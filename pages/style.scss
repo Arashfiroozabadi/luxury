@@ -1,0 +1,24 @@
+body{
+    height: 1000px;
+}
+.page-transition-enter {
+    opacity: 0;
+    transform: translateY(-100px)
+}
+
+.page-transition-enter-active {
+    opacity   : 1;
+    transform: translateY(0);
+    transition:opacity 100ms, transform 500ms;
+}
+
+.page-transition-exit {
+    opacity: 1;
+    transform: translateY(0px)
+}
+
+.page-transition-exit-active {
+    opacity   : 0;
+    transform: translateY(-100px);
+    transition:opacity 100ms, transform 500ms;
+}

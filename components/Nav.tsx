@@ -1,15 +1,27 @@
+import React, { useState } from 'react'
 import Link from 'next/link';
 import { makeStyles } from '@material-ui/styles';
-import { Paper } from '@material-ui/core';
+import {
+    AppBar, Toolbar,
+    Typography,
+    Drawer,
+    List,
+    ListItem,
+    useScrollTrigger,
+    Slide,
+    // Slide
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton';
 import Logo from './Logo';
 
 const useStyles = makeStyles({
     root: {
         width: '100%',
         display: 'flex',
-        flexDirection:'column',
+        flexDirection: 'column',
     },
-    logo:{
+    logo: {
         textDecoration: 'none'
     },
     navList: {
@@ -23,44 +35,121 @@ const useStyles = makeStyles({
                 textDecoration: 'none'
             }
         }
+    },
+    menuButton: {
+        color: 'blue'
+    },
+    toolBar: {
+        justifyContent: 'space-between'
+    },
+    logoList: {
+        fontSize: 20
     }
 });
+interface Props {
+    children: React.ReactElement;
+}
 
-function Nav() {
+function HideOnScroll(props: Props) {
+    const { children } = props;
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold:250
+    })
+
+    return React.cloneElement(children, {
+        elevation: trigger ? 4 : 0,
+        direction: "down",
+        appear: false,
+        in: !trigger
+    });
+}
+
+function Nav(props:any) {
+    const [open, setOpen] = useState(false)
     const classes = useStyles();
+
+    function handleOpen() {
+        setOpen(!open)
+    }
+    function handleClose() {
+        setOpen(false)
+    }
     return (
-        <Paper
+        <div
             className={classes.root}
         >
-            <div>
-                <Link href="/">
-                    <a
-                        className={classes.logo}
+            <HideOnScroll>
+                <Slide
+                    timeout={{
+                        enter:200,
+                        exit: 750
+                    }}
+                    {...props}
+                >
+                    <AppBar
+                        position="fixed"
+                        color="default"
                     >
-                        <Logo />
-                    </a>
-                </Link>
-            </div>
-
-            <ul
-                className={classes.navList}
+                        <Toolbar
+                            className={classes.toolBar}
+                        >
+                            <IconButton
+                                edge="start"
+                                className={classes.menuButton}
+                                color="inherit"
+                                aria-label="menu"
+                                onClick={() => handleOpen()}
+                            >
+                                <MenuIcon
+                                    fontSize="large"
+                                />
+                            </IconButton>
+                            <Typography
+                                variant="h6"
+                            >
+                                <Link href="/">
+                                    <a
+                                        className={classes.logo}
+                                    >
+                                        <Logo />
+                                    </a>
+                                </Link>
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
+                </Slide>
+            </HideOnScroll>
+            <Toolbar />
+            <Drawer
+                open={open}
+                anchor="right"
+                onClose={
+                    () => handleClose()
+                }
             >
-                <li>
-                    <Link href="/production">
-                        <a>محصولات</a>
-                    </Link>
-                </li>
-                <li>
+                <div>
+                    <List>
+                        <Link href="/" passHref>
+                            <ListItem component="a" button>
+                                <div
 
-                </li>
-                <li>
-                    <Link href="/production">
-                        <a>درباره ما</a>
-                    </Link>
-                </li>
-            </ul>
-
-        </Paper>
+                                >
+                                    <Logo
+                                        textClass={classes.logoList}
+                                    />
+                                </div>
+                            </ListItem>
+                        </Link>
+                        <Link href="/production" passHref>
+                            <ListItem component="a" button>
+                                محصولات
+                            </ListItem>
+                        </Link>
+                    </List>
+                </div>
+            </Drawer>
+        </div>
     )
 }
 

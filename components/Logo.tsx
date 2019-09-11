@@ -3,16 +3,16 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
     root: {
-        padding:'5px',
+        padding: '5px',
         textAlign: 'left',
     },
     logo: {
         color: "gold",
-        fontSize: '4rem'
+        fontSize: '3rem'
     }
 });
 
-const Logo = () => {
+const Logo = ({ textClass }: any) => {
 
     const classes = useStyles();
     return (
@@ -22,7 +22,7 @@ const Logo = () => {
             <Typography
                 variant="h1"
                 component="h1"
-                className={classes.logo}
+                className={`${classes.logo} ${textClass ? textClass : null}`}
                 gutterBottom
             >
                 Luxury
