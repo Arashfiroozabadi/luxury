@@ -1,7 +1,9 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import {
-  Grid
+  Grid,
+  Typography,
+  Box
 } from '@material-ui/core';
 
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
@@ -18,14 +20,32 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     textBox: {
       alignSelf: 'flex-start',
+      [theme.breakpoints.only('xs')]: {
+        width: '100%',
+      },
     },
     text: {
       textAlign: 'center',
       whiteSpace: 'nowrap',
+      fontWeight: 200,
+    },
+    gText: {
+      color: 'white',
+      letterSpacing: 30,
+      backgroundColor: 'black',
+      borderBottom: '1px solid gold',
+    },
+    logoText: {
+      color: 'gold',
+      fontSize: '1.5em',
+      fontWeight: 300,
+      letterSpacing: 25,
+      backgroundColor: 'black',
     },
     imgBox: {
       position: 'relative',
       minHeight: 400,
+      width: '100%'
     },
     image: {
       top: 0,
@@ -56,10 +76,11 @@ export default () => {
         <Grid
           justify="center"
           container
+          direction="column"
           alignItems="center"
         >
           <Grid
-            xs={3}
+            xs={12}
             sm={4}
             md={3}
             lg={3}
@@ -67,15 +88,30 @@ export default () => {
             item
             className={classes.textBox}
           >
-            <h1
+            <Typography
               className={classes.text}
+              component="span"
             >
-              گالری مبل لاکچری
-            </h1>
+              <Box
+                m={0}
+                textAlign="justify"
+                component="p"
+                className={classes.gText}
+              >
+                گالری مبل
+              </Box>
+              <Box
+                m={0}
+                component="p"
+                className={classes.logoText}
+              >
+                لاکچری
+              </Box>
+            </Typography>
           </Grid>
           <Grid
             className={classes.imgBox}
-            xs={8}
+            xs={12}
             sm={8}
             md={9}
             lg={8}

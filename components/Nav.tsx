@@ -54,7 +54,7 @@ function HideOnScroll(props: Props) {
     const { children } = props;
     const trigger = useScrollTrigger({
         disableHysteresis: true,
-        threshold:250
+        threshold: 250
     })
 
     return React.cloneElement(children, {
@@ -65,7 +65,7 @@ function HideOnScroll(props: Props) {
     });
 }
 
-function Nav(props:any) {
+function Nav(props: any) {
     const [open, setOpen] = useState(false)
     const classes = useStyles();
 
@@ -82,7 +82,7 @@ function Nav(props:any) {
             <HideOnScroll>
                 <Slide
                     timeout={{
-                        enter:200,
+                        enter: 200,
                         exit: 750
                     }}
                     {...props}
@@ -120,6 +120,7 @@ function Nav(props:any) {
                     </AppBar>
                 </Slide>
             </HideOnScroll>
+            <Toolbar />
             <Toolbar />
             <Drawer
                 open={open}
