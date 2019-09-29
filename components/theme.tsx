@@ -3,6 +3,7 @@ import { red } from '@material-ui/core/colors';
 
 // Create a theme instance.
 let theme = createMuiTheme({
+    direction: 'rtl',
     typography: {
         fontFamily: [
             'Vazir'

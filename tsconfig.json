@@ -1,4 +1,8 @@
 {
+  "typeRoots": [
+    "../node_modules/@types",
+    "../@types"
+  ],
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
@@ -36,6 +40,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "pages/_app.js", "components/Nav.tsx"
+    "**/*.tsx",
+    "pages/_app.js",
+    "components/Nav.tsx"
   ]
 }

@@ -37,7 +37,7 @@ const useStyles = makeStyles({
         }
     },
     menuButton: {
-        color: 'blue'
+        color: 'black'
     },
     toolBar: {
         justifyContent: 'space-between'

@@ -3,10 +3,12 @@ import dynamic from 'next/dynamic';
 import {
   Grid,
   Typography,
-  Box
+  Box,
+  Container
 } from '@material-ui/core';
 
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import Carousel from '../components/Carousel';
 
 const Layout = dynamic(
   () => import('../components/Layout'),
@@ -31,7 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     gText: {
       color: 'white',
-      letterSpacing: 30,
+      letterSpacing: 25,
+      paddingLeft: 15,
       backgroundColor: 'black',
       borderBottom: '1px solid gold',
     },
@@ -41,6 +44,13 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 300,
       letterSpacing: 25,
       backgroundColor: 'black',
+    },
+    splashText: {
+      padding: '1.5rem',
+      textAlign: 'center',
+      [theme.breakpoints.only('xs')]: {
+        padding: '3.5rem',
+      },
     },
     imgBox: {
       position: 'relative',
@@ -70,7 +80,7 @@ export default () => {
       <Head>
         <title>Luxury</title>
       </Head>
-      <div
+      <Container
         className={classes.root}
       >
         <Grid
@@ -118,12 +128,27 @@ export default () => {
             xl
             item
           >
-            <div
+            {/* <div
               className={classes.image}
-            />
+            /> */}
+            <Carousel />
+            {/* <div
+              className={classes.splashText}
+            >
+              <Typography
+                component="span"
+              >
+                <Box
+                  fontWeight="fontWeightMedium"
+                  component="p"
+                >
+                  عرضه کننده انواع مبلمان راحتی
+                </Box>
+              </Typography>
+            </div> */}
           </Grid>
         </Grid>
-      </div>
+      </Container>
     </Layout>
   )
 }
