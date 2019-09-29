@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 import Nav from "./Nav";
+import Footer from './Footer';
 
 interface Layout {
     children: any,
@@ -17,6 +18,7 @@ function Layout(props: Layout) {
             </Head>
             <Nav />
             {props.children}
+            <Footer />
         </div>
     )
 }

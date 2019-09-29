@@ -55,11 +55,10 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         justifyContent: 'center',
         height: 50,
-        paddingLeft: theme.spacing(4),
         backgroundColor: theme.palette.background.default,
     },
     img: {
-        height: 450,
+        height: 300,
         display: 'block',
         margin: '0 10px',
         overflow: 'hidden',
@@ -94,7 +93,7 @@ function Carousel() {
                 <Typography>{tutorialSteps[activeStep].label}</Typography>
             </Paper>
             <AutoPlaySwipeableViews
-                interval={5000}
+                interval={4000}
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={activeStep}
                 onChangeIndex={handleStepChange}
@@ -123,14 +122,14 @@ function Carousel() {
                 activeStep={activeStep}
                 nextButton={
                     <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-                        Next
+                        بعدی
                         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                     </Button>
                 }
                 backButton={
                     <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
                         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                        Back
+                        قبلی
                     </Button>
                 }
             />

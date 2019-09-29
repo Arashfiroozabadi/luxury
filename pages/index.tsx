@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: 'white',
       letterSpacing: 25,
       paddingLeft: 15,
-      backgroundColor: 'black',
+      backgroundColor: theme.palette.secondary.dark,
       borderBottom: '1px solid gold',
     },
     logoText: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: '1.5em',
       fontWeight: 300,
       letterSpacing: 25,
-      backgroundColor: 'black',
+      backgroundColor: theme.palette.secondary.dark,
     },
     splashText: {
       padding: '1.5rem',
@@ -56,16 +56,6 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       minHeight: 400,
       width: '100%'
-    },
-    image: {
-      top: 0,
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      backgroundSize: '100% auto',
-      backgroundImage: 'url(/static/img/firstShow.png)',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center center'
     },
     control: {
       padding: theme.spacing(2),
@@ -128,11 +118,7 @@ export default () => {
             xl
             item
           >
-            {/* <div
-              className={classes.image}
-            /> */}
-            <Carousel />
-            {/* <div
+            <div
               className={classes.splashText}
             >
               <Typography
@@ -145,7 +131,8 @@ export default () => {
                   عرضه کننده انواع مبلمان راحتی
                 </Box>
               </Typography>
-            </div> */}
+            </div>
+            <Carousel />
           </Grid>
         </Grid>
       </Container>

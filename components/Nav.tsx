@@ -124,7 +124,7 @@ function Nav(props: any) {
             <Toolbar />
             <Drawer
                 open={open}
-                anchor="right"
+                anchor="left"
                 onClose={
                     () => handleClose()
                 }
