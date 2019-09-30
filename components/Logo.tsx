@@ -12,12 +12,12 @@ const useStyles = makeStyles({
     }
 });
 
-const Logo = ({ textClass }: any) => {
+const Logo = ({ textClass, rootClass }: any) => {
 
     const classes = useStyles();
     return (
         <div
-            className={classes.root}
+            className={`${classes.root} ${rootClass ? rootClass : null}`}
         >
             <Typography
                 variant="h1"

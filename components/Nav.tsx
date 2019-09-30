@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import {
     AppBar, Toolbar,
     Typography,
@@ -15,37 +15,38 @@ import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import Logo from './Logo';
 
-const useStyles = makeStyles({
-    root: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    logo: {
-        textDecoration: 'none'
-    },
-    navList: {
-        width: '100%',
-        display: 'flex',
-        listStyle: 'none',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        '& li': {
-            '& a': {
-                textDecoration: 'none'
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+        },
+        logo: {
+            textDecoration: 'none'
+        },
+        navList: {
+            width: '100%',
+            display: 'flex',
+            listStyle: 'none',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
+            '& li': {
+                '& a': {
+                    textDecoration: 'none'
+                }
             }
+        },
+        menuButton: {
+            color: theme.palette.secondary.dark,
+        },
+        toolBar: {
+            justifyContent: 'space-between'
+        },
+        logoList: {
+            fontSize: 20
         }
-    },
-    menuButton: {
-        color: 'black'
-    },
-    toolBar: {
-        justifyContent: 'space-between'
-    },
-    logoList: {
-        fontSize: 20
-    }
-});
+    }))
 interface Props {
     children: React.ReactElement;
 }
