@@ -134,6 +134,24 @@ export default () => {
             </div>
             <Carousel />
           </Grid>
+          <Grid
+            item
+          >
+          </Grid>
+        </Grid>
+      </Container>
+      <Container>
+        <Grid container>
+          <Grid item>
+            <Typography
+              variant="h5"
+              component="h2"
+            >
+              <Box>
+                محصولات ما
+              </Box>
+            </Typography>
+          </Grid>
         </Grid>
       </Container>
     </Layout>

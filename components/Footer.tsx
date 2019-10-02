@@ -4,11 +4,12 @@ import {
     Grid,
     Container,
     Box,
-    Typography
+    Typography,
+    Divider
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
-import { KeyboardArrowLeft, Call } from '@material-ui/icons';
+import { KeyboardArrowLeft, Call, LocationOnOutlined } from '@material-ui/icons';
 import Logo from './Logo';
 
 
@@ -86,6 +87,11 @@ const useStyles = makeStyles((theme: Theme) =>
                 textDecoration: 'none',
             }
         },
+        divider: {
+            width: '100%',
+            backgroundColor: '#252525',
+            margin: '10px 0',
+        }
     }),
 );
 
@@ -216,7 +222,35 @@ function Footer() {
                                 </Box>
                             </Typography>
                         </Container>
+                    </Grid>
+                    <Divider
+                        className={classes.divider}
+                    />
+                    <Grid
+                        item
+                        xs={12}
+                    >
+                        <Container>
+                            <Typography
+                                variant='caption'
+                                component="h6"
+                            >
+                                <Box
+                                    fontWeight="fontWeightLight"
+                                    p="5px 25px"
+                                    m="10px 0"
+                                    color="#adacacb8"
+                                    textAlign="center"
 
+                                >
+                                    <div>
+                                        <LocationOnOutlined />
+                                    </div>
+                                    البرز مشکین‌ دشت بلوار امام علی
+                                    گالری مبل لاکچری
+                                </Box>
+                            </Typography>
+                        </Container>
                     </Grid>
                 </Grid>
             </div>
