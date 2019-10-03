@@ -1,14 +1,18 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
+import Link from "next/link";
 import {
   Grid,
+  Button,
   Typography,
   Box,
-  Container
+  Container,
+  Toolbar
 } from '@material-ui/core';
 
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Carousel from '../components/Carousel';
+import Cards from '../components/Cards';
 
 const Layout = dynamic(
   () => import('../components/Layout'),
@@ -60,6 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
     control: {
       padding: theme.spacing(2),
     },
+    moreButton: {
+      marginTop: '1.5rem',
+      textAlign: 'center',
+    }
   }),
 );
 
@@ -134,26 +142,74 @@ export default () => {
             </div>
             <Carousel />
           </Grid>
-          <Grid
-            item
-          >
-          </Grid>
         </Grid>
       </Container>
+      <Toolbar />
       <Container>
-        <Grid container>
-          <Grid item>
+        <Grid
+          container
+          justify="space-between"
+        >
+          <Grid
+            item
+            md={12}
+          >
             <Typography
               variant="h5"
               component="h2"
+              gutterBottom
             >
               <Box>
                 محصولات ما
               </Box>
             </Typography>
           </Grid>
+          <Grid
+            item
+            md={3}
+          >
+            <Cards
+              title="مبلمان راحتی"
+              link="rahati"
+            />
+          </Grid>
+          <Grid
+            item
+            md={3}
+          >
+            <Cards
+              title="مبلمان راحتی ال"
+              link="rahati-L"
+            />
+          </Grid>
+          <Grid
+            item
+            md={3}
+          >
+            <Cards
+              title="سرویس خواب"
+              link="service-khab"
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            className={classes.moreButton}
+          >
+            <Link href="production" passHref>
+              <Button
+                size="small"
+                color="primary"
+                variant="outlined"
+                component="a"
+              >
+                مشاهده سایر محصولات
+              </Button>
+            </Link>
+          </Grid>
         </Grid>
       </Container>
+      <Toolbar />
     </Layout>
   )
 }

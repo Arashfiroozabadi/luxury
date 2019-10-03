@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
-import { KeyboardArrowLeft, Call, LocationOnOutlined } from '@material-ui/icons';
+import { KeyboardArrowLeft, Call, LocationOnOutlined, Instagram, Telegram, Twitter } from '@material-ui/icons';
 import Logo from './Logo';
 
 
@@ -82,9 +82,23 @@ const useStyles = makeStyles((theme: Theme) =>
             '& > div > a': {
                 left: 25,
                 bottom: -4,
-                color: 'white',
+                color: '#adacacb8',
                 position: 'absolute',
                 textDecoration: 'none',
+            }
+        },
+        social: {
+            display: 'flex',
+            padding: '5px 0px',
+            marginTop: '10px',
+            backgroundColor: 'transparent',
+            '& a': {
+                color: '#adacacb8',
+                margin: '0px 5px',
+                display: 'flex',
+            },
+            '& a:first-child': {
+                margin: '0 5px 0 0'
             }
         },
         divider: {
@@ -201,7 +215,9 @@ function Footer() {
                         lg={6}
                         xs={6}
                     >
-                        <Container>
+                        <Container
+                            dir="ltr"
+                        >
                             <Logo
                                 rootClass={classes.logoRoot}
                                 textClass={classes.logo}
@@ -221,6 +237,29 @@ function Footer() {
                                     </a>
                                 </Box>
                             </Typography>
+                            <Grid
+                                container
+                            >
+                                <Grid
+                                    item
+                                    md={3}
+                                    xs={12}
+                                >
+                                    <div
+                                        className={classes.social}
+                                    >
+                                        <a>
+                                            <Instagram />
+                                        </a>
+                                        <a href="">
+                                            <Telegram />
+                                        </a>
+                                        <a href="">
+                                            <Twitter />
+                                        </a>
+                                    </div>
+                                </Grid>
+                            </Grid>
                         </Container>
                     </Grid>
                     <Divider
