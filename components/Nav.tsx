@@ -134,9 +134,7 @@ function Nav(props: any) {
                     <List>
                         <Link href="/" passHref>
                             <ListItem component="a" button>
-                                <div
-
-                                >
+                                <div>
                                     <Logo
                                         textClass={classes.logoList}
                                     />
@@ -146,6 +144,11 @@ function Nav(props: any) {
                         <Link href="/production" passHref>
                             <ListItem component="a" button>
                                 محصولات
+                            </ListItem>
+                        </Link>
+                        <Link href="/upload" passHref>
+                            <ListItem component="a" button>
+                                upload
                             </ListItem>
                         </Link>
                     </List>
