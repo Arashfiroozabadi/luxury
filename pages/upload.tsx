@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme: Theme) =>
         img: {
             width: '80%',
             height: 'auto',
-            borderRadius: 4,
-            boxShadow: theme.shadows['10']
+            borderRadius: theme.shape.borderRadius,
+            boxShadow: theme.shadows['6']
         },
         sendFormButton: {
             width: '50%',

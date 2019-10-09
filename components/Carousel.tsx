@@ -60,9 +60,11 @@ const useStyles = makeStyles(theme => ({
     img: {
         height: 300,
         display: 'block',
-        margin: '0 10px',
+        margin: '10px 10px',
         overflow: 'hidden',
         width: 'calc(100% - 20px)',
+        boxShadow: theme.shadows['6'],
+        borderRadius: theme.shape.borderRadius,
         backgroundSize: '100% auto',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
