@@ -7,7 +7,7 @@ const PhotoModel = new schema({
     author: ObjectId,
     title: { type: String },
     color: [{ colorName: String, imgPath: String }],
-    path: { type: String },
+    path: { type: Array },
     unit: { type: String },
     category: { type: String },
     description: { type: String },

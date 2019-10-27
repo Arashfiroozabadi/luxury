@@ -23,12 +23,19 @@ function CallUS() {
             </h1>
             {resp ?
                 resp.map((d: any, index: any) => (
-                    <img
+                    <div
                         key={index}
-                        src={d.path ? d.path : null}
-                        height={200}
-                        width={200}
-                    />
+                    >{
+                            d.path.map((src: any, index: any) => (
+                                <img
+                                    key={index}
+                                    src={src ? src : null}
+                                    height={200}
+                                    width={200}
+                                />
+                            ))
+                        }
+                    </div>
                 )) :
                 null
             }

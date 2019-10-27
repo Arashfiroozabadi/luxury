@@ -33,6 +33,9 @@ app.prepare().then(() => {
   const server = express();
   server.use(bodyParser.json());
   server.use(session({
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 365
+    },
     secret: "secret",
     resave: false,
     saveUninitialized: true,

@@ -3,7 +3,18 @@ import React, {
     useEffect
 } from 'react';
 import clsx from 'clsx';
-import { TextField, Button, Paper, Grid, FormHelperText, Typography, Container, MenuItem, LinearProgress } from '@material-ui/core';
+import {
+    Box,
+    TextField,
+    Button,
+    Paper,
+    Grid,
+    FormHelperText,
+    Typography,
+    Container,
+    MenuItem,
+    LinearProgress
+} from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import axios from 'axios';
 
@@ -48,10 +59,21 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: theme.spacing(1),
         },
         img: {
-            width: '80%',
+            width: '30%',
             height: 'auto',
-            borderRadius: theme.shape.borderRadius,
-            boxShadow: theme.shadows['6']
+            margin: 2.5,
+            position: 'relative',
+            '& img': {
+                width: '100%',
+                height: 'auto',
+                borderRadius: theme.shape.borderRadius,
+                boxShadow: theme.shadows['6'],
+            },
+            '&:hover': {
+                '& .close': {
+                    display: 'block'
+                }
+            }
         },
         sendFormButton: {
             width: '50%',
@@ -79,12 +101,13 @@ function Upload() {
         name: '',
         desc: '',
         cate: '',
-        // file: {},
+        img: [],
         msg: ""
     });
+    const [imgUrl, setImgUrl] = useState<any | null>([])
+    const [imgs, setImgs] = useState<any | null>([])
     const [isAuth, setAuth] = useState()
     useEffect(() => {
-        console.log('ok');
         const fetchData = async () => {
             const result = await axios.post(
                 '/api/auth',
@@ -112,32 +135,48 @@ function Upload() {
         setUpload({ ...uploadForm, [e.target.name]: e.target.value })
     }
     function handleChangeImage(e: any) {
-        setUpload({ ...uploadForm, img: e.target.files[0] })
+        let i = 0
+        setImgUrl([...imgUrl, URL.createObjectURL(e.target.files[i])])
+        setImgs([...imgs, e.target.files[i]])
+        ++i
+    }
+    function handleDelete(i: any) {
+        const array = [...imgUrl]
+        array.splice(i, 1);
+        setImgUrl(array)
+
+        const arrayU = [...imgs]
+        arrayU.splice(i, 1);
+        setImgs(arrayU)
     }
     function handleSendFile() {
         const file = new FormData()
-        // const regex = new RegExp('[^.]+$');
-        // const extension = uploadForm.img.name.match(regex)[0];
-
         file.append('name', uploadForm.name)
         file.append('desc', uploadForm.desc)
         file.append('cate', uploadForm.cate)
-        file.append('file', uploadForm.img)
-
-        axios.post('/api/upload',
-            file, {
-            onUploadProgress: ProgressEvent => {
-                setLoad({
-                    loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
-                })
-            },
+        for (let i = 0; i < imgs.length; i++) {
+            file.append("file", imgs[i]);
         }
+        axios.post('/api/upload',
+
+            file,
+            {
+                onUploadProgress: ProgressEvent => {
+                    setLoad({
+                        loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
+                    })
+                },
+            }
         ).then((res: any) => {
             setData(res.data)
-            console.log(res.data);
-
-            // setErr(!res.data.auth)
-        })
+        }).catch(
+            (err: any) => {
+                if (err.response) {
+                    alert(err.response.data);
+                }
+                console.log(err)
+            }
+        )
     }
     const cate = [
         {
@@ -157,7 +196,6 @@ function Upload() {
             label: 'نهار خوری',
         },
     ];
-    console.log(data.auth);
 
     if (data.auth === true) {
         return (
@@ -232,6 +270,10 @@ function Upload() {
                                         name='file'
                                         onChange={(e) => handleChangeImage(e)}
                                         type="file"
+                                        inputProps={{
+                                            multiple: true,
+                                            encType: "multipart/form-data"
+                                        }}
                                         margin="dense"
                                         variant="outlined"
                                     />
@@ -240,10 +282,29 @@ function Upload() {
                                         variant="determinate"
                                         value={load.loaded}
                                     />
-                                    <img
-                                        className={classes.img}
-                                        src={data.imgPath}
-                                    />
+                                    <Box
+                                        display="flex"
+                                        flexWrap="wrap"
+                                    >
+                                        {
+                                            imgUrl.map((d: any, i: any) => (
+                                                <div
+                                                    key={i}
+                                                    className={classes.img}
+                                                >
+                                                    <img
+                                                        src={d}
+                                                    />
+                                                    <button
+                                                        className='close'
+                                                        onClick={() => handleDelete(i)}
+                                                    >
+                                                        t
+                                                    </button>
+                                                </div>
+                                            ))
+                                        }
+                                    </Box>
                                 </Grid>
                                 <Grid
                                     item

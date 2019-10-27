@@ -18,28 +18,44 @@ AccountController.get('/all', (_req, res) => {
 })
 
 var storage = multer.diskStorage({
-    destination: function (req: any, _file: any, cb) {
-        const dest = `static/uploads/${req.body.cate}`
+    destination: function (req: any, _files: any, cb) {
+        const dest = `static/uploads/${req.body.cate}/${req.body.name}`
         mkdirp.sync(dest);
         cb(null, dest)
     },
     filename: function (_req: any, file, cb) {
         cb(null, file.originalname)
-        console.log(_req.body.name);
+        // console.log(_req.body.name);
 
     }
 })
-var upload = multer({ storage: storage })
+function filters(req: any, file: any, cb: any) {
+    // const files = req.files
+
+    if (req.body.name.length === 0 || req.body.cate.length === 0 || req.body.desc.length === 0 || file === undefined) {
+        cb("لطفا تمام فیلد‌ها را وارد کنید", false)
+    }
+    if (file.mimetype !== 'image/jpeg') {
+        cb('file type not allow', false)
+    }
+    cb(null, true)
+}
+const upload = multer({
+    storage: storage,
+    fileFilter: filters
+})
+
 AccountController.post('/auth', (req: any, res) => {
+
     if (req.session.auth) {
         res.send({ auth: true, test: req.session.auth, msg: 'وارد شدید' })
     } else {
         res.send({ auth: false })
     }
 })
+
 AccountController.post('/login', upload.single('file'), (req: any, res) => {
     const body = req.body.form
-    console.log(req.body);
 
     if (body.userName.length <= 0) {
         res.send({ msg: "نام کاربری را وارد کنید" })
@@ -62,20 +78,24 @@ AccountController.post('/login', upload.single('file'), (req: any, res) => {
         }
     }
 })
-AccountController.post('/upload', upload.single('file'), (req: any, res) => {
-
-    const file = req.file;
+AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
+    const file = req.files;
     const body = req.body;
 
-    if (body.name.length === 0 || body.cate.length === 0 || body.desc.length === 0) {
-        console.log('file name is null');
+    if (body.name.length === 0 || body.cate.length === 0 || body.desc.length === 0 || file.length === 0) {
+        // console.log('file name is null');
         res.send({ auth: true, msg: 'لطفا تمام فیلد‌ها را وارد کنید', status: 'err' })
+
     } else {
+        let path: any = []
+        file.map((d: any) => {
+            path.push(d.path)
+        })
         const newPhoto = new PhotoModel({
             title: body.name,
             category: body.cate,
             description: body.desc,
-            path: file.path
+            path: path
         })
         newPhoto.save();
 
@@ -86,9 +106,9 @@ AccountController.post('/upload', upload.single('file'), (req: any, res) => {
             status: 'ok'
         });
     }
-    console.log(
-        typeof (body.name)
-    );
+    // console.log(
+    //     typeof (body.name)
+    // );
 
     // res.send({ auth: true, imgPath: req.file.path })
 
