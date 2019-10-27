@@ -36,14 +36,15 @@ function Production() {
             <h1>Production</h1>
             <Container>
                 <Grid container justify="space-between">
-                    <Grid item>
+                    <Grid item md={3}>
+                        <Cards
+                            title="مبلمان راحتی"
+                            link="rahati"
+                        />
                     </Grid>
                 </Grid>
             </Container>
-            <Cards
-                title="مبلمان راحتی"
-                link="rahati"
-            />
+
             {resp ?
                 resp.map((d: any, index: any) => (
                     <div
