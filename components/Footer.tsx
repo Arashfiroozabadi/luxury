@@ -5,7 +5,8 @@ import {
     Container,
     Box,
     Typography,
-    Divider
+    Divider,
+    Toolbar
 } from "@material-ui/core";
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
@@ -114,6 +115,7 @@ function Footer() {
     const classes = useStyles();
     return (
         <footer>
+            <Toolbar />
             <div
                 className={classes.root}
             >

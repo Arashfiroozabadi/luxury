@@ -209,7 +209,6 @@ export default () => {
           </Grid>
         </Grid>
       </Container>
-      <Toolbar />
     </Layout>
   )
 }
