@@ -7,11 +7,11 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-import Cards from '../components/Cards'
+import Cards from '../../components/Cards'
 import { Container, Grid, Typography, Box } from '@material-ui/core';
 
 const Layout = dynamic(
-    () => import('../components/Layout'),
+    () => import('../../components/Layout'),
     { loading: () => <p>loading...</p> }
 )
 
