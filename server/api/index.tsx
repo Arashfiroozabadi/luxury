@@ -18,6 +18,7 @@ AccountController.get('/all', (_req, res) => {
 })
 
 
+
 var storage = multer.diskStorage({
     destination: function (req: any, _files: any, cb) {
         const dest = `static/uploads/${req.body.cate}/${req.body.name}`
@@ -133,6 +134,15 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
     //         res.send({ auth: true, userName: body.userName, msg: 'وارد شدید' })
     //     }
     // }
+})
+
+AccountController.get('/production/rahati', (req, res) => {
+    const target = req.query.target
+    PhotoModel.find({ category: target }).then(
+        resualt => {
+            res.send(resualt)
+        }
+    )
 })
 
 export default AccountController
