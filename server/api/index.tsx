@@ -17,18 +17,6 @@ AccountController.get('/all', (_req, res) => {
     )
 })
 
-AccountController.get('/pordctions', (req: any, res) => {
-    console.log(
-        req.session.auth
-    );
-
-    PhotoModel.find({ category: req.body.cate }).then(
-        resualt => {
-            res.send(resualt)
-        }
-    )
-})
-
 
 var storage = multer.diskStorage({
     destination: function (req: any, _files: any, cb) {
