@@ -157,7 +157,7 @@ function Footer() {
                                             گالری مبل لاکچری عرضه کننده انواع مبلمان ...
                                         </Typography>
                                         <Link
-                                            href="about-us"
+                                            href="/about-us"
                                         >
                                             <a
                                                 className={classes.links}
@@ -196,7 +196,7 @@ function Footer() {
                                             راه‌های ارتباطی با ما
                                         </Typography>
                                         <Link
-                                            href="call-us"
+                                            href="/call-us"
                                         >
                                             <a
                                                 className={classes.links}
@@ -253,10 +253,10 @@ function Footer() {
                                         <a>
                                             <Instagram />
                                         </a>
-                                        <a href="">
+                                        <a href="#">
                                             <Telegram />
                                         </a>
-                                        <a href="">
+                                        <a href="#">
                                             <Twitter />
                                         </a>
                                     </div>

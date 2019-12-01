@@ -53,7 +53,9 @@ app.prepare().then(() => {
   })
 
   server.get('/posts/:id', (req, res) => {
-    return app.render(req, res, '/posts', { id: req.params.id })
+    const nextJsPage = "/posts";
+    const queryParams = { id: req.params.id, des: req.params.des };
+    return app.render(req, res, nextJsPage, queryParams)
   })
 
   server.get('*', (req, res) => {

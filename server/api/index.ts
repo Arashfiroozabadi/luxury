@@ -136,9 +136,17 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
     // }
 })
 
-AccountController.get('/production/rahati', (req, res) => {
-    const target = req.query.target
+AccountController.post('/production', (req, res) => {
+    const target = req.body.target
     PhotoModel.find({ category: target }).then(
+        resualt => {
+            res.send(resualt)
+        }
+    )
+})
+AccountController.post('/product', (req, res) => {
+    const target = req.body.target
+    PhotoModel.findOne({ _id: target }).then(
         resualt => {
             res.send(resualt)
         }

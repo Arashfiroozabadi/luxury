@@ -1,14 +1,19 @@
 import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { PageTransition } from 'next-page-transitions';
+import withRedux from "next-redux-wrapper";
 
 import theme from '../components/theme';
+import store from '../store';
 import './style.scss'
 
 class MyApp extends App {
+
     componentDidMount() {
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector('#jss-server-side');
@@ -18,7 +23,7 @@ class MyApp extends App {
     }
 
     render() {
-        const { Component, pageProps, router } = this.props;
+        const { Component, pageProps, router, store } = this.props;
 
         return (
             <React.Fragment>
@@ -29,13 +34,15 @@ class MyApp extends App {
                 <ThemeProvider theme={theme}>
                     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                     <CssBaseline />
-                    <PageTransition timeout={500} classNames="page-transition">
-                        <Component {...pageProps} key={router.route} />
-                    </PageTransition>
+                    <Provider store={store}>
+                        <PageTransition timeout={500} classNames="page-transition">
+                            <Component {...pageProps} key={router.route} />
+                        </PageTransition>
+                    </Provider>
                 </ThemeProvider>
             </React.Fragment>
         );
     }
 }
 
-export default MyApp;
+export default withRedux(store)(MyApp);
