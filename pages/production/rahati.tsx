@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme: Theme) =>
                 width: '100%',
             },
         },
+        title: {
+            fontSize: '1.15rem'
+        },
         cardImgs: {
             width: '100%',
             height: 'auto',
@@ -79,6 +82,7 @@ function Rahati() {
                                             variant="h6"
                                             component="h2"
                                             gutterBottom
+                                            className={classes.title}
                                         >
                                             <Box>
                                                 {`مدل ${d.title}`}
