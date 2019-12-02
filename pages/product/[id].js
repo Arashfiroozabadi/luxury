@@ -12,6 +12,9 @@ import {
   Box
 } from '@material-ui/core';
 
+import ProductCaro from '../../components/ProductCaro';
+
+
 export default function Post() {
   // const data = useSelector(state => state.data)
   const [res, setRes] = useState([]);
@@ -30,7 +33,7 @@ export default function Post() {
     };
     fetchData();
   }, []);
-  console.log(res);
+  // console.log(res.path);
 
   return (
     < Layout >
@@ -54,16 +57,35 @@ export default function Post() {
                 </Typography>
               </CardContent>
               <CardContent>
-                <Typography
-                  variant="h6"
-                  component="h5"
-                  gutterBottom
-                // className={classes.title}
-                >
-                  <Box>
-                    {`مدل ${res.description}`}
-                  </Box>
-                </Typography>
+                {
+                  res.path ?
+                    <div
+                      style={{
+                        display: 'flex'
+                      }}
+                    >
+                      <Typography
+                        style={{
+                          width: '50%'
+                        }}
+                        variant="h6"
+                        component="h5"
+                        gutterBottom
+                      // className={classes.title}
+                      >
+                        <Box>
+                          {`مدل ${res.description}`}
+                        </Box>
+                      </Typography>
+                      <ProductCaro
+                        path={res.path}
+                      />
+                    </div>
+                    :
+                    null
+                }
+              </CardContent>
+              <CardContent>
               </CardContent>
             </Card>
           </Grid>
