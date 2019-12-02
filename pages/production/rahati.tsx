@@ -62,7 +62,7 @@ function Rahati() {
     return (
         <Layout>
             <Container>
-                <Grid container justify="space-between">
+                <Grid container justify="space-evenly">
                     {
                         resp.map((d: any, i: any) => (
                             <Grid
