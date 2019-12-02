@@ -13,7 +13,7 @@ import {
     Grid, Button,
     Card, CardMedia,
     CardContent, CardActions,
-    Typography, Box
+    Typography, Box, Divider
 } from '@material-ui/core';
 import { withRouter } from 'next/dist/client/router';
 
@@ -85,6 +85,7 @@ function Rahati() {
                                             </Box>
                                         </Typography>
                                     </CardContent>
+                                    <Divider />
                                     <CardMedia
                                         className={classes.cardImgs}
                                         component="img"
@@ -92,6 +93,7 @@ function Rahati() {
                                         alt={d.title}
                                         title={d.title}
                                     />
+                                    <Divider />
                                     <CardActions>
                                         <Link
                                             href={{
