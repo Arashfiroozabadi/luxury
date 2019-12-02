@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
 
         },
+        container: {
+            margin: 1
+        },
         cards: {
             margin: '5px 5px',
             marginTop: theme.spacing(3),
@@ -41,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
         cardImgs: {
             width: '100%',
             height: 'auto',
+            maxHeight: 230,
         },
     })
 )
@@ -72,6 +76,7 @@ function Rahati() {
                                 key={i}
                                 item
                                 md={4}
+                                className={classes.container}
                             >
                                 <Card
                                     className={classes.cards}
