@@ -13,14 +13,26 @@ const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
+        maxWidth: 600
     },
     carousel: {
         // width: '50%'
     },
     thumbs: {
-        // width: '50%'
+        padding: 5,
+        display: 'flex',
+        justifyContent: "space-evenly",
+    },
+    imgThumbs: {
+        boxShadow: theme.shadows['4'],
+        transition: 'all 0.2s',
+        borderRadius: theme.shape.borderRadius,
+        '&:hover': {
+            border: '2px solid #556cd694'
+        }
     },
     header: {
+        margin: '5px 5px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -38,6 +50,9 @@ const useStyles = makeStyles(theme => ({
         backgroundSize: '100% auto',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
+        [theme.breakpoints.only('xs')]: {
+            height: 240,
+        }
     },
 }));
 
@@ -70,7 +85,7 @@ function ProductCaro(props: any) {
                 className={classes.carousel}
             >
                 <AutoPlaySwipeableViews
-                    interval={5000}
+                    interval={50000}
                     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                     index={activeStep}
                     onChangeIndex={handleStepChange}
@@ -111,6 +126,7 @@ function ProductCaro(props: any) {
             >
                 {path.map((p: any, i: any) => (
                     <img
+                        className={classes.imgThumbs}
                         key={i}
                         src={'/' + p}
                         alt=""
@@ -118,7 +134,7 @@ function ProductCaro(props: any) {
                         width="80"
                         onClick={() => handleStepChange(i)}
                         style={{
-                            border: activeStep === i ? '1px solid red' : ''
+                            border: activeStep === i ? '2px solid #556cd6' : ''
                         }}
                     />
                 ))}

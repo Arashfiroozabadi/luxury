@@ -3,7 +3,7 @@ import React, {
     useEffect
 } from 'react';
 import axios from 'axios';
-// import Head from 'next/head';
+import Head from 'next/head';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 // import { useDispatch } from 'react-redux'
@@ -68,8 +68,21 @@ function Rahati() {
 
     return (
         <Layout>
+            <Head>
+                <title>مبل راحتی</title>
+            </Head>
             <Container>
+                <Typography
+                    variant="h5"
+                    component="h2"
+                    gutterBottom
+                >
+                    <Box>
+                        مبل راحتی
+                    </Box>
+                </Typography>
                 <Grid container justify="space-evenly">
+
                     {
                         resp.map((d: any, i: any) => (
                             <Grid
@@ -105,10 +118,9 @@ function Rahati() {
                                     <Divider />
                                     <CardActions>
                                         <Link
-                                            href={{
-                                                pathname: "/product/[id]"
-                                            }}
-                                            as={`/product/${d._id}`}
+                                            href="/rahati/[id]"
+                                            as={`/rahati/${d._id}`}
+                                            passHref
                                         >
                                             <Button
                                                 size="small"

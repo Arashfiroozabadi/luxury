@@ -45,6 +45,12 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         logoList: {
             fontSize: 20
+        },
+        offSet: {
+            minHeight: 25,
+            [theme.breakpoints.only('xs')]: {
+                minHeight: 40,
+            }
         }
     }))
 interface Props {
@@ -122,7 +128,7 @@ function Nav(props: any) {
                 </Slide>
             </HideOnScroll>
             <Toolbar />
-            <Toolbar />
+            <Toolbar className={classes.offSet} />
             <Drawer
                 open={open}
                 anchor="left"

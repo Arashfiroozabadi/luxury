@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '../../components/Layout';
+import Head from 'next/head';
 // import { useSelector } from 'react-redux'
 import axios from 'axios';
 import {
@@ -11,12 +11,43 @@ import {
   Typography,
   Box
 } from '@material-ui/core';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
+import Layout from '../../components/Layout';
 import ProductCaro from '../../components/ProductCaro';
 
 
+
+const useStyles = makeStyles(theme =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      [theme.breakpoints.only('xs')]: {
+        width: '100%',
+      },
+    },
+    card: {
+      boxShadow: theme.shadows['0'],
+    },
+    mainContent: {
+      display: 'flex',
+      justifyContent: 'space-evenly',
+      [theme.breakpoints.only('xs')]: {
+        flexDirection: 'column-reverse'
+      },
+    },
+    texts: {
+      width: '30%',
+      [theme.breakpoints.only('xs')]: {
+        width: '100%',
+        marginTop: 20
+      },
+    },
+  }))
+
 export default function Post() {
   // const data = useSelector(state => state.data)
+  const classes = useStyles();
   const [res, setRes] = useState([]);
   const router = useRouter();
   const id = router.query.id;
@@ -37,13 +68,20 @@ export default function Post() {
 
   return (
     < Layout >
+      <Head>
+        <title>
+          {`مدل ${res.title}`}
+        </title>
+      </Head>
       <Container>
         <Grid container justify="center" >
           <Grid item
             md={12}
 
           >
-            <Card>
+            <Card
+              className={classes.card}
+            >
               <CardContent>
                 <Typography
                   variant="h6"
@@ -60,23 +98,22 @@ export default function Post() {
                 {
                   res.path ?
                     <div
-                      style={{
-                        display: 'flex'
-                      }}
+                      className={classes.mainContent}
                     >
-                      <Typography
-                        style={{
-                          width: '50%'
-                        }}
-                        variant="h6"
-                        component="h5"
-                        gutterBottom
-                      // className={classes.title}
+                      <div
+                        className={classes.texts}
                       >
-                        <Box>
-                          {`مدل ${res.description}`}
-                        </Box>
-                      </Typography>
+                        <Typography
+                          variant="subtitle1"
+                          component="h5"
+                          gutterBottom
+                        // className={classes.title}
+                        >
+                          <Box textAlign="justify" >
+                            {`مدل ${res.description}`}
+                          </Box>
+                        </Typography>
+                      </div>
                       <ProductCaro
                         path={res.path}
                       />
@@ -84,8 +121,6 @@ export default function Post() {
                     :
                     null
                 }
-              </CardContent>
-              <CardContent>
               </CardContent>
             </Card>
           </Grid>
