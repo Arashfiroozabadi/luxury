@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 )
 
-function Rahati() {
+function RahatiL() {
     const classes = useStyles()
     const [resp, setResp] = useState<any | null>([]);
     // const dispatch = useDispatch()
@@ -58,7 +58,7 @@ function Rahati() {
             const result = await axios.post(
                 '/api/production',
                 {
-                    target: 'راحتی'
+                    target: 'راحتی ال'
                 }
             );
             setResp(result.data);
@@ -69,7 +69,7 @@ function Rahati() {
     return (
         <Layout>
             <Head>
-                <title>مبل راحتی</title>
+                <title> مبل راحتی ال</title>
             </Head>
             <Container>
                 <Typography
@@ -78,7 +78,7 @@ function Rahati() {
                     gutterBottom
                 >
                     <Box>
-                        مبل راحتی
+                        مبل راحتی ال
                     </Box>
                 </Typography>
                 <Grid container justify="space-evenly">
@@ -143,4 +143,4 @@ function Rahati() {
     )
 }
 
-export default withRouter(Rahati)
+export default withRouter(RahatiL)

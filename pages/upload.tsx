@@ -184,8 +184,8 @@ function Upload() {
             label: 'راحتی',
         },
         {
-            value: 'راحتی-ال',
-            label: 'راحتی-ال',
+            value: 'راحتی ال',
+            label: 'راحتی ال',
         },
         {
             value: 'سرویس خواب',
@@ -194,6 +194,10 @@ function Upload() {
         {
             value: 'نهار خوری',
             label: 'نهار خوری',
+        },
+        {
+            value: 'آینه کنسول',
+            label: 'آینه کنسول',
         },
     ];
 
