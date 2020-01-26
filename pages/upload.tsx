@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme: Theme) =>
         dense: {
             marginTop: theme.spacing(2),
         },
+        inputFiles: {
+            width: 100
+        },
         sendButton: {
             width: '40%',
             marginTop: theme.spacing(1),
@@ -70,10 +73,19 @@ const useStyles = makeStyles((theme: Theme) =>
                 boxShadow: theme.shadows['6'],
             },
             '&:hover': {
-                '& .close': {
-                    display: 'block'
-                }
+                // '& .close': {
+                //     display: 'block'
+                // }
             }
+        },
+        close: {
+            top: 0,
+            color: 'red',
+            right: 0,
+            border: 'solid white 1.5px',
+            position: 'absolute',
+            borderRadius: 50,
+            backgroundColor: 'black',
         },
         sendFormButton: {
             width: '50%',
@@ -135,10 +147,18 @@ function Upload() {
         setUpload({ ...uploadForm, [e.target.name]: e.target.value })
     }
     function handleChangeImage(e: any) {
-        let i = 0
-        setImgUrl([...imgUrl, URL.createObjectURL(e.target.files[i])])
-        setImgs([...imgs, e.target.files[i]])
-        ++i
+        if (imgs.length >= 7) {
+            alert('nemishe dige upload koni')
+        } else {
+            let i = 0
+            setImgUrl([...imgUrl, URL.createObjectURL(e.target.files[i])])
+            setImgs([...imgs, e.target.files[i]])
+            ++i
+            e.target.value = null;
+            console.log(
+                imgs.length
+            );
+        }
     }
     function handleDelete(i: any) {
         const array = [...imgUrl]
@@ -172,7 +192,7 @@ function Upload() {
         }).catch(
             (err: any) => {
                 if (err.response) {
-                    alert(err.response.data);
+                    console.log(err)
                 }
                 console.log(err)
             }
@@ -275,6 +295,7 @@ function Upload() {
                                         onChange={(e) => handleChangeImage(e)}
                                         type="file"
                                         inputProps={{
+                                            className: classes.inputFiles,
                                             multiple: true,
                                             encType: "multipart/form-data"
                                         }}
@@ -300,10 +321,10 @@ function Upload() {
                                                         src={d}
                                                     />
                                                     <button
-                                                        className='close'
+                                                        className={classes.close}
                                                         onClick={() => handleDelete(i)}
                                                     >
-                                                        t
+                                                        X
                                                     </button>
                                                 </div>
                                             ))
