@@ -1,5 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+
+
+const middlewares = [thunk];
 
 const initialState = {
     lastUpdate: 0,
@@ -25,13 +29,13 @@ const store = (preloadedState = initialState) => {
         return createStore(
             reducer,
             preloadedState,
-            applyMiddleware()
+            applyMiddleware(...middlewares)
         )
     } else {
         return createStore(
             reducer,
             preloadedState,
-            composeWithDevTools(applyMiddleware())
+            composeWithDevTools(applyMiddleware(...middlewares))
         )
     }
 }
