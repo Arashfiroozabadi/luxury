@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'; import axios from 'axios';
+import Link from 'next/link';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -10,39 +11,6 @@ import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
-
-const tutorialSteps = [
-    {
-        label: 'San Francisco – Oakland Bay Bridge, United States',
-        imgPath:
-            'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
-    },
-    {
-        label: 'Bird',
-        imgPath:
-            'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-    },
-    {
-        label: 'Bali, Indonesia',
-        imgPath:
-            'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
-    },
-    {
-        label: 'NeONBRAND Digital Marketing, Las Vegas, United States',
-        imgPath:
-            'https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60',
-    },
-    {
-        label: 'Goč, Serbia',
-        imgPath:
-            'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-    },
-    {
-        label: 'مبل سنا',
-        imgPath: '/static/img/firstShow.png'
-
-    },
-];
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -75,7 +43,20 @@ function Carousel() {
     const classes = useStyles();
     const theme = useTheme();
     const [activeStep, setActiveStep] = React.useState(0);
-    const maxSteps = tutorialSteps.length;
+
+    const [res, setRes] = useState<any | null>([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios.post(
+                '/api/baner'
+            );
+            setRes(result.data);
+        };
+        fetchData();
+    }, []);
+    console.log(res);
+    const maxSteps = res.length;
+
 
     const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -90,52 +71,68 @@ function Carousel() {
     };
 
     return (
-        <div className={classes.root}>
-            <Paper square elevation={0} className={classes.header}>
-                <Typography>{tutorialSteps[activeStep].label}</Typography>
-            </Paper>
-            <AutoPlaySwipeableViews
-                interval={4000}
-                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                index={activeStep}
-                onChangeIndex={handleStepChange}
-                enableMouseEvents
-            >
-                {tutorialSteps.map((step, index) => (
-                    <div key={step.label}>
-                        {Math.abs(activeStep - index) <= 2 ? (
-                            <div
-                                className={classes.img}
-                                style={{
-                                    backgroundImage: `url(${step.imgPath})`,
-                                    color: 'red'
-                                }}
-                            // src={step.imgPath}
-                            // alt={step.label}
-                            />
-                        ) : null}
-                    </div>
-                ))}
-            </AutoPlaySwipeableViews>
-            <MobileStepper
-                steps={maxSteps}
-                position="static"
-                variant="dots"
-                activeStep={activeStep}
-                nextButton={
-                    <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-                        بعدی
+        res.length !== 0 ?
+            <div className={classes.root}>
+                <Paper square elevation={0} className={classes.header}>
+                    <Link
+                        href="/product/[id]"
+                        as={`/product/${res[activeStep]._id}`}
+                        passHref
+                    >
+                        <Button
+                            size="small"
+                            color="primary"
+                            component="a"
+                        >
+                            {`${res[activeStep].category} ${res[activeStep].title}`}
+                        </Button>
+
+                    </Link>
+                </Paper>
+                <AutoPlaySwipeableViews
+                    interval={40000}
+                    axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                    index={activeStep}
+                    onChangeIndex={handleStepChange}
+                    enableMouseEvents
+                >
+                    {res.map((step: any, index: any) => (
+                        < div key={index} >
+                            {
+                                Math.abs(activeStep - index) <= 2 ? (
+                                    <div>
+                                        <img
+                                            className={classes.img}
+                                            src={step.path[0]}
+                                            alt={step.title}
+                                        />
+                                    </div>
+                                ) : null
+                            }
+                        </div>
+                    ))}
+                </AutoPlaySwipeableViews>
+                <MobileStepper
+                    steps={maxSteps}
+                    position="static"
+                    variant="dots"
+                    activeStep={activeStep}
+                    nextButton={
+                        <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
+                            بعدی
                         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                        </Button>
+                    }
+                    backButton={
+                        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+                            {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                            قبلی
                     </Button>
-                }
-                backButton={
-                    <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-                        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                        قبلی
-                    </Button>
-                }
-            />
-        </div>
+                    }
+                />
+            </div >
+            :
+            null
     );
 }
 

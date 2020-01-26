@@ -153,4 +153,12 @@ AccountController.post('/product', (req, res) => {
     )
 })
 
+AccountController.post('/baner', (_req, res) => {
+    PhotoModel.find().then(
+        resualt => {
+            res.send(resualt)
+        }
+    )
+})
+
 export default AccountController
