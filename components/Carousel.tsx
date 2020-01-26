@@ -48,7 +48,7 @@ function Carousel() {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.post(
-                '/api/baner'
+                '/api/banner'
             );
             setRes(result.data);
         };
