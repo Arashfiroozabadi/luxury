@@ -63,9 +63,12 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         img: {
             width: '30%',
-            height: 'auto',
             margin: 2.5,
+            height: 'auto',
+            display: 'flex',
+            overflow: 'hidden',
             position: 'relative',
+            justifyContent: 'center',
             '& img': {
                 width: '100%',
                 height: 'auto',
@@ -73,19 +76,38 @@ const useStyles = makeStyles((theme: Theme) =>
                 boxShadow: theme.shadows['6'],
             },
             '&:hover': {
-                // '& .close': {
-                //     display: 'block'
-                // }
+                '& .bannerForm': {
+                    transform: 'translateY(-10px)',
+                }
             }
         },
         close: {
             top: 0,
-            color: 'red',
             right: 0,
-            border: 'solid white 1.5px',
+            width: '30px',
+            color: 'white',
+            height: '30px',
+            cursor: 'pointer',
+            border: ' solid white 1.5px',
+            display: 'flex',
             position: 'absolute',
-            borderRadius: 50,
+            alignItems: 'center',
+            fontFamily: 'monospace',
+            borderRadius: '50px',
+            justifyContent: 'center',
             backgroundColor: 'black',
+        },
+        bannerForm: {
+            bottom: 0,
+            display: 'flex',
+            position: 'absolute',
+            transition: 'transform 0.2s',
+            transform: 'translateY(25px)',
+        },
+
+        select: {
+
+
         },
         sendFormButton: {
             width: '50%',
@@ -113,7 +135,7 @@ function Upload() {
         name: '',
         desc: '',
         cate: '',
-        img: [],
+        bannerPath: '',
         msg: ""
     });
     const [imgUrl, setImgUrl] = useState<any | null>([])
@@ -155,11 +177,9 @@ function Upload() {
             setImgs([...imgs, e.target.files[i]])
             ++i
             e.target.value = null;
-            console.log(
-                imgs.length
-            );
         }
     }
+
     function handleDelete(i: any) {
         const array = [...imgUrl]
         array.splice(i, 1);
@@ -168,7 +188,17 @@ function Upload() {
         const arrayU = [...imgs]
         arrayU.splice(i, 1);
         setImgs(arrayU)
+        setUpload({ ...uploadForm, bannerPath: '', banner: false })
     }
+
+    function handleBannerChange(i: any) {
+        if (uploadForm.bannerPath === i) {
+            setUpload({ ...uploadForm, bannerPath: '', banner: false })
+        } else {
+            setUpload({ ...uploadForm, bannerPath: i, banner: true })
+        }
+    }
+
     function handleSendFile() {
         const file = new FormData()
         file.append('name', uploadForm.name)
@@ -320,12 +350,44 @@ function Upload() {
                                                     <img
                                                         src={d}
                                                     />
-                                                    <button
+                                                    <span
                                                         className={classes.close}
                                                         onClick={() => handleDelete(i)}
                                                     >
                                                         X
-                                                    </button>
+                                                    </span>
+                                                    <div
+                                                        className={clsx('bannerForm', classes.bannerForm)}
+                                                        style={
+                                                            uploadForm.bannerPath === i ?
+                                                                {
+                                                                    color: 'green',
+                                                                    transform: 'translateY(-10px)'
+                                                                }
+                                                                :
+                                                                {
+                                                                    color: 'black'
+                                                                }
+                                                        }
+                                                    >
+                                                        <input
+                                                            className={clsx('select', classes.select)}
+                                                            // onClick={(e) => handleBanner(e, i)}
+                                                            onChange={() => handleBannerChange(i)}
+                                                            type="checkbox"
+                                                            id="banner"
+                                                            checked={uploadForm.bannerPath === i ?
+                                                                true
+                                                                :
+                                                                false
+                                                            }
+                                                        />
+                                                        <label htmlFor="banner">
+                                                            {
+                                                                uploadForm.bannerPath === i ? 'انتخاب شده برای بنر' : 'اضافه کردن به بنر'
+                                                            }
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             ))
                                         }
