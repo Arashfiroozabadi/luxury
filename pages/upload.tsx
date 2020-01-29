@@ -188,7 +188,14 @@ function Upload() {
         const arrayU = [...imgs]
         arrayU.splice(i, 1);
         setImgs(arrayU)
-        setUpload({ ...uploadForm, bannerPath: '', banner: false })
+        if (uploadForm.banner === true) {
+            if (uploadForm.bannerPath === i) {
+                setUpload({ ...uploadForm, bannerPath: '', banner: false })
+
+            } else if (uploadForm.bannerPath > i) {
+                setUpload({ ...uploadForm, bannerPath: uploadForm.bannerPath - 1, banner: true })
+            }
+        }
     }
 
     function handleBannerChange(i: any) {
