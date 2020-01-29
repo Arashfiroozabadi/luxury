@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             '&:hover': {
                 '& .bannerForm': {
-                    transform: 'translateY(-10px)',
+                    transform: 'translateY(0px)',
                 }
             }
         },
@@ -85,7 +85,8 @@ const useStyles = makeStyles((theme: Theme) =>
             top: 0,
             right: 0,
             width: '30px',
-            color: 'white',
+            color: 'gold',
+            margin: 5,
             height: '30px',
             cursor: 'pointer',
             border: ' solid white 1.5px',
@@ -95,19 +96,26 @@ const useStyles = makeStyles((theme: Theme) =>
             fontFamily: 'monospace',
             borderRadius: '50px',
             justifyContent: 'center',
-            backgroundColor: 'black',
+            backgroundColor: '#171717cc',
         },
         bannerForm: {
+            width: '100%',
             bottom: 0,
             display: 'flex',
+            padding: '10px 0px',
             position: 'absolute',
+            transform: 'translateY(40px)',
+            alignItems: 'center',
             transition: 'transform 0.2s',
-            transform: 'translateY(25px)',
+            justifyContent: 'center',
+            backgroundColor: '#171717cc',
         },
 
         select: {
 
-
+        },
+        checkBoxLabel: {
+            fontSize: 12
         },
         sendFormButton: {
             width: '50%',
@@ -368,12 +376,12 @@ function Upload() {
                                                         style={
                                                             uploadForm.bannerPath === i ?
                                                                 {
-                                                                    color: 'green',
-                                                                    transform: 'translateY(-10px)'
+                                                                    color: 'gold',
+                                                                    transform: 'translateY(0px)'
                                                                 }
                                                                 :
                                                                 {
-                                                                    color: 'black'
+                                                                    color: 'white'
                                                                 }
                                                         }
                                                     >
@@ -389,7 +397,10 @@ function Upload() {
                                                                 false
                                                             }
                                                         />
-                                                        <label htmlFor={`banner${i}`}>
+                                                        <label
+                                                            className={clsx(classes.checkBoxLabel)}
+                                                            htmlFor={`banner${i}`}
+                                                        >
                                                             {
                                                                 uploadForm.bannerPath === i ? 'انتخاب شده برای بنر' : 'اضافه کردن به بنر'
                                                             }
