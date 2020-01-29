@@ -375,14 +375,14 @@ function Upload() {
                                                             // onClick={(e) => handleBanner(e, i)}
                                                             onChange={() => handleBannerChange(i)}
                                                             type="checkbox"
-                                                            id="banner"
+                                                            id={`banner${i}`}
                                                             checked={uploadForm.bannerPath === i ?
                                                                 true
                                                                 :
                                                                 false
                                                             }
                                                         />
-                                                        <label htmlFor="banner">
+                                                        <label htmlFor={`banner${i}`}>
                                                             {
                                                                 uploadForm.bannerPath === i ? 'انتخاب شده برای بنر' : 'اضافه کردن به بنر'
                                                             }
