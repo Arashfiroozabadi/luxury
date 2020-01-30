@@ -155,7 +155,7 @@ AccountController.post('/product', (req, res) => {
 })
 
 AccountController.post('/banner', (_req, res) => {
-    PhotoModel.find().then(
+    PhotoModel.find({ banner: true }).then(
         resualt => {
             res.send(resualt)
         }

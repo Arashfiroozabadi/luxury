@@ -103,7 +103,7 @@ function Carousel() {
                                     <div>
                                         <img
                                             className={classes.img}
-                                            src={step.path[0]}
+                                            src={step.path[step.bannerPath]}
                                             alt={step.title}
                                         />
                                     </div>
