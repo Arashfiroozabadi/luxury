@@ -110,7 +110,7 @@ export default function Post() {
                         // className={classes.title}
                         >
                           <Box textAlign="justify" >
-                            {`مدل ${res.description}`}
+                            {res.description}
                           </Box>
                         </Typography>
                       </div>
