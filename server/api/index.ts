@@ -96,7 +96,9 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
             title: body.name,
             category: body.cate,
             description: body.desc,
-            path: path
+            path: path,
+            banner: body.banner,
+            bannerPath: body.bannerPath
         })
         newPhoto.save();
 

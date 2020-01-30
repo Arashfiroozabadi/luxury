@@ -11,6 +11,8 @@ const PhotoModel = new schema({
     unit: { type: String },
     category: { type: String },
     description: { type: String },
+    banner: { type: Boolean },
+    bannerPath: { type: String },
     date: { type: Date, default: Date.now },
 })
 

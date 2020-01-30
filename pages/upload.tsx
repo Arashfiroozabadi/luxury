@@ -143,6 +143,7 @@ function Upload() {
         name: '',
         desc: '',
         cate: '',
+        banner: false,
         bannerPath: '',
         msg: ""
     });
@@ -219,6 +220,10 @@ function Upload() {
         file.append('name', uploadForm.name)
         file.append('desc', uploadForm.desc)
         file.append('cate', uploadForm.cate)
+        if (uploadForm.banner === true) {
+            file.append('banner', uploadForm.banner)
+            file.append('bannerPath', uploadForm.bannerPath)
+        }
         for (let i = 0; i < imgs.length; i++) {
             file.append("file", imgs[i]);
         }
