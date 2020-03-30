@@ -178,7 +178,7 @@ function Management() {
         pass: '',
         msg: ""
     });
-    const [isAuth, setAuth] = useState();
+    const [isAuth, setAuth] = useState<any | null>({});
     const [err, setErr] = useState(false);
 
     useEffect(() => {
