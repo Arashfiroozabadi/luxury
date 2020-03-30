@@ -3,6 +3,11 @@ import mongoose from 'mongoose';
 const schema = mongoose.Schema
 const ObjectId = schema.ObjectId;
 
+const Overview = new schema({
+    total: { type: Number, default: 0 },
+    category: { type: Array },
+})
+
 const PhotoModel = new schema({
     author: ObjectId,
     title: { type: String },
@@ -26,5 +31,5 @@ const User = new schema({
 User.requiredPaths()
 
 export const User = mongoose.model('users', User)
-
+export const Overview = mongoose.model('overview', Overview)
 export const PhotoModel = mongoose.model('photos', PhotoModel)

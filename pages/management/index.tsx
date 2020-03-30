@@ -24,6 +24,7 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 import Layout from "../../components/Layout"
 import RTL from "../../components/RTL"
+import Overview from './overview';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -234,7 +235,7 @@ function Management() {
                             </Tabs>
                         </AppBar>
                         <TabPanel value={value} index={0}>
-                            Item One
+                            <Overview />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             Item Two

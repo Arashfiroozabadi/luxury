@@ -3,7 +3,8 @@ import multer from 'multer';
 import mkdirp from 'mkdirp';
 import {
     User,
-    PhotoModel
+    PhotoModel,
+    Overview
 } from '../models'
 
 const AccountController = express.Router();
@@ -102,6 +103,8 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
         })
         newPhoto.save();
 
+        Overview.updateOne({ $inc: { total: 1 } }, () => { });
+
         res.send({
             msg: "ثبت شد",
             auth: true,
@@ -109,32 +112,6 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
             status: 'ok'
         });
     }
-    // console.log(
-    //     typeof (body.name)
-    // );
-
-    // res.send({ auth: true, imgPath: req.file.path })
-
-    // if (body.userName.length <= 0) {
-    //     res.send({ msg: "نام کاربری را وارد کنید" })
-    // } else if (body.pass.length <= 0) {
-    //     res.send({ msg: "رمز عبور را وارد کنید" })
-    // } else {
-    //     if (req.session.auth == undefined) {
-    //         User.findOne({ userName: body.userName, pass: body.pass }).then(
-    //             (resualt: any) => {
-    //                 if (resualt === null) {
-    //                     res.send({ msg: 'نام کاربری و یا رمز عبور اشتباه است' })
-    //                 } else {
-    //                     req.session.auth = { username: body.userName };
-    //                     res.send({ auth: true, userName: resualt.userName, msg: 'وارد شدید' })
-    //                 }
-    //             }
-    //         )
-    //     } else if (req.session.auth.username === body.userName) {
-    //         res.send({ auth: true, userName: body.userName, msg: 'وارد شدید' })
-    //     }
-    // }
 })
 
 AccountController.post('/production', (req, res) => {
@@ -158,6 +135,15 @@ AccountController.post('/banner', (_req, res) => {
     PhotoModel.find({ banner: true }).then(
         resualt => {
             res.send(resualt)
+        }
+    )
+})
+
+AccountController.post('/overview', (_req, res) => {
+    PhotoModel.find({}).then(
+        resualt => {
+            const data = resualt.length
+            res.send({ resualt, data })
         }
     )
 })
