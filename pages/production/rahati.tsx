@@ -58,7 +58,7 @@ function Rahati() {
             const result = await axios.post(
                 '/api/production',
                 {
-                    target: 'راحتی'
+                    target: 'rahati'
                 }
             );
             setResp(result.data);

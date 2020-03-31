@@ -250,23 +250,23 @@ function Upload() {
     }
     const cate = [
         {
-            value: 'راحتی',
+            value: 'rahati',
             label: 'راحتی',
         },
         {
-            value: 'راحتی ال',
+            value: 'rahatil',
             label: 'راحتی ال',
         },
         {
-            value: 'سرویس خواب',
+            value: 'servicekhab',
             label: 'سرویس خواب',
         },
         {
-            value: 'نهار خوری',
+            value: 'naharkhori',
             label: 'نهار خوری',
         },
         {
-            value: 'آینه کنسول',
+            value: 'console',
             label: 'آینه کنسول',
         },
     ];

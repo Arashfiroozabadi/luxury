@@ -58,7 +58,7 @@ function Console() {
             const result = await axios.post(
                 '/api/production',
                 {
-                    target: 'آینه کنسول'
+                    target: 'console'
                 }
             );
             setResp(result.data);

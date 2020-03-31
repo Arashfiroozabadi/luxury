@@ -58,7 +58,7 @@ function RahatiL() {
             const result = await axios.post(
                 '/api/production',
                 {
-                    target: 'راحتی ال'
+                    target: 'rahatil'
                 }
             );
             setResp(result.data);

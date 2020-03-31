@@ -1,8 +1,4 @@
-import React, {
-    // useState,
-    // useEffect
-} from 'react';
-// import axios from 'axios';
+import React from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
@@ -30,16 +26,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Production() {
     const classes = useStyles();
-    // const [resp, setResp] = useState<any | null>([]);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const result = await axios.get(
-    //             '/api/all',
-    //         );
-    //         setResp(result.data);
-    //     };
-    //     fetchData();
-    // }, []);
     return (
         <Layout>
             <Head>
@@ -93,31 +79,6 @@ function Production() {
                     </Grid>
                 </Grid>
             </Container>
-
-            {/* {resp ?
-                resp.map((d: any, index: any) => (
-                    <div
-                        key={index}
-                    >
-                        <h1>{d.title}</h1>
-                        <h2>
-                            {d.category}
-                        </h2>
-                        {
-                            d.path.map((src: any, index: any) => (
-                                <img
-                                    key={index}
-                                    src={src ? src : null}
-                                    height={200}
-                                    width={200}
-                                />
-                            ))
-                        }
-                        <h5>{d.description}</h5>
-                    </div>
-                )) :
-                null
-            } */}
         </Layout>
     )
 }

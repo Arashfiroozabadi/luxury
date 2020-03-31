@@ -101,10 +101,18 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
             banner: body.banner,
             bannerPath: body.bannerPath
         })
+
+        Overview.updateOne({ "category.name": "overview" },
+            {
+                $inc: {
+                    total: 1,
+                    [`category.$.${body.cate}`]: 1
+                }
+            },
+            { upsert: true },
+            () => { }
+        );
         newPhoto.save();
-
-        Overview.updateOne({ $inc: { total: 1 } }, () => { });
-
         res.send({
             msg: "ثبت شد",
             auth: true,

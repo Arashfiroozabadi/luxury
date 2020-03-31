@@ -58,7 +58,7 @@ function ServiceKhab() {
             const result = await axios.post(
                 '/api/production',
                 {
-                    target: 'سرویس خواب'
+                    target: 'servicekhab'
                 }
             );
             setResp(result.data);
