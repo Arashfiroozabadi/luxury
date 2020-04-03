@@ -133,7 +133,31 @@ AccountController.post('/production', (req, res) => {
 AccountController.post('/product', (req, res) => {
     const target = req.body.target
     PhotoModel.findOne({ _id: target }).then(
-        resualt => {
+        (resualt: any) => {
+            PhotoModel.updateOne(
+                { "_id": target },
+                { $addToSet: { "views": req.connection.remoteAddress } },
+                (err, d) => {
+                    if (err) return console.log(err);
+                    else {
+                        if (d.nModified === 0) {
+                            return null
+                        } else if (d.nModified === 1) {
+                            Overview.updateOne(
+                                { "category.name": "overview" },
+                                { $inc: { totalView: 1 } },
+                                (err, d) => {
+                                    if (err) return console.log(err);
+                                    else {
+                                        return console.log(d);
+                                    }
+                                }
+                            )
+                        }
+                        return console.log(d);
+                    }
+                }
+            )
             res.send(resualt)
         }
     )
@@ -148,10 +172,9 @@ AccountController.post('/banner', (_req, res) => {
 })
 
 AccountController.post('/overview', (_req, res) => {
-    PhotoModel.find({}).then(
+    Overview.find({}).then(
         resualt => {
-            const data = resualt.length
-            res.send({ resualt, data })
+            res.send({ resualt })
         }
     )
 })

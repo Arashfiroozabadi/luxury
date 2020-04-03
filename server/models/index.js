@@ -6,6 +6,7 @@ const ObjectId = schema.ObjectId;
 const Overview = new schema({
     total: { type: Number, default: 0 },
     category: { type: Array },
+    totalView: { type: Number, default: 0, }
 })
 
 const PhotoModel = new schema({
@@ -13,6 +14,7 @@ const PhotoModel = new schema({
     title: { type: String },
     color: [{ colorName: String, imgPath: String }],
     path: { type: Array },
+    views: { type: Array, unique: true },
     unit: { type: String },
     category: { type: String },
     description: { type: String },
