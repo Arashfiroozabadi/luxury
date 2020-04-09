@@ -4,8 +4,9 @@ import React, {
 } from 'react';
 import axios from 'axios';
 
+
 function Overview() {
-    const [data, setData] = useState<any | null>([]);
+    const [data, setData] = useState<any | null>({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -13,21 +14,31 @@ function Overview() {
                 'api/overview',
             );
             // if (result.data.auth === false) { setAuth(false) }
-            setData(result.data.resualt);
+            setData(result.data);
         };
         fetchData();
     }, [])
-    return (
-        <div>
-            <span>all</span>
-            <h1>{data.length}</h1>
+    console.log(data);
+    if (data.category) {
+        return (
             <div>
-                {data.map((item: any, index: any) => (
-                    <li key={index} >{item.title}</li>
-                ))}
+                <ul>
+                    <h1>total products {data.total}</h1>
+                    {data.category.map((item: any, i: any) => (
+                        <li key={i} >
+                            <span>{item.name}</span>
+                            {' '}
+                            <span>{item.value}</span>
+                        </li>
+                    ))}
+                </ul>
+                <h2>total views {data.totalView}</h2>
             </div>
-        </div>
-    )
+        )
+    } else {
+        return null
+    }
+
 }
 
 export default Overview

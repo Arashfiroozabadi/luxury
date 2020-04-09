@@ -102,11 +102,11 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
             bannerPath: body.bannerPath
         })
 
-        Overview.updateOne({ "category.name": "overview" },
+        Overview.updateOne({ "category.name": body.cate },
             {
                 $inc: {
                     total: 1,
-                    [`category.$.${body.cate}`]: 1
+                    "category.$.value": 1
                 }
             },
             { upsert: true },
@@ -132,6 +132,7 @@ AccountController.post('/production', (req, res) => {
 })
 AccountController.post('/product', (req, res) => {
     const target = req.body.target
+
     PhotoModel.findOne({ _id: target }).then(
         (resualt: any) => {
             PhotoModel.updateOne(
@@ -144,7 +145,7 @@ AccountController.post('/product', (req, res) => {
                             return null
                         } else if (d.nModified === 1) {
                             Overview.updateOne(
-                                { "category.name": "overview" },
+                                { "name": "overview" },
                                 { $inc: { totalView: 1 } },
                                 (err, d) => {
                                     if (err) return console.log(err);
@@ -172,9 +173,9 @@ AccountController.post('/banner', (_req, res) => {
 })
 
 AccountController.post('/overview', (_req, res) => {
-    Overview.find({}).then(
+    Overview.findOne({}).then(
         resualt => {
-            res.send({ resualt })
+            res.send(resualt)
         }
     )
 })

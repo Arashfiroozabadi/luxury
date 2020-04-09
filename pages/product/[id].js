@@ -57,7 +57,7 @@ export default function Post() {
       const result = await axios.post(
         '/api/product',
         {
-          target: id
+          target: id,
         }
       );
       setRes(result.data);
