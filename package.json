@@ -33,6 +33,7 @@
     "next-pwa": "^2.3.3",
     "next-redux-wrapper": "^4.0.1",
     "node-sass": "^4.13.1",
+    "persianjs": "^0.4.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-redux": "^7.1.3",

@@ -171,6 +171,11 @@ function Nav(props: any) {
                                 upload
                             </ListItem>
                         </Link>
+                        <Link href="/management" passHref>
+                            <ListItem component="a" button>
+                                مدیریت
+                            </ListItem>
+                        </Link>
                     </List>
                 </div>
             </Drawer>
