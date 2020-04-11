@@ -149,7 +149,7 @@ function Upload() {
     });
     const [imgUrl, setImgUrl] = useState<any | null>([])
     const [imgs, setImgs] = useState<any | null>([])
-    const [isAuth, setAuth] = useState()
+    const [isAuth, setAuth] = useState<boolean | null>()
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.post(

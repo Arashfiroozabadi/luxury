@@ -110,7 +110,47 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
                 }
             },
             { upsert: true },
-            () => { }
+            (err, d) => {
+                if (err) {
+                    console.log(err);
+
+                    if (err.code === 2) {
+                        Overview.find({},
+                            (err, doc: any) => {
+                                if (err) {
+                                    return console.log(err)
+                                } else {
+                                    console.log(doc);
+
+                                    const id = doc[0]._id
+                                    console.log(id);
+
+                                    Overview.updateOne(
+                                        { "_id": id },
+                                        {
+                                            $inc: {
+                                                total: 1
+                                            },
+                                            $push: {
+                                                "category": { 'name': body.cate, 'value': 1 }
+                                            }
+                                        },
+                                        (err, doc) => {
+                                            if (err) return console.log(err)
+                                            console.log(doc)
+                                        }
+                                    )
+                                }
+                            }
+                        )
+                    } else {
+                        return console.log(err);
+                    }
+                }
+                else {
+                    return console.log(d);
+                }
+            }
         );
         newPhoto.save();
         res.send({

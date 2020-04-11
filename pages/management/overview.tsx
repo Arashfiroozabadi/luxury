@@ -5,6 +5,17 @@ import React, {
 import axios from 'axios';
 import persianJs from 'persianJs';
 
+
+import ConverString from '../../components/ConverString';
+
+function converValue(v: any) {
+    if (v === 0) {
+        return 0
+    } else {
+        return persianJs(v).englishNumber().toString()
+    }
+}
+
 function Overview() {
     const [data, setData] = useState<any | null>({});
 
@@ -23,56 +34,16 @@ function Overview() {
         return (
             <div>
                 <ul>
-                    <h1>تمام محصولات {persianJs(data.total).englishNumber().toString()}</h1>
-                    {data.category.map((item: any, i: any) => {
-                        switch (item.name) {
-                            case "rahati":
-                                return (
-                                    <li key={i} >
-                                        <span>راحتی</span>
-                                        {' '}
-                                        <span>{persianJs(item.value).englishNumber().toString()}</span>
-                                    </li>
-                                )
-                            case "rahatil":
-                                return (
-                                    <li key={i} >
-                                        <span>راحتی ال</span>
-                                        {' '}
-                                        <span>{persianJs(item.value).englishNumber().toString()}</span>
-                                    </li>
-                                )
-                            case "servicekhab":
-                                return (
-                                    <li key={i} >
-                                        <span>سرویس خواب</span>
-                                        {' '}
-                                        <span>{persianJs(item.value).englishNumber().toString()}</span>
-                                    </li>
-                                )
-                            case "naharkhori":
-                                return (
-                                    <li key={i} >
-                                        <span>نهار خوری</span>
-                                        {' '}
-                                        <span>{persianJs(item.value).englishNumber().toString()}</span>
-                                    </li>
-                                )
-                            case "console":
-                                return (
-                                    <li key={i} >
-                                        <span>آینه کنسول</span>
-                                        {' '}
-                                        <span>{persianJs(item.value).englishNumber().toString()}</span>
-                                    </li>
-                                )
-                            default:
-                                return null
-                        }
-                    }
-                    )}
+                    <h1>تمام محصولات {converValue(data.total)}</h1>
+                    {data.category.map((item: any, i: any) => (
+                        <li key={i} >
+                            <span>{ConverString(item.name)}</span>
+                            {' '}
+                            <span>{converValue(item.value)}</span>
+                        </li>
+                    ))}
                 </ul>
-                <h2>total views {data.totalView}</h2>
+                <h2>میزان بازدید کلی {converValue(data.totalView)}</h2>
             </div>
         )
     } else {

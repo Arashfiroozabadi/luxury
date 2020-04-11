@@ -11,6 +11,9 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
+
+import ConverString from './ConverString';
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const useStyles = makeStyles(theme => ({
@@ -113,7 +116,7 @@ function Carousel() {
                             color="primary"
                             component="a"
                         >
-                            {`${res[activeStep].category} ${res[activeStep].title}`}
+                            {`${ConverString(res[activeStep].category)} ${res[activeStep].title}`}
                         </Button>
                     </Link>
                 </Paper>
