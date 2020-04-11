@@ -12,7 +12,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
 
-import ConverString from './ConverString';
+import ConvertString from './ConvertString';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -116,7 +116,7 @@ function Carousel() {
                             color="primary"
                             component="a"
                         >
-                            {`${ConverString(res[activeStep].category)} ${res[activeStep].title}`}
+                            {`${ConvertString(res[activeStep].category)} ${res[activeStep].title}`}
                         </Button>
                     </Link>
                 </Paper>

@@ -6,9 +6,9 @@ import axios from 'axios';
 import persianJs from 'persianJs';
 
 
-import ConverString from '../../components/ConverString';
+import ConvertString from '../../components/ConvertString';
 
-function converValue(v: any) {
+function convertValue(v: any) {
     if (v === 0) {
         return 0
     } else {
@@ -34,16 +34,16 @@ function Overview() {
         return (
             <div>
                 <ul>
-                    <h1>تمام محصولات {converValue(data.total)}</h1>
+                    <h1>تمام محصولات {convertValue(data.total)}</h1>
                     {data.category.map((item: any, i: any) => (
                         <li key={i} >
-                            <span>{ConverString(item.name)}</span>
+                            <span>{ConvertString(item.name)}</span>
                             {' '}
-                            <span>{converValue(item.value)}</span>
+                            <span>{convertValue(item.value)}</span>
                         </li>
                     ))}
                 </ul>
-                <h2>میزان بازدید کلی {converValue(data.totalView)}</h2>
+                <h2>میزان بازدید کلی {convertValue(data.totalView)}</h2>
             </div>
         )
     } else {
