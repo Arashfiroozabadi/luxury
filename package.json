@@ -43,7 +43,9 @@
     "react-transition-group": "^4.3.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "serialize-javascript": "^3.0.0"
+    "sass": "^1.26.3",
+    "serialize-javascript": "^3.0.0",
+    "strip-ansi": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.35",

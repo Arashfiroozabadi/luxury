@@ -44,14 +44,6 @@ app.prepare().then(() => {
   server.use('/api', AccountController)
 
 
-  server.get('/a', (req, res) => {
-    return app.render(req, res, '/a', req.query)
-  })
-
-  server.get('/b', (req, res) => {
-    return app.render(req, res, '/b', req.query)
-  })
-
   server.get('/posts/:id', (req, res) => {
     const nextJsPage = "/posts";
     const queryParams = { id: req.params.id, des: req.params.des };

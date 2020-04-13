@@ -1,5 +1,4 @@
 const withPlugins = require("next-compose-plugins");
-const withSass = require('@zeit/next-sass');
 // const withPWA = require('next-pwa')
 // const settings = {
 //   env: {
@@ -11,9 +10,8 @@ const withSass = require('@zeit/next-sass');
 //     dest: 'public',
 //   },
 // };
-module.exports = process.env.NODE_ENV === 'development' ? withSass({}) : withPlugins(
+module.exports = process.env.NODE_ENV === 'development' ? {} : withPlugins(
   [
-    [withSass],
     // [withPWA,
     //   settings
     // ]
