@@ -5,7 +5,7 @@ import persianJs from 'persianjs';
 
 
 import ConvertString from '../../components/ConvertString';
-import Chart from './test';
+import Chart from './char';
 
 function convertValue(v: number) {
   if (v === 0) {
