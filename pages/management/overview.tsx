@@ -24,6 +24,7 @@ function Overview() {
             const result = await axios.post(
                 'api/overview',
             );
+
             setData(result.data);
         };
         fetchData();
