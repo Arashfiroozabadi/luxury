@@ -24,7 +24,6 @@ function Overview() {
             const result = await axios.post(
                 'api/overview',
             );
-            // if (result.data.auth === false) { setAuth(false) }
             setData(result.data);
         };
         fetchData();
