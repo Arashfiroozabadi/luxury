@@ -1,21 +1,21 @@
 export default function (value: string) {
-    switch (value) {
-        case "rahati":
-            return "راحتی"
+  switch (value) {
+    case 'rahati':
+      return 'راحتی';
 
-        case "rahatil":
-            return "راحتی ال"
+    case 'rahatil':
+      return 'راحتی ال';
 
-        case "servicekhab":
-            return "سرویس خواب"
+    case 'servicekhab':
+      return 'سرویس خواب';
 
-        case "naharkhori":
-            return "نهار خوری"
+    case 'naharkhori':
+      return 'نهار خوری';
 
-        case "console":
-            return "آینه کنسول"
+    case 'console':
+      return 'آینه کنسول';
 
-        default:
-            break
-    }
+    default:
+      return null;
+  }
 }

@@ -1,37 +1,37 @@
 import mongoose from 'mongoose';
 
-const schema = mongoose.Schema
-const ObjectId = schema.ObjectId;
+const { Schema } = mongoose;
+const { ObjectId } = Schema;
 
-const Overview = new schema({
-    total: { type: Number, default: 0 },
-    category: { type: Array },
-    totalView: { type: Number, default: 0, }
-})
+const overview = new Schema({
+  total: { type: Number, default: 0 },
+  category: { type: Array },
+  totalView: { type: Number, default: 0 },
+});
 
-const PhotoModel = new schema({
-    author: ObjectId,
-    title: { type: String },
-    color: [{ colorName: String, imgPath: String }],
-    path: { type: Array },
-    views: { type: Array },
-    unit: { type: String },
-    category: { type: String },
-    description: { type: String },
-    banner: { type: Boolean },
-    bannerPath: { type: String },
-    date: { type: Date, default: Date.now },
-})
+const photoModel = new Schema({
+  author: ObjectId,
+  title: { type: String },
+  color: [{ colorName: String, imgPath: String }],
+  path: { type: Array },
+  views: { type: Array },
+  unit: { type: String },
+  category: { type: String },
+  description: { type: String },
+  banner: { type: Boolean },
+  bannerPath: { type: String },
+  date: { type: Date, default: Date.now },
+});
 
-const User = new schema({
-    author: ObjectId,
-    userName: { type: String, unique: true, required: true },
-    pass: { type: String },
-    type: { text: String },
-    date: { type: Date, default: Date.now },
-})
-User.requiredPaths()
+const user = new Schema({
+  author: ObjectId,
+  userName: { type: String, unique: true, required: true },
+  pass: { type: String },
+  type: { text: String },
+  date: { type: Date, default: Date.now },
+});
+user.requiredPaths();
 
-export const User = mongoose.model('users', User)
-export const Overview = mongoose.model('overview', Overview)
-export const PhotoModel = mongoose.model('photos', PhotoModel)
+export const User = mongoose.model('users', user);
+export const Overview = mongoose.model('overview', overview);
+export const PhotoModel = mongoose.model('photos', photoModel);

@@ -1,81 +1,87 @@
+import React from 'react';
 import {
-    Card,
-    CardMedia,
-    CardContent,
-    Typography,
-    Box,
-    CardActions,
-    Button
-} from "@material-ui/core";
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Box,
+  CardActions,
+  Button,
+} from '@material-ui/core';
+// eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Link from "next/link";
-// test
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            marginTop: theme.spacing(3),
-            [theme.breakpoints.only('xs')]: {
+import Link from 'next/link';
 
-            }
-        },
-        title: {
-            fontSize: '1.15rem'
-        },
-        cardButton: {
-            // color: '#ffd54f'
-        }
-    })
-)
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  root: {
+    marginTop: theme.spacing(3),
+    [theme.breakpoints.only('xs')]: {
 
-function Cards(props: any) {
-    const classes = useStyles();
-    return (
-        <Card
-            className={classes.root}
+    },
+  },
+  title: {
+    fontSize: '1.15rem',
+  },
+  cardButton: {
+    // color: '#ffd54f'
+  },
+}));
+interface CardProps {
+    title: string,
+    caption?: string,
+    link:string
+}
+
+function Cards(props: CardProps) {
+  const { title, caption, link } = props;
+  const classes = useStyles();
+  return (
+    <Card
+      className={classes.root}
             // raised
-            elevation={8}
+      elevation={8}
+    >
+      <CardMedia
+        component="img"
+        image="/static/img/firstShow.png"
+        alt="مبل راحتی"
+        title="مبل راحتی"
+      />
+      <CardContent>
+        <Typography
+          variant="h6"
+          component="h2"
+          gutterBottom
+          className={classes.title}
         >
-            <CardMedia
-                component="img"
-                image="/static/img/firstShow.png"
-                alt="مبل راحتی"
-                title="مبل راحتی"
-            />
-            <CardContent>
-                <Typography
-                    variant="h6"
-                    component="h2"
-                    gutterBottom
-                    className={classes.title}
-                >
-                    <Box>
-                        {props.title}
-                    </Box>
-                </Typography>
-                <Typography
-                    variant="body2"
-                    component="span"
-                >
-                    <Box>
-                        {props.caption}
-                    </Box>
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Link href={`/production/${props.link}`} passHref>
-                    <Button
-                        size="small"
-                        color="primary"
-                        variant="outlined"
-                        component="a"
-                        className={classes.cardButton}
-                    >
-                        مشاهده
-                    </Button>
-                </Link>
-            </CardActions>
-        </Card>
-    )
+          <Box>
+            {title}
+          </Box>
+        </Typography>
+        <Typography
+          variant="body2"
+          component="span"
+        >
+          <Box>
+            {caption}
+          </Box>
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Link href={`/production/${link}`} passHref>
+          <Button
+            size="small"
+            color="primary"
+            variant="outlined"
+            component="a"
+            className={classes.cardButton}
+          >
+            مشاهده
+          </Button>
+        </Link>
+      </CardActions>
+    </Card>
+  );
 }
 
 export default Cards;

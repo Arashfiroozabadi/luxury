@@ -9,48 +9,45 @@ import {
   Card,
   CardContent,
   Typography,
-  Box
+  Box,
 } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 import Layout from '../../components/Layout';
 import ProductCaro from '../../components/ProductCaro';
 
 
-
-const useStyles = makeStyles(theme =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      [theme.breakpoints.only('xs')]: {
-        width: '100%',
-      },
+const useStyles = makeStyles((theme) => createStyles({
+  root: {
+    flexGrow: 1,
+    [theme.breakpoints.only('xs')]: {
+      width: '100%',
     },
-    card: {
-      boxShadow: theme.shadows['0'],
+  },
+  card: {
+    boxShadow: theme.shadows['0'],
+  },
+  mainContent: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    [theme.breakpoints.only('xs')]: {
+      flexDirection: 'column-reverse',
     },
-    mainContent: {
-      display: 'flex',
-      justifyContent: 'space-evenly',
-      [theme.breakpoints.only('xs')]: {
-        flexDirection: 'column-reverse'
-      },
+  },
+  texts: {
+    width: '30%',
+    [theme.breakpoints.only('xs')]: {
+      width: '100%',
+      marginTop: 20,
     },
-    texts: {
-      width: '30%',
-      [theme.breakpoints.only('xs')]: {
-        width: '100%',
-        marginTop: 20
-      },
-    },
-  }))
-
+  },
+}));
 export default function Post() {
   // const data = useSelector(state => state.data)
   const classes = useStyles();
   const [res, setRes] = useState([]);
   const router = useRouter();
-  const id = router.query.id;
+  const { id } = router.query;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,7 +55,7 @@ export default function Post() {
         '/api/product',
         {
           target: id,
-        }
+        },
       );
       setRes(result.data);
     };
@@ -67,15 +64,16 @@ export default function Post() {
   // console.log(res.path);
 
   return (
-    < Layout >
+    <Layout>
       <Head>
         <title>
           {`مدل ${res.title}`}
         </title>
       </Head>
       <Container>
-        <Grid container justify="center" >
-          <Grid item
+        <Grid container justify="center">
+          <Grid
+            item
             md={12}
 
           >
@@ -96,36 +94,36 @@ export default function Post() {
               </CardContent>
               <CardContent>
                 {
-                  res.path ?
-                    <div
-                      className={classes.mainContent}
-                    >
+                  res.path
+                    ? (
                       <div
-                        className={classes.texts}
+                        className={classes.mainContent}
                       >
-                        <Typography
-                          variant="subtitle1"
-                          component="h5"
-                          gutterBottom
-                        // className={classes.title}
+                        <div
+                          className={classes.texts}
                         >
-                          <Box textAlign="justify" >
-                            {res.description}
-                          </Box>
-                        </Typography>
+                          <Typography
+                            variant="subtitle1"
+                            component="h5"
+                            gutterBottom
+                          >
+                            <Box textAlign="justify">
+                              {res.description}
+                            </Box>
+                          </Typography>
+                        </div>
+                        <ProductCaro
+                          path={res.path}
+                        />
                       </div>
-                      <ProductCaro
-                        path={res.path}
-                      />
-                    </div>
-                    :
-                    null
+                    )
+                    : null
                 }
               </CardContent>
             </Card>
           </Grid>
         </Grid>
       </Container>
-    </Layout >
+    </Layout>
   );
 }

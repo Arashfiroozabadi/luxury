@@ -1,75 +1,75 @@
+import React from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import Link from "next/link";
+import Link from 'next/link';
 import {
   Grid,
   Button,
   Typography,
   Box,
   Container,
-  Toolbar
+  Toolbar,
 } from '@material-ui/core';
 
+// eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Carousel from '../components/Carousel';
 import Cards from '../components/Cards';
 
 const Layout = dynamic(
   () => import('../components/Layout'),
-  { loading: () => <p>loading...</p> }
-)
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    textBox: {
-      alignSelf: 'flex-start',
-      [theme.breakpoints.only('xs')]: {
-        width: '100%',
-      },
-    },
-    text: {
-      textAlign: 'center',
-      whiteSpace: 'nowrap',
-      fontWeight: 200,
-    },
-    gText: {
-      color: 'white',
-      letterSpacing: 25,
-      paddingLeft: 15,
-      backgroundColor: theme.palette.secondary.dark,
-      borderBottom: '1px solid gold',
-    },
-    logoText: {
-      color: 'gold',
-      fontSize: '1.5em',
-      fontWeight: 300,
-      letterSpacing: 25,
-      backgroundColor: theme.palette.secondary.dark,
-    },
-    splashText: {
-      padding: '1.5rem',
-      textAlign: 'center',
-      [theme.breakpoints.only('xs')]: {
-        padding: '3.5rem',
-      },
-    },
-    imgBox: {
-      position: 'relative',
-      minHeight: 400,
-      width: '100%'
-    },
-    control: {
-      padding: theme.spacing(2),
-    },
-    moreButton: {
-      marginTop: '1.5rem',
-      textAlign: 'center',
-    }
-  }),
+  { loading: () => <p>loading...</p> },
 );
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  root: {
+    flexGrow: 1,
+  },
+  textBox: {
+    alignSelf: 'flex-start',
+    [theme.breakpoints.only('xs')]: {
+      width: '100%',
+    },
+  },
+  text: {
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    fontWeight: 200,
+  },
+  gText: {
+    color: 'white',
+    letterSpacing: 25,
+    paddingLeft: 15,
+    backgroundColor: theme.palette.secondary.dark,
+    borderBottom: '1px solid gold',
+  },
+  logoText: {
+    color: 'gold',
+    fontSize: '1.5em',
+    fontWeight: 300,
+    letterSpacing: 25,
+    backgroundColor: theme.palette.secondary.dark,
+  },
+  splashText: {
+    padding: '1.5rem',
+    textAlign: 'center',
+    [theme.breakpoints.only('xs')]: {
+      padding: '3.5rem',
+    },
+  },
+  imgBox: {
+    position: 'relative',
+    minHeight: 400,
+    width: '100%',
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+  moreButton: {
+    marginTop: '1.5rem',
+    textAlign: 'center',
+  },
+}));
 
 export default () => {
   const classes = useStyles();
@@ -210,5 +210,5 @@ export default () => {
         </Grid>
       </Container>
     </Layout>
-  )
-}
+  );
+};
