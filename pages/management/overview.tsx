@@ -4,7 +4,6 @@ import axios from 'axios';
 import persianJs from 'persianjs';
 
 
-import ConvertString from '../../components/ConvertString';
 import Chart from './chart';
 
 function convertValue(v: number) {
@@ -30,33 +29,24 @@ function Overview() {
   if (data.category) {
     return (
       <div>
-        <ul>
-          <h1>
-            تمام محصولات
-            {convertValue(data.total)}
-          </h1>
-          {data.category.map((item: any) => (
-            <li key={item.name}>
-              <span>{ConvertString(item.name)}</span>
-              {' '}
-              <span>{convertValue(item.value)}</span>
-            </li>
-          ))}
-        </ul>
-        <h2>
-          میزان بازدید کلی
-          {convertValue(data.totalView)}
-        </h2>
+        <h1>
+          تمام محصولات
+          {convertValue(data.total)}
+        </h1>
         <div
           style={{
             width: '100%',
           }}
         >
           <Chart
-            total={data.total}
+            data={data}
             array={data.category}
           />
         </div>
+        <h2>
+          میزان بازدید کلی
+          {convertValue(data.totalView)}
+        </h2>
       </div>
     );
   }
