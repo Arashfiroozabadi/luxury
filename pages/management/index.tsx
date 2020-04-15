@@ -208,7 +208,6 @@ function Management() {
             setErr(!res.data.auth)
         })
     }
-    console.log(data);
 
     if (data.auth === true) {
         return (

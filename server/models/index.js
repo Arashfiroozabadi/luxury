@@ -14,7 +14,7 @@ const PhotoModel = new schema({
     title: { type: String },
     color: [{ colorName: String, imgPath: String }],
     path: { type: Array },
-    views: { type: Array, unique: true },
+    views: { type: Array },
     unit: { type: String },
     category: { type: String },
     description: { type: String },
