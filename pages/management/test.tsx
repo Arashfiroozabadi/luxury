@@ -32,6 +32,7 @@ function Chart(props: any) {
                     display: 'flex'
                 }}
             >
+
                 {
                     t.map((item: number, i: string) => {
                         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
