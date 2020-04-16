@@ -9,7 +9,7 @@ import {
 
 const AccountController = express.Router();
 
-
+// test git
 AccountController.get('/all', (_req, res) => {
   PhotoModel.find({}).then(
     (resualt) => {
