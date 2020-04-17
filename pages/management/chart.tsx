@@ -1,6 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import clsx from 'clsx';
 
 
 import { Divider } from '@material-ui/core';
@@ -33,11 +34,19 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     justifyContent: 'center',
   },
   chartCell: {
+    height: 25,
     display: 'flex',
     fontSize: 14,
     textAlign: 'center',
+    boxShadow: '0px 1px 5px 0.5px #ffffffc7',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  chartContiner: {
+    padding: theme.spacing(1.5),
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: '#050506',
+
   },
   chartInfo: {
     width: '15%',
@@ -48,7 +57,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       margin: '0',
     },
   },
+  chartIdColorDivider: {
+    height: theme.spacing(0.5),
+    borderRadius: theme.shape.borderRadius,
+  },
 }));
+
+const chartRowColor = ['#006D2D', '#e8e230', '#ec407a', '#AB47BC', '#ff5722', '#039be5'];
+
 function Chart(props: PropsTypes) {
   const classes = useStyles();
   const { data } = props;
@@ -66,8 +82,8 @@ function Chart(props: PropsTypes) {
   if (data.category) {
     return (
       <div className={classes.root}>
-        <div className={classes.row}>
-          {t.map((item: number) => {
+        <div className={clsx(classes.row, classes.chartContiner)}>
+          {t.map((item: number, i:number) => {
             const randomColor = Math.floor(Math.random() * 16777215).toString(16);
             return (
               <div
@@ -76,15 +92,14 @@ function Chart(props: PropsTypes) {
                 key={randomColor}
                 style={{
                   width: `${item}%`,
-                  height: 50,
-                  backgroundColor: `#${randomColor}`,
+                  backgroundColor: chartRowColor[i],
                 }}
               />
             );
           })}
         </div>
         <div className={classes.row}>
-          {data.category.map((item:CateType) => {
+          {data.category.map((item:CateType, i:number) => {
             const randomKey = Math.floor(Math.random() * 16777215).toString(16);
             return (
               <div
@@ -92,7 +107,14 @@ function Chart(props: PropsTypes) {
                 className={classes.chartInfo}
               >
                 <p>{ConvertString(item.name)}</p>
-                <Divider />
+                <Divider
+                  classes={{
+                    root: classes.chartIdColorDivider,
+                  }}
+                  style={{
+                    backgroundColor: chartRowColor[i],
+                  }}
+                />
                 <p>{ConvertValue(item.value)}</p>
               </div>
             );
