@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import persianJs from 'persianjs';
 
 
+import { Grid, Typography, Box } from '@material-ui/core';
 import Chart from './chart';
 
 function convertValue(v: number) {
@@ -28,11 +28,17 @@ function Overview() {
 
   if (data.category) {
     return (
-      <div>
-        <h1>
-          تمام محصولات
-          {convertValue(data.total)}
-        </h1>
+      <Grid container>
+        <Typography
+          variant="h5"
+          component="h2"
+          gutterBottom
+        >
+          <Box>
+            تمام محصولات
+            {` ${convertValue(data.total)}`}
+          </Box>
+        </Typography>
         <div
           style={{
             width: '100%',
@@ -47,7 +53,7 @@ function Overview() {
           میزان بازدید کلی
           {convertValue(data.totalView)}
         </h2>
-      </div>
+      </Grid>
     );
   }
   return null;
