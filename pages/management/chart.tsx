@@ -2,9 +2,8 @@ import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import { Divider, Typography, Box } from '@material-ui/core';
 
-
-import { Divider } from '@material-ui/core';
 import ConvertString from '../../components/ConvertString';
 import ConvertValue from '../../components/ConvertValue';
 
@@ -94,7 +93,18 @@ function Chart(props: PropsTypes) {
                   width: `${item}%`,
                   backgroundColor: chartRowColor[i],
                 }}
-              />
+              >
+                <Typography
+                  variant="caption"
+                  component="span"
+                  color="textPrimary"
+                >
+                  <Box>
+                    {ConvertValue(item)}
+                    %
+                  </Box>
+                </Typography>
+              </div>
             );
           })}
         </div>
