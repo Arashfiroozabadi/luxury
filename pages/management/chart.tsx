@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  captionText: {
+    color: theme.palette.info.contrastText,
+  },
   chartContiner: {
     padding: theme.spacing(1.5),
     borderRadius: theme.shape.borderRadius,
@@ -95,9 +98,9 @@ function Chart(props: PropsTypes) {
                 }}
               >
                 <Typography
+                  className={classes.captionText}
                   variant="caption"
                   component="span"
-                  color="textPrimary"
                 >
                   <Box>
                     {ConvertValue(item)}
