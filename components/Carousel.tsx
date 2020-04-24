@@ -86,7 +86,6 @@ function Carousel() {
     };
     fetchData();
   }, []);
-  console.log(res);
   const maxSteps = res.length;
 
 

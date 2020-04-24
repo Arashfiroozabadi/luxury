@@ -1,6 +1,15 @@
 // eslint-disable-next-line no-unused-vars
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import Head from 'next/head';
+import { ThemeProvider } from '@material-ui/styles';
+
+// eslint-disable-next-line no-unused-vars
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import {
+  useSelector,
+  // useDispatch,
+} from 'react-redux';
+import themeDark, { themeLight } from './theme';
 
 import Nav from './Nav';
 import Footer from './Footer';
@@ -8,21 +17,42 @@ import Footer from './Footer';
 interface Layout {
     children: ReactNode,
 }
+interface State {
+  theme:boolean
+}
 
+
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  root: {
+    [theme.breakpoints.only('xs')]: {
+      width: '100%',
+    },
+    backgroundColor: theme.palette.background.default,
+    transition: 'background-color 250ms linear',
+  },
+}));
 function Layout(props: Layout) {
+  const classes = useStyles();
   const { children } = props;
+  const t = useSelector((state:State) => state.theme);
+  useEffect(() => {
+    console.log(t);
+  }, [children]);
+
   return (
-    <div>
-      <Head>
-        <meta
-          name="viewport"
-          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
-        />
-      </Head>
-      <Nav />
-      {children}
-      <Footer />
-    </div>
+    <ThemeProvider theme={t ? themeDark : themeLight}>
+      <div className={classes.root}>
+        <Head>
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+          />
+        </Head>
+        <Nav />
+        {children}
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -20,8 +20,16 @@ import {
   // LinearProgress
 } from '@material-ui/core';
 // eslint-disable-next-line no-unused-vars
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import {
+  // eslint-disable-next-line no-unused-vars
+  makeStyles, createStyles, Theme, ThemeProvider,
+} from '@material-ui/core/styles';
+import {
+  useSelector,
+  // useDispatch,
+} from 'react-redux';
 
+import themeDark, { themeLight } from '../../components/theme';
 
 import Layout from '../../components/Layout';
 import RTL from '../../components/RTL';
@@ -32,7 +40,9 @@ interface TabPanelProps {
     index: any;
     value: any;
 }
-
+interface State {
+  theme:boolean
+}
 
 function TabPanel(props: TabPanelProps) {
   const {
@@ -172,7 +182,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 function Management() {
   const classes = useStyles();
-
+  const t = useSelector((state:State) => state.theme);
   const [value, setValue] = React.useState(0);
   const [data, setData] = useState<any | null>({});
   const [form, setForm] = useState<any | null>({
@@ -212,52 +222,54 @@ function Management() {
 
   if (data.auth === true) {
     return (
-      <Layout>
-        <Container>
-          <div className={classes.rootTab}>
-            <AppBar position="static" color="default">
-              <Tabs
-                value={value}
-                onChange={handleChangeTab}
-                variant="scrollable"
-                scrollButtons="on"
-                indicatorColor="primary"
-                textColor="primary"
-                aria-label="scrollable force tabs example"
-              >
-                <Tab label="Item One" {...a11yProps(0)} />
-                <Tab label="Item Two" {...a11yProps(1)} />
-                <Tab label="Item Three" {...a11yProps(2)} />
-                <Tab label="Item Four" {...a11yProps(3)} />
-                <Tab label="Item Five" {...a11yProps(4)} />
-                <Tab label="Item Six" {...a11yProps(5)} />
-                <Tab label="Item Seven" {...a11yProps(6)} />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-              <Overview />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              Item Two
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-              Item Three
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-              Item Four
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-              Item Five
-            </TabPanel>
-            <TabPanel value={value} index={5}>
-              Item Six
-            </TabPanel>
-            <TabPanel value={value} index={6}>
-              Item Seven
-            </TabPanel>
-          </div>
-        </Container>
-      </Layout>
+      <ThemeProvider theme={t ? themeDark : themeLight}>
+        <Layout>
+          <Container>
+            <div className={classes.rootTab}>
+              <AppBar position="static" color="default">
+                <Tabs
+                  value={value}
+                  onChange={handleChangeTab}
+                  variant="scrollable"
+                  scrollButtons="on"
+                  indicatorColor="primary"
+                  textColor="primary"
+                  aria-label="scrollable force tabs example"
+                >
+                  <Tab label="Item One" {...a11yProps(0)} />
+                  <Tab label="Item Two" {...a11yProps(1)} />
+                  <Tab label="Item Three" {...a11yProps(2)} />
+                  <Tab label="Item Four" {...a11yProps(3)} />
+                  <Tab label="Item Five" {...a11yProps(4)} />
+                  <Tab label="Item Six" {...a11yProps(5)} />
+                  <Tab label="Item Seven" {...a11yProps(6)} />
+                </Tabs>
+              </AppBar>
+              <TabPanel value={value} index={0}>
+                <Overview />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                Item Two
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                Item Three
+              </TabPanel>
+              <TabPanel value={value} index={3}>
+                Item Four
+              </TabPanel>
+              <TabPanel value={value} index={4}>
+                Item Five
+              </TabPanel>
+              <TabPanel value={value} index={5}>
+                Item Six
+              </TabPanel>
+              <TabPanel value={value} index={6}>
+                Item Seven
+              </TabPanel>
+            </div>
+          </Container>
+        </Layout>
+      </ThemeProvider>
     );
   }
   return (

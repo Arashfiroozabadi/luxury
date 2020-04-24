@@ -8,6 +8,7 @@ const middlewares = [thunk];
 const initialState = {
   lastUpdate: 0,
   light: false,
+  theme: false,
   count: 0,
 };
 
@@ -17,6 +18,10 @@ const reducer = (state = initialState, action) => {
       return {
         data: action.data,
 
+      };
+    case 'changeTheme':
+      return {
+        theme: action.theme,
       };
     default:
       return state;
