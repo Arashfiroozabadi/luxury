@@ -1,21 +1,17 @@
 // eslint-disable-next-line no-unused-vars
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import Head from 'next/head';
-import { ThemeProvider } from '@material-ui/styles';
-
 // eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import {
-  useSelector,
-  // useDispatch,
-} from 'react-redux';
-import themeDark, { themeLight } from './theme';
+import { ThemeProvider } from '@material-ui/styles';
+import { useSelector } from 'react-redux';
 
+import { themeDark, themeLight } from './theme';
 import Nav from './Nav';
 import Footer from './Footer';
 
 interface Layout {
-    children: ReactNode,
+  children: ReactNode,
 }
 interface State {
   theme:boolean
@@ -35,9 +31,6 @@ function Layout(props: Layout) {
   const classes = useStyles();
   const { children } = props;
   const t = useSelector((state:State) => state.theme);
-  useEffect(() => {
-    console.log(t);
-  }, [children]);
 
   return (
     <ThemeProvider theme={t ? themeDark : themeLight}>

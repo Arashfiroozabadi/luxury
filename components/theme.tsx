@@ -50,6 +50,5 @@ const theme2 = createMuiTheme({
     },
   },
 });
-const themeDark = responsiveFontSizes(theme1);
+export const themeDark = responsiveFontSizes(theme1);
 export const themeLight = responsiveFontSizes(theme2);
-export default themeDark;

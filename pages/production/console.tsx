@@ -7,8 +7,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 // import { useDispatch } from 'react-redux'
+import {
 // eslint-disable-next-line no-unused-vars
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+  makeStyles, createStyles, Theme, ThemeProvider,
+} from '@material-ui/core/styles';
 import {
   Container,
   Grid, Button,
@@ -17,6 +19,13 @@ import {
   Typography, Box, Divider,
 } from '@material-ui/core';
 import { withRouter } from 'next/dist/client/router';
+import {
+  useSelector,
+} from 'react-redux';
+
+// eslint-disable-next-line no-unused-vars
+import { ThemeProps } from '../../interface';
+import { themeDark, themeLight } from '../../components/theme';
 
 const Layout = dynamic(
   () => import('../../components/Layout'),
@@ -51,6 +60,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 function Console() {
   const classes = useStyles();
   const [resp, setResp] = useState<any | null>([]);
+  const t = useSelector((state:ThemeProps) => state.theme);
   // const dispatch = useDispatch()
   useEffect(() => {
     const fetchData = async () => {
@@ -66,22 +76,23 @@ function Console() {
   }, []);
 
   return (
-    <Layout>
-      <Head>
-        <title>آینه کنسول</title>
-      </Head>
-      <Container>
-        <Typography
-          variant="h5"
-          component="h2"
-          gutterBottom
-        >
-          <Box>
-            آینه کنسول
-          </Box>
-        </Typography>
-        <Grid container justify="space-evenly">
-          {
+    <ThemeProvider theme={t ? themeDark : themeLight}>
+      <Layout>
+        <Head>
+          <title>آینه کنسول</title>
+        </Head>
+        <Container>
+          <Typography
+            variant="h5"
+            component="h2"
+            gutterBottom
+          >
+            <Box>
+              آینه کنسول
+            </Box>
+          </Typography>
+          <Grid container justify="space-evenly">
+            {
             resp.map((d: any) => (
               <Grid
                 key={d._id}
@@ -134,9 +145,10 @@ function Console() {
               </Grid>
             ))
         }
-        </Grid>
-      </Container>
-    </Layout>
+          </Grid>
+        </Container>
+      </Layout>
+    </ThemeProvider>
   );
 }
 

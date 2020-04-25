@@ -21,7 +21,7 @@ import {
   // useDispatch,
 } from 'react-redux';
 
-import themeDark, { themeLight } from '../components/theme';
+import { themeDark, themeLight } from '../components/theme';
 import Carousel from '../components/Carousel';
 import Cards from '../components/Cards';
 

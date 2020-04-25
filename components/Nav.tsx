@@ -103,9 +103,7 @@ function Nav(props: any) {
   function handleClose() {
     setOpen(false);
   }
-  const handleChangeTheme = (e:React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target);
-
+  const handleChangeTheme = () => {
     dispatch({ type: 'changeTheme', theme: !theme });
   };
   return (
