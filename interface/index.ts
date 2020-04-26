@@ -2,8 +2,23 @@
 import { ReactNode } from 'react';
 
 export interface Layout {
-    children: ReactNode,
+    children: ReactNode;
+}
+export interface ChildProps {
+    children: ReactNode;
 }
 export interface ThemeProps {
-    theme:boolean
+    theme: boolean;
+}
+
+export interface FetchData {
+    category?: string;
+    color? : string[];
+    date?: string;
+    description?: string;
+    path?: [string] | null;
+    title?: string;
+    views?: string;
+    __v?: number;
+    _id?: string;
 }

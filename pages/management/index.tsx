@@ -29,7 +29,7 @@ import {
   // useDispatch,
 } from 'react-redux';
 
-import themeDark, { themeLight } from '../../components/theme';
+import { themeDark, themeLight } from '../../components/theme';
 
 import Layout from '../../components/Layout';
 import RTL from '../../components/RTL';
@@ -41,7 +41,7 @@ interface TabPanelProps {
     value: any;
 }
 interface State {
-  theme:boolean
+  theme: boolean;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -182,7 +182,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 function Management() {
   const classes = useStyles();
-  const t = useSelector((state:State) => state.theme);
+  const t = useSelector((state: State) => state.theme);
   const [value, setValue] = React.useState(0);
   const [data, setData] = useState<any | null>({});
   const [form, setForm] = useState<any | null>({

@@ -17,6 +17,7 @@ import {
   Typography, Box, Divider,
 } from '@material-ui/core';
 import { withRouter } from 'next/dist/client/router';
+import AppTheme from '../../components/theme';
 
 const Layout = dynamic(
   () => import('../../components/Layout'),
@@ -66,78 +67,77 @@ function Rahati() {
   }, []);
 
   return (
-    <Layout>
-      <Head>
-        <title>مبل راحتی</title>
-      </Head>
-      <Container>
-        <Typography
-          variant="h5"
-          component="h2"
-          gutterBottom
-        >
-          <Box>
-            مبل راحتی
-          </Box>
-        </Typography>
-        <Grid container justify="space-evenly">
-
-          {
-                        resp.map((d: any) => (
-                          <Grid
-                            key={d._id}
-                            item
-                            md={4}
-                            className={classes.container}
-                          >
-                            <Card
-                              className={classes.cards}
-                              elevation={8}
-                            >
-                              <CardContent>
-                                <Typography
-                                  variant="h6"
-                                  component="h2"
-                                  gutterBottom
-                                  className={classes.title}
-                                >
-                                  <Box>
-                                    {`مدل ${d.title}`}
-                                  </Box>
-                                </Typography>
-                              </CardContent>
-                              <Divider />
-                              <CardMedia
-                                className={classes.cardImgs}
-                                component="img"
-                                image={`/${d.path[0]}`}
-                                alt={d.title}
-                                title={d.title}
-                              />
-                              <Divider />
-                              <CardActions>
-                                <Link
-                                  href="/product/[id]"
-                                  as={`/product/${d._id}`}
-                                  passHref
-                                >
-                                  <Button
-                                    size="small"
-                                    color="primary"
-                                    variant="outlined"
-                                    component="a"
-                                  >
-                                    مشاهده محصول
-                                  </Button>
-                                </Link>
-                              </CardActions>
-                            </Card>
-                          </Grid>
-                        ))
-                    }
-        </Grid>
-      </Container>
-    </Layout>
+    <AppTheme>
+      <Layout>
+        <Head>
+          <title>مبل راحتی</title>
+        </Head>
+        <Container>
+          <Typography
+            variant="h5"
+            component="h2"
+            gutterBottom
+          >
+            <Box>
+              مبل راحتی
+            </Box>
+          </Typography>
+          <Grid container justify="space-evenly">
+            {resp.map((d: any) => (
+              <Grid
+                key={d._id}
+                item
+                md={4}
+                className={classes.container}
+              >
+                <Card
+                  className={classes.cards}
+                  elevation={8}
+                >
+                  <CardContent>
+                    <Typography
+                      variant="h6"
+                      component="h2"
+                      gutterBottom
+                      className={classes.title}
+                    >
+                      <Box>
+                        {`مدل ${d.title}`}
+                      </Box>
+                    </Typography>
+                  </CardContent>
+                  <Divider />
+                  <CardMedia
+                    className={classes.cardImgs}
+                    component="img"
+                    image={`/${d.path[0]}`}
+                    alt={d.title}
+                    title={d.title}
+                  />
+                  <Divider />
+                  <CardActions>
+                    <Link
+                      href="/product/[id]"
+                      as={`/product/${d._id}`}
+                      passHref
+                    >
+                      <Button
+                        size="small"
+                        color="primary"
+                        variant="outlined"
+                        component="a"
+                      >
+                        مشاهده محصول
+                      </Button>
+                    </Link>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Layout>
+    </AppTheme>
   );
 }
 

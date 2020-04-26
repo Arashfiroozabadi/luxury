@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   Card,
   CardMedia,
@@ -27,12 +27,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 interface CardProps {
-    title: string,
-    caption?: string,
-    link:string
+    title: string;
+    caption?: string;
+    link: string;
 }
 
-function Cards(props: CardProps) {
+function Cards(props: CardProps): ReactNode {
   const { title, caption, link } = props;
   const classes = useStyles();
   return (

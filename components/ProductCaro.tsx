@@ -16,10 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
   carousel: {
   },
+  mobileStepperRoot: {
+    transition: 'background-color 250ms linear , color 250ms linear',
+  },
   thumbs: {
     padding: 5,
     display: 'flex',
     justifyContent: 'space-evenly',
+    transition: 'background-color 250ms linear , color 250ms linear',
   },
   imgThumbs: {
     boxShadow: theme.shadows['4'],
@@ -28,14 +32,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       border: '2px solid #556cd694',
     },
-  },
-  header: {
-    margin: '5px 5px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
-    backgroundColor: theme.palette.background.default,
   },
   img: {
     height: 300,
@@ -101,6 +97,7 @@ function ProductCaro(props: any) {
           ))}
         </AutoPlaySwipeableViews>
         <MobileStepper
+          className={classes.mobileStepperRoot}
           steps={maxSteps}
           position="static"
           variant="dots"
@@ -110,13 +107,13 @@ function ProductCaro(props: any) {
               بعدی
               {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
             </Button>
-                      )}
+          )}
           backButton={(
             <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
               {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
               قبلی
             </Button>
-                      )}
+          )}
         />
       </div>
       <Paper

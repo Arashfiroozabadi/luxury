@@ -15,6 +15,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 
 import Layout from '../../components/Layout';
 import ProductCaro from '../../components/ProductCaro';
+import AppTheme from '../../components/theme';
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => createStyles({
   },
   card: {
     boxShadow: theme.shadows['0'],
+    transition: 'background-color 250ms linear , color 250ms linear',
   },
   mainContent: {
     display: 'flex',
@@ -64,66 +66,63 @@ export default function Post() {
   // console.log(res.path);
 
   return (
-    <Layout>
-      <Head>
-        <title>
-          {`مدل ${res.title}`}
-        </title>
-      </Head>
-      <Container>
-        <Grid container justify="center">
-          <Grid
-            item
-            md={12}
-
-          >
-            <Card
-              className={classes.card}
+    <AppTheme>
+      <Layout>
+        <Head>
+          <title>
+            {`مدل ${res.title}`}
+          </title>
+        </Head>
+        <Container>
+          <Grid container justify="center">
+            <Grid
+              item
+              md={12}
             >
-              <CardContent>
-                <Typography
-                  variant="h6"
-                  component="h2"
-                  gutterBottom
-                // className={classes.title}
-                >
-                  <Box>
-                    {`مدل ${res.title}`}
-                  </Box>
-                </Typography>
-              </CardContent>
-              <CardContent>
-                {
-                  res.path
-                    ? (
+              <Card
+                className={classes.card}
+              >
+                <CardContent>
+                  <Typography
+                    variant="h6"
+                    component="h2"
+                    gutterBottom
+                  >
+                    <Box>
+                      {`مدل ${res.title}`}
+                    </Box>
+                  </Typography>
+                </CardContent>
+                <CardContent>
+                  {res.path ? (
+                    <div
+                      className={classes.mainContent}
+                    >
                       <div
-                        className={classes.mainContent}
+                        className={classes.texts}
                       >
-                        <div
-                          className={classes.texts}
+                        <Typography
+                          variant="subtitle1"
+                          component="h5"
+                          gutterBottom
                         >
-                          <Typography
-                            variant="subtitle1"
-                            component="h5"
-                            gutterBottom
-                          >
-                            <Box textAlign="justify">
-                              {res.description}
-                            </Box>
-                          </Typography>
-                        </div>
-                        <ProductCaro
-                          path={res.path}
-                        />
+                          <Box textAlign="justify">
+                            {res.description}
+                          </Box>
+                        </Typography>
                       </div>
-                    )
-                    : null
-                }
-              </CardContent>
-            </Card>
+                      <ProductCaro
+                        path={res.path}
+                      />
+                    </div>
+                  )
+                    : null}
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </Layout>
+        </Container>
+      </Layout>
+    </AppTheme>
   );
 }

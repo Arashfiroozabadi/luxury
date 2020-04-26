@@ -9,15 +9,15 @@ import ConvertValue from '../../components/ConvertValue';
 
 
 interface CateType{
-  name:string,
-  value:number
+  name: string;
+  value: number;
 }
 interface PropsTypes{
-    data:{
-      total:string,
-      category:Array<CateType>
-    },
-    array: Array<{name:string}>;
+    data: {
+      total: string;
+      category: Array<CateType>;
+    };
+    array: Array<{name: string}>;
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -85,7 +85,7 @@ function Chart(props: PropsTypes) {
     return (
       <div className={classes.root}>
         <div className={clsx(classes.row, classes.chartContiner)}>
-          {t.map((item: number, i:number) => {
+          {t.map((item: number, i: number) => {
             const randomColor = Math.floor(Math.random() * 16777215).toString(16);
             return (
               <div
@@ -112,7 +112,7 @@ function Chart(props: PropsTypes) {
           })}
         </div>
         <div className={classes.row}>
-          {data.category.map((item:CateType, i:number) => {
+          {data.category.map((item: CateType, i: number) => {
             const randomKey = Math.floor(Math.random() * 16777215).toString(16);
             return (
               <div
