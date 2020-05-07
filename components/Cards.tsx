@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import {
   Card,
   CardMedia,
@@ -32,7 +32,7 @@ interface CardProps {
     link: string;
 }
 
-function Cards(props: CardProps): ReactNode {
+function Cards(props: CardProps) {
   const { title, caption, link } = props;
   const classes = useStyles();
   return (

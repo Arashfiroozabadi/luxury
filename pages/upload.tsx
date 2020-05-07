@@ -21,6 +21,7 @@ import {
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import axios from 'axios';
 
+import AppTheme from 'components/theme';
 import Layout from '../components/Layout';
 import RTL from '../components/RTL';
 
@@ -273,112 +274,113 @@ function Upload() {
 
   if (data.auth === true) {
     return (
-      <Layout>
-        <RTL>
-          <Container>
-            <Paper>
-              <Grid
-                container
-                justify="center"
-              >
+      <AppTheme>
+        <Layout>
+          <RTL>
+            <Container>
+              <Paper>
                 <Grid
-                  item
-                  xs={12}
+                  container
+                  justify="center"
                 >
-                  <Typography
-                    variant="h5"
-                    component="h6"
-                    className={classes.formTitle}
+                  <Grid
+                    item
+                    xs={12}
                   >
-                    ارسال اطلاعات محصول
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  xs={4}
-                >
-                  <TextField
-                    className={clsx(classes.textField, classes.dense)}
-                    name="name"
-                    label="نام"
-                    onChange={(e) => handleChangeUpload(e)}
-                    type="text"
-                    margin="dense"
-                    variant="outlined"
-                  />
-                  <TextField
-                    className={clsx(classes.textField, classes.dense)}
-                    select
-                    label="انتخاب دسته بندی"
-                    name="cate"
-                    value={uploadForm.cate}
-                    onChange={(e) => handleChangeUpload(e)}
-                    margin="dense"
-                    variant="outlined"
+                    <Typography
+                      variant="h5"
+                      component="h6"
+                      className={classes.formTitle}
+                    >
+                      ارسال اطلاعات محصول
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={4}
                   >
-                    {cate.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                  <TextField
-                    className={clsx(classes.textField, classes.dense)}
-                    name="desc"
-                    label="توضیحات"
-                    onChange={(e) => handleChangeUpload(e)}
-                    type="text"
-                    margin="dense"
-                    multiline
-                    rows="4"
-                    rowsMax="6"
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={6}
-                >
-                  <TextField
-                    className={clsx(classes.textField, classes.dense)}
-                    name="file"
-                    onChange={(e) => handleChangeImage(e)}
-                    type="file"
-                    inputProps={{
-                      className: classes.inputFiles,
-                      multiple: true,
-                      encType: 'multipart/form-data',
-                    }}
-                    margin="dense"
-                    variant="outlined"
-                  />
-                  <LinearProgress
-                    className={classes.progress}
-                    variant="determinate"
-                    value={load.loaded}
-                  />
-                  <Box
-                    display="flex"
-                    flexWrap="wrap"
+                    <TextField
+                      className={clsx(classes.textField, classes.dense)}
+                      name="name"
+                      label="نام"
+                      onChange={(e) => handleChangeUpload(e)}
+                      type="text"
+                      margin="dense"
+                      variant="outlined"
+                    />
+                    <TextField
+                      className={clsx(classes.textField, classes.dense)}
+                      select
+                      label="انتخاب دسته بندی"
+                      name="cate"
+                      value={uploadForm.cate}
+                      onChange={(e) => handleChangeUpload(e)}
+                      margin="dense"
+                      variant="outlined"
+                    >
+                      {cate.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                    <TextField
+                      className={clsx(classes.textField, classes.dense)}
+                      name="desc"
+                      label="توضیحات"
+                      onChange={(e) => handleChangeUpload(e)}
+                      type="text"
+                      margin="dense"
+                      multiline
+                      rows="4"
+                      rowsMax="6"
+                      variant="outlined"
+                    />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
                   >
-                    {imgUrl.map((d: any, i: any) => (
-                      <div
-                        key={d}
-                        className={classes.img}
-                      >
-                        <img
-                          src={d}
-                          alt=""
-                        />
-                        <span
-                          className={classes.close}
-                          onClick={() => handleDelete(i)}
-                        >
-                          X
-                        </span>
+                    <TextField
+                      className={clsx(classes.textField, classes.dense)}
+                      name="file"
+                      onChange={(e) => handleChangeImage(e)}
+                      type="file"
+                      inputProps={{
+                        className: classes.inputFiles,
+                        multiple: true,
+                        encType: 'multipart/form-data',
+                      }}
+                      margin="dense"
+                      variant="outlined"
+                    />
+                    <LinearProgress
+                      className={classes.progress}
+                      variant="determinate"
+                      value={load.loaded}
+                    />
+                    <Box
+                      display="flex"
+                      flexWrap="wrap"
+                    >
+                      {imgUrl.map((d: any, i: any) => (
                         <div
-                          className={clsx('bannerForm', classes.bannerForm)}
-                          style={
+                          key={d}
+                          className={classes.img}
+                        >
+                          <img
+                            src={d}
+                            alt=""
+                          />
+                          <span
+                            className={classes.close}
+                            onClick={() => handleDelete(i)}
+                          >
+                            X
+                          </span>
+                          <div
+                            className={clsx('bannerForm', classes.bannerForm)}
+                            style={
                               uploadForm.bannerPath === i
                                 ? {
                                   color: 'gold',
@@ -388,36 +390,107 @@ function Upload() {
                                   color: 'white',
                                 }
                             }
-                        >
-                          <input
-                            className={clsx('select', classes.select)}
-                                                            // onClick={(e) => handleBanner(e, i)}
-                            onChange={() => handleBannerChange(i)}
-                            type="checkbox"
-                            id={`banner${i}`}
-                            checked={uploadForm.bannerPath === i}
-                          />
-                          <label
-                            className={clsx(classes.checkBoxLabel)}
-                            htmlFor={`banner${i}`}
                           >
-                            {
+                            <input
+                              className={clsx('select', classes.select)}
+                                                            // onClick={(e) => handleBanner(e, i)}
+                              onChange={() => handleBannerChange(i)}
+                              type="checkbox"
+                              id={`banner${i}`}
+                              checked={uploadForm.bannerPath === i}
+                            />
+                            <label
+                              className={clsx(classes.checkBoxLabel)}
+                              htmlFor={`banner${i}`}
+                            >
+                              {
                                 uploadForm.bannerPath === i ? 'انتخاب شده برای بنر' : 'اضافه کردن به بنر'
                             }
-                          </label>
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </Box>
+                      ))}
+                    </Box>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    className={classes.formFooter}
+                  >
+                    <Button
+                      className={classes.sendFormButton}
+                      onClick={() => handleSendFile()}
+                      color="primary"
+                      variant="contained"
+                    >
+                      ارسال
+                    </Button>
+                    <FormHelperText
+                      className={classes.helperText}
+                      color="red"
+                      style={data.status === 'err'
+                        ? {
+                          color: 'red',
+                        }
+                        : {
+                          color: 'green',
+                        }}
+                    >
+                      {data.msg}
+                    </FormHelperText>
+                  </Grid>
                 </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  className={classes.formFooter}
+              </Paper>
+            </Container>
+          </RTL>
+        </Layout>
+      </AppTheme>
+    );
+  } return (
+    <AppTheme>
+      <Layout>
+        <RTL>
+          <Container>
+            <Grid
+              container
+              justify="center"
+            >
+              <Grid
+                item
+                xs={3}
+              >
+                <Paper
+                  className={classes.loginRoot}
+                  elevation={8}
                 >
+                  <Typography
+                    variant="h5"
+                    component="h6"
+                    className={classes.formTitle}
+                  >
+                    ورود
+                  </Typography>
+                  <TextField
+                    className={clsx(classes.textField, classes.dense)}
+                    name="userName"
+                    label="نام کاربری"
+                    onChange={(e) => handleChange(e)}
+                    type="text"
+                    margin="dense"
+                    variant="outlined"
+                  />
+                  <TextField
+                    className={clsx(classes.textField, classes.dense)}
+                    name="pass"
+                    label="رمزعبور"
+                    onChange={(e) => handleChange(e)}
+                    type="text"
+                    margin="dense"
+                    variant="outlined"
+                  />
                   <Button
-                    className={classes.sendFormButton}
-                    onClick={() => handleSendFile()}
+                    className={classes.sendButton}
+                    onClick={() => handleSend()}
                     color="primary"
                     variant="contained"
                   >
@@ -425,85 +498,17 @@ function Upload() {
                   </Button>
                   <FormHelperText
                     className={classes.helperText}
-                    color="red"
-                    style={data.status === 'err'
-                      ? {
-                        color: 'red',
-                      }
-                      : {
-                        color: 'green',
-                      }}
+                    error={err}
                   >
                     {data.msg}
                   </FormHelperText>
-                </Grid>
+                </Paper>
               </Grid>
-            </Paper>
+            </Grid>
           </Container>
         </RTL>
       </Layout>
-    );
-  } return (
-    <Layout>
-      <RTL>
-        <Container>
-          <Grid
-            container
-            justify="center"
-          >
-            <Grid
-              item
-              xs={3}
-            >
-              <Paper
-                className={classes.loginRoot}
-                elevation={8}
-              >
-                <Typography
-                  variant="h5"
-                  component="h6"
-                  className={classes.formTitle}
-                >
-                  ورود
-                </Typography>
-                <TextField
-                  className={clsx(classes.textField, classes.dense)}
-                  name="userName"
-                  label="نام کاربری"
-                  onChange={(e) => handleChange(e)}
-                  type="text"
-                  margin="dense"
-                  variant="outlined"
-                />
-                <TextField
-                  className={clsx(classes.textField, classes.dense)}
-                  name="pass"
-                  label="رمزعبور"
-                  onChange={(e) => handleChange(e)}
-                  type="text"
-                  margin="dense"
-                  variant="outlined"
-                />
-                <Button
-                  className={classes.sendButton}
-                  onClick={() => handleSend()}
-                  color="primary"
-                  variant="contained"
-                >
-                  ارسال
-                </Button>
-                <FormHelperText
-                  className={classes.helperText}
-                  error={err}
-                >
-                  {data.msg}
-                </FormHelperText>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
-      </RTL>
-    </Layout>
+    </AppTheme>
   );
 }
 

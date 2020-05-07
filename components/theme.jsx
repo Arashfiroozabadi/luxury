@@ -1,5 +1,8 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, responsiveFontSizes, MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+// import { ThemeProvider } from '@material-ui/styles';
 import { red } from '@material-ui/core/colors';
 // eslint-disable-next-line no-unused-vars
 import { useSelector } from 'react-redux';
@@ -17,6 +20,9 @@ const theme1 = createMuiTheme({
     type: 'dark',
     primary: {
       main: '#556cd6',
+    },
+    testText: {
+      main: 'blue',
     },
     secondary: {
       main: '#212121',
@@ -47,19 +53,26 @@ const theme2 = createMuiTheme({
     error: {
       main: red.A400,
     },
+    background: {
+      default: '#fff',
+    },
+    testText: {
+      main: 'red',
+    },
   },
 });
 export const themeDark = responsiveFontSizes(theme1);
 export const themeLight = responsiveFontSizes(theme2);
 
-function AppTheme(props:ChildProps) {
+function AppTheme(props) {
   const { children } = props;
-  const t = useSelector((state:ThemeProps) => state.theme);
+  const t = useSelector((state) => state.theme);
 
   return (
-    <ThemeProvider theme={t ? themeDark : themeLight}>
+    <MuiThemeProvider theme={t ? themeDark : themeLight}>
+      <CssBaseline />
       {children}
-    </ThemeProvider>
+    </MuiThemeProvider>
   );
 }
 

@@ -43,6 +43,6 @@
     "**/*.tsx",
     "pages/_app.js",
     "components/Nav.tsx",
-    "server/models/index.js"
+    "server/models/index.js", "components/theme.jsx"
   ]
 }
