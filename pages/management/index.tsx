@@ -5,7 +5,7 @@ import React, {
 import axios from 'axios';
 import clsx from 'clsx';
 import {
-  Box,
+  // Box,
   TextField,
   AppBar,
   Tabs,
@@ -29,38 +29,21 @@ import {
   // useDispatch,
 } from 'react-redux';
 
-import { themeDark, themeLight } from '../../components/theme';
+import AppTheme, { themeDark, themeLight } from '../../components/theme';
 
 import Layout from '../../components/Layout';
 import RTL from '../../components/RTL';
-import Overview from './overview';
+import Overview from '../../components/overview';
+import TabPanel from '../../components/tabPanel';
 
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-}
+// interface TabPanelProps {
+//     children?: React.ReactNode;
+//     className?:string;
+//     index: any;
+//     value: any;
+// }
 interface State {
   theme: boolean;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const {
-    children, value, index, ...other
-  } = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-force-tabpanel-${index}`}
-      aria-labelledby={`scrollable-force-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-  );
 }
 function a11yProps(index: any) {
   return {
@@ -178,6 +161,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     height: 30,
     padding: theme.spacing(1),
   },
+  testT: {
+    color: 'black',
+    backgroundColor: theme.palette.background.paper,
+  },
 }));
 
 function Management() {
@@ -245,12 +232,22 @@ function Management() {
                   <Tab label="Item Seven" {...a11yProps(6)} />
                 </Tabs>
               </AppBar>
-              <TabPanel value={value} index={0}>
-                <Overview />
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                Item Two
-              </TabPanel>
+              <AppTheme>
+                <TabPanel value={value} index={0}>
+                  <Overview />
+                </TabPanel>
+              </AppTheme>
+              <AppTheme>
+                <TabPanel value={value} index={1}>
+                  <Typography
+                    variant="caption"
+                    component="span"
+                    color="textPrimary"
+                  >
+                    Item Two
+                  </Typography>
+                </TabPanel>
+              </AppTheme>
               <TabPanel value={value} index={2}>
                 Item Three
               </TabPanel>
