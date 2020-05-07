@@ -26,6 +26,7 @@ const theme1 = createMuiTheme({
     },
     secondary: {
       main: '#212121',
+      dark: '#171717',
     },
     error: {
       main: red.A400,
@@ -49,6 +50,7 @@ const theme2 = createMuiTheme({
     },
     secondary: {
       main: '#212121',
+      dark: '#171717',
     },
     error: {
       main: red.A400,

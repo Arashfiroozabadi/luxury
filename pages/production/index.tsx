@@ -56,6 +56,7 @@ function Production() {
               md={12}
             >
               <Typography
+                color="textPrimary"
                 variant="h5"
                 component="h2"
                 gutterBottom

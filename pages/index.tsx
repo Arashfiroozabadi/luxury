@@ -175,6 +175,7 @@ export default () => {
               <Typography
                 variant="h5"
                 component="h2"
+                color="textPrimary"
                 gutterBottom
               >
                 <Box>

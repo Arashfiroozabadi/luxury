@@ -4,28 +4,18 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import Head from 'next/head';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
-// import { useDispatch } from 'react-redux'
-import {
 // eslint-disable-next-line no-unused-vars
-  makeStyles, createStyles, Theme, ThemeProvider,
-} from '@material-ui/core/styles';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import {
   Container,
-  Grid, Button,
-  Card, CardMedia,
-  CardContent, CardActions,
-  Typography, Box, Divider,
+  Grid,
+  Typography, Box,
 } from '@material-ui/core';
 import { withRouter } from 'next/dist/client/router';
-import {
-  useSelector,
-} from 'react-redux';
 
-// eslint-disable-next-line no-unused-vars
-import { ThemeProps } from '../../interface';
-import { themeDark, themeLight } from '../../components/theme';
+import AppTheme from '../../components/theme';
+import ProductCardInfo from '../../components/ProductCardInfo';
 
 const Layout = dynamic(
   () => import('../../components/Layout'),
@@ -35,32 +25,18 @@ const Layout = dynamic(
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
-
-  },
-  container: {
-    margin: 1,
-  },
-  cards: {
-    margin: '5px 5px',
-    marginTop: theme.spacing(3),
     [theme.breakpoints.only('xs')]: {
       width: '100%',
     },
   },
-  title: {
-    fontSize: '1.15rem',
-  },
-  cardImgs: {
-    width: '100%',
-    height: 'auto',
-    maxHeight: 230,
+  container: {
+    margin: 1,
   },
 }));
 
 function Console() {
   const classes = useStyles();
   const [resp, setResp] = useState<any | null>([]);
-  const t = useSelector((state:ThemeProps) => state.theme);
   // const dispatch = useDispatch()
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +52,7 @@ function Console() {
   }, []);
 
   return (
-    <ThemeProvider theme={t ? themeDark : themeLight}>
+    <AppTheme>
       <Layout>
         <Head>
           <title>آینه کنسول</title>
@@ -100,55 +76,18 @@ function Console() {
                 md={4}
                 className={classes.container}
               >
-                <Card
-                  className={classes.cards}
-                  elevation={8}
-                >
-                  <CardContent>
-                    <Typography
-                      variant="h6"
-                      component="h2"
-                      gutterBottom
-                      className={classes.title}
-                    >
-                      <Box>
-                        {`مدل ${d.title}`}
-                      </Box>
-                    </Typography>
-                  </CardContent>
-                  <Divider />
-                  <CardMedia
-                    className={classes.cardImgs}
-                    component="img"
-                    image={`/${d.path[0]}`}
-                    alt={d.title}
-                    title={d.title}
-                  />
-                  <Divider />
-                  <CardActions>
-                    <Link
-                      href="/product/[id]"
-                      as={`/product/${d._id}`}
-                      passHref
-                    >
-                      <Button
-                        size="small"
-                        color="primary"
-                        variant="outlined"
-                        component="a"
-                      >
-                        مشاهده محصول
-                      </Button>
-                    </Link>
-                  </CardActions>
-                </Card>
+                <ProductCardInfo
+                  title={d.title}
+                  path={d.path[0]}
+                  _id={d._id}
+                />
               </Grid>
             ))
         }
           </Grid>
         </Container>
       </Layout>
-    </ThemeProvider>
+    </AppTheme>
   );
 }
 

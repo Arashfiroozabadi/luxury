@@ -15,12 +15,14 @@ import Link from 'next/link';
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     marginTop: theme.spacing(3),
+    transition: 'background-color 250ms linear , color 250ms linear',
+    backgroundColor: theme.palette.background.default,
     [theme.breakpoints.only('xs')]: {
 
     },
   },
   title: {
-    fontSize: '1.15rem',
+    fontSize: '1rem',
   },
   cardButton: {
     // color: '#ffd54f'

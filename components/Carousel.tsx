@@ -23,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
 
   },
   header: {
+    height: 50,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 50,
+    transition: 'background-color 250ms linear , color 250ms linear',
     backgroundColor: theme.palette.background.default,
   },
   imgContainer: {
@@ -68,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
       color: 'gold',
       fontSize: 18,
     },
+  },
+  MobileStepper: {
+    transition: 'background-color 250ms linear , color 250ms linear',
   },
 }));
 
@@ -163,9 +167,10 @@ function Carousel() {
             })}
           </AutoPlaySwipeableViews>
           <MobileStepper
+            className={classes.MobileStepper}
             steps={maxSteps}
-            position="static"
             variant="dots"
+            position="static"
             activeStep={activeStep}
             nextButton={(
               <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
