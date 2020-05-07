@@ -28,7 +28,6 @@ function Post() {
     };
     fetchData();
   }, []);
-  console.log(res.path);
   return (
     <AppTheme>
       <Layout>
