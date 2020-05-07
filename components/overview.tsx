@@ -37,7 +37,7 @@ function Overview() {
             color="textPrimary"
             gutterBottom
           >
-            <Box>
+            <Box fontSize="1rem">
               تمام محصولات
               {` ${convertValue(data.total)}`}
             </Box>
@@ -58,7 +58,7 @@ function Overview() {
             color="textPrimary"
             gutterBottom
           >
-            <Box>
+            <Box fontSize="1rem">
               میزان بازدید کلی
               {convertValue(data.totalView)}
             </Box>
@@ -67,7 +67,11 @@ function Overview() {
       </AppTheme>
     );
   }
-  return null;
+  return (
+    <div>
+      Loading...
+    </div>
+  );
 }
 
 export default Overview;
