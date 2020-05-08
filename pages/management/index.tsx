@@ -5,7 +5,6 @@ import React, {
 import axios from 'axios';
 import clsx from 'clsx';
 import {
-  // Box,
   TextField,
   AppBar,
   Tabs,
@@ -16,35 +15,24 @@ import {
   FormHelperText,
   Typography,
   Container,
-  // MenuItem,
-  // LinearProgress
 } from '@material-ui/core';
 // eslint-disable-next-line no-unused-vars
 import {
   // eslint-disable-next-line no-unused-vars
-  makeStyles, createStyles, Theme, ThemeProvider,
+  makeStyles, createStyles, Theme,
 } from '@material-ui/core/styles';
-import {
-  useSelector,
-  // useDispatch,
-} from 'react-redux';
+// import {
+//   useSelector,
+//   // useDispatch,
+// } from 'react-redux';
 
-import AppTheme, { themeDark, themeLight } from '../../components/theme';
+import AppTheme from '../../components/theme';
 
 import Layout from '../../components/Layout';
 import RTL from '../../components/RTL';
 import Overview from '../../components/overview';
 import TabPanel from '../../components/tabPanel';
 
-// interface TabPanelProps {
-//     children?: React.ReactNode;
-//     className?:string;
-//     index: any;
-//     value: any;
-// }
-interface State {
-  theme: boolean;
-}
 function a11yProps(index: any) {
   return {
     id: `scrollable-force-tab-${index}`,
@@ -169,7 +157,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 function Management() {
   const classes = useStyles();
-  const t = useSelector((state: State) => state.theme);
   const [value, setValue] = React.useState(0);
   const [data, setData] = useState<any | null>({});
   const [form, setForm] = useState<any | null>({
@@ -209,7 +196,7 @@ function Management() {
 
   if (data.auth === true) {
     return (
-      <ThemeProvider theme={t ? themeDark : themeLight}>
+      <AppTheme>
         <Layout>
           <Container>
             <div className={classes.rootTab}>
@@ -223,32 +210,28 @@ function Management() {
                   textColor="primary"
                   aria-label="scrollable force tabs example"
                 >
-                  <Tab label="Item One" {...a11yProps(0)} />
-                  <Tab label="Item Two" {...a11yProps(1)} />
-                  <Tab label="Item Three" {...a11yProps(2)} />
+                  <Tab label="آمار" {...a11yProps(0)} />
+                  <Tab label="محصولات" {...a11yProps(1)} />
+                  {/* <Tab label="Item Three" {...a11yProps(2)} />
                   <Tab label="Item Four" {...a11yProps(3)} />
                   <Tab label="Item Five" {...a11yProps(4)} />
                   <Tab label="Item Six" {...a11yProps(5)} />
-                  <Tab label="Item Seven" {...a11yProps(6)} />
+                  <Tab label="Item Seven" {...a11yProps(6)} /> */}
                 </Tabs>
               </AppBar>
-              <AppTheme>
-                <TabPanel value={value} index={0}>
-                  <Overview />
-                </TabPanel>
-              </AppTheme>
-              <AppTheme>
-                <TabPanel value={value} index={1}>
-                  <Typography
-                    variant="caption"
-                    component="span"
-                    color="textPrimary"
-                  >
-                    Item Two
-                  </Typography>
-                </TabPanel>
-              </AppTheme>
-              <TabPanel value={value} index={2}>
+              <TabPanel value={value} index={0}>
+                <Overview />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <Typography
+                  variant="caption"
+                  component="span"
+                  color="textPrimary"
+                >
+                  Item Two
+                </Typography>
+              </TabPanel>
+              {/* <TabPanel value={value} index={2}>
                 Item Three
               </TabPanel>
               <TabPanel value={value} index={3}>
@@ -262,11 +245,11 @@ function Management() {
               </TabPanel>
               <TabPanel value={value} index={6}>
                 Item Seven
-              </TabPanel>
+              </TabPanel> */}
             </div>
           </Container>
         </Layout>
-      </ThemeProvider>
+      </AppTheme>
     );
   }
   return (
