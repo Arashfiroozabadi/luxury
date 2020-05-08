@@ -61,6 +61,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   links: {
     color: '#ffd54f',
     display: 'flex',
+    fontSize: 12,
+    fontFamily: 'Vazir',
     alignItems: 'center',
     textDecoration: 'none',
     '& svg': {
