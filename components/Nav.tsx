@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       },
     },
   },
+  link: {
+    fontFamily: 'Vazir',
+  },
   menuButton: {
     // color: theme.palette.secondary.dark,
     transition: 'color 250ms linear',
@@ -198,17 +201,17 @@ function Nav(props: any) {
               </ListItem>
             </Link>
             <Link href="/production" passHref>
-              <ListItem component="a" button>
+              <ListItem className={classes.link} component="a" button>
                 محصولات
               </ListItem>
             </Link>
             <Link href="/upload" passHref>
-              <ListItem component="a" button>
+              <ListItem className={classes.link} component="a" button>
                 upload
               </ListItem>
             </Link>
             <Link href="/management" passHref>
-              <ListItem component="a" button>
+              <ListItem className={classes.link} component="a" button>
                 مدیریت
               </ListItem>
             </Link>
