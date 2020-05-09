@@ -27,6 +27,7 @@
     "express-session": "^1.17.1",
     "jss": "^10.1.1",
     "jss-rtl": "^0.3.0",
+    "material-table": "^1.57.2",
     "minimist": "^1.2.5",
     "mkdirp": "^0.5.5",
     "mongoose": "^5.9.10",
