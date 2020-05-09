@@ -1,4 +1,4 @@
-export default function (value: string) {
+export default function (value: string| undefined) {
   switch (value) {
     case 'rahati':
       return 'راحتی';
