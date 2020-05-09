@@ -16,6 +16,7 @@ export interface FetchData {
     color? : string[];
     date?: string;
     description?: string;
+    banner?: boolean;
     path?: [string] | null;
     title?: string;
     views?: string;
