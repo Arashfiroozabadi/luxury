@@ -24,6 +24,7 @@ class MyDocument extends Document {
             rel="stylesheet"
             type="text/css"
           />
+          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
         </Head>
         <body dir="rtl">
           <Main />
