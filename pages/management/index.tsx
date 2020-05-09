@@ -26,6 +26,7 @@ import {
 //   // useDispatch,
 // } from 'react-redux';
 
+import AllProducts from '../../components/management/AllProducts';
 import AppTheme from '../../components/theme';
 
 import Layout from '../../components/Layout';
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+    transition: 'background-color 250ms linear , color 250ms linear',
   },
   uploadRoot: {
 
@@ -223,13 +225,7 @@ function Management() {
                 <Overview />
               </TabPanel>
               <TabPanel value={value} index={1}>
-                <Typography
-                  variant="caption"
-                  component="span"
-                  color="textPrimary"
-                >
-                  Item Two
-                </Typography>
+                <AllProducts />
               </TabPanel>
               {/* <TabPanel value={value} index={2}>
                 Item Three
