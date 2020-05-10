@@ -54,7 +54,8 @@ function AllProducts() {
                 toolbar: { searchPlaceholder: 'جستوجو' },
               }}
               options={{
-
+                pageSize: 10,
+                pageSizeOptions: [10, 20, 30],
               }}
               title="محصولات"
               columns={[
@@ -66,7 +67,7 @@ function AllProducts() {
                   render: (rowData) => (rowData.banner ? 'true' : 'false'),
                 },
                 {
-                  title: 'دیسته بندی',
+                  title: 'دسته بندی',
                   field: 'category',
                   render: (rowData) => (rowData.category),
                 },
