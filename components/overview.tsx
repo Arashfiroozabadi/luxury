@@ -19,7 +19,7 @@ function Overview() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.post(
-        'api/overview',
+        '/api/overview',
       );
 
       setData(result.data);
