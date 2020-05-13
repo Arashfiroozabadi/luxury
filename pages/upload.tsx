@@ -21,7 +21,7 @@ import {
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import axios from 'axios';
 
-import AppTheme from 'components/theme';
+import AppTheme from '../components/theme';
 import Layout from '../components/Layout';
 import RTL from '../components/RTL';
 
