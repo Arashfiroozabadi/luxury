@@ -71,14 +71,14 @@ function WithNav(props:any) {
           color="textSecondary"
           className={clsx(
             classes.link,
-            pathname === '/management/overview' ? classes.active : null,
+            pathname === '/management/products' ? classes.active : null,
           )}
         >
-          <Link href="/management/overview">
+          <Link href="/management/products">
             <a
               className={classes.aTag}
             >
-              chart
+              products
             </a>
           </Link>
         </Typography>

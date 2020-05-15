@@ -2,7 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core';
 import Axios from 'axios';
-import MaterialTable from 'material-table';
+import MaterialTable, {
+// MTableFilterRow,
+} from 'material-table';
 
 // eslint-disable-next-line no-unused-vars
 import Product from '../Product';
@@ -20,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     backgroundColor: theme.palette.background.default,
     transition: 'background-color 250ms linear',
   },
+  // test: {
+  //   backgroundColor: 'red',
+  // },
 }));
 
 
@@ -49,6 +54,17 @@ function AllProducts() {
                     <div {...props} />
                   </div>
                 ),
+                // FilterRow: (props) => (
+                //   <MTableFilterRow className={classes.test}>
+                //     <div {...props} />
+                //   </MTableFilterRow>
+                // ),
+                // Groupbar: (props) => (
+                //   <div className={classes.test}>
+                //     <h1>Teeeeeeeeeeeeeeeeeeeest</h1>
+                //     <div {...props} />
+                //   </div>
+                // ),
               }}
               localization={{
                 toolbar: { searchPlaceholder: 'جستوجو' },
