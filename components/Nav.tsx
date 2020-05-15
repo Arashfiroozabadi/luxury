@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
   useSelector,
   useDispatch,
@@ -18,11 +19,17 @@ import {
   Slide,
   Switch,
   Tooltip,
+  Collapse,
+  ListItemText,
   // Slide
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
+
+import clsx from 'clsx';
 import Logo from './Logo';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -33,6 +40,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   appBar: {
     transition: 'background-color 250ms linear',
+  },
+  drawer: {
+    overflowY: 'inherit',
+  },
+  rootDrawer: {
+    width: 240,
   },
   logo: {
     textDecoration: 'none',
@@ -49,8 +62,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       },
     },
   },
+  collaoseMenuText: {
+    textAlign: 'right',
+  },
   link: {
     fontFamily: 'Vazir',
+  },
+  subLink: {
+    fontSize: '0.8rem',
+    fontFamily: 'Vazir',
+    paddingRight: theme.spacing(4),
   },
   menuButton: {
     // color: theme.palette.secondary.dark,
@@ -71,6 +92,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     [theme.breakpoints.only('xs')]: {
       minHeight: 40,
     },
+  },
+  active: {
+    backgroundColor: theme.palette.background.default,
+    borderBottom: '1px solid gold',
+
   },
 }));
 interface Props {
@@ -97,9 +123,15 @@ function HideOnScroll(props: Props) {
 function Nav(props: any) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(true);
+
+  const router = useRouter();
+  const { pathname } = router;
+
   const dispatch = useDispatch();
   // eslint-disable-next-line no-shadow
   const theme = useSelector((state:State) => state.theme);
+
   function handleOpen() {
     setOpen(!open);
   }
@@ -108,6 +140,9 @@ function Nav(props: any) {
   }
   const handleChangeTheme = () => {
     dispatch({ type: 'changeTheme', theme: !theme });
+  };
+  const handleClick = () => {
+    setOpenMenu(!openMenu);
   };
   return (
     <div
@@ -185,11 +220,12 @@ function Nav(props: any) {
       <Drawer
         open={open}
         anchor="left"
-        onClose={
-                    () => handleClose()
-                }
+        classes={{
+          paper: classes.drawer,
+        }}
+        onClose={() => handleClose()}
       >
-        <div>
+        <div className={classes.rootDrawer}>
           <List>
             <Link href="/" passHref>
               <ListItem component="a" button>
@@ -201,20 +237,57 @@ function Nav(props: any) {
               </ListItem>
             </Link>
             <Link href="/production" passHref>
-              <ListItem className={classes.link} component="a" button>
+              <ListItem
+                className={
+                  clsx(classes.link, pathname === '/production' ? classes.active : null)
+                }
+                component="a"
+                button
+              >
                 محصولات
               </ListItem>
             </Link>
             <Link href="/upload" passHref>
-              <ListItem className={classes.link} component="a" button>
+              <ListItem
+                className={
+                  clsx(classes.link, pathname === '/upload' ? classes.active : null)
+                }
+                component="a"
+                button
+              >
                 upload
               </ListItem>
             </Link>
-            <Link href="/management" passHref>
-              <ListItem className={classes.link} component="a" button>
-                مدیریت
-              </ListItem>
-            </Link>
+            <ListItem button onClick={handleClick}>
+              <ListItemText className={classes.collaoseMenuText} primary="مدیریت" />
+              {openMenu ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={openMenu} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <Link href="/management/chart" passHref>
+                  <ListItem
+                    className={
+                      clsx(classes.subLink, pathname === '/management/chart' ? classes.active : null)
+                    }
+                    component="a"
+                    button
+                  >
+                    آمار
+                  </ListItem>
+                </Link>
+                <Link href="/management/products" passHref>
+                  <ListItem
+                    className={
+                    clsx(classes.subLink, pathname === '/management/products' ? classes.active : null)
+                  }
+                    component="a"
+                    button
+                  >
+                    محصولات
+                  </ListItem>
+                </Link>
+              </List>
+            </Collapse>
           </List>
         </div>
       </Drawer>
