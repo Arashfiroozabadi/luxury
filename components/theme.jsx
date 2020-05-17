@@ -4,7 +4,6 @@ import { createMuiTheme, responsiveFontSizes, MuiThemeProvider } from '@material
 import CssBaseline from '@material-ui/core/CssBaseline';
 // import { ThemeProvider } from '@material-ui/styles';
 import { red } from '@material-ui/core/colors';
-// eslint-disable-next-line no-unused-vars
 import { useSelector } from 'react-redux';
 // eslint-disable-next-line no-unused-vars
 import { ChildProps, ThemeProps } from '../interface';
