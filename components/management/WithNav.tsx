@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     textDecoration: 'none',
   },
   active: {
-    borderBottom: '1px solid blue',
+    borderBottom: '1px solid gold',
+    backgroundColor: theme.palette.background.default,
   },
 }));
 
@@ -62,7 +63,7 @@ function WithNav(props:any) {
             <a
               className={classes.aTag}
             >
-              chart
+              آمار
             </a>
           </Link>
         </Typography>
@@ -71,14 +72,14 @@ function WithNav(props:any) {
           color="textSecondary"
           className={clsx(
             classes.link,
-            pathname === '/management/overview' ? classes.active : null,
+            pathname === '/management/products' ? classes.active : null,
           )}
         >
-          <Link href="/management/overview">
+          <Link href="/management/products">
             <a
               className={classes.aTag}
             >
-              chart
+              محصولات
             </a>
           </Link>
         </Typography>
