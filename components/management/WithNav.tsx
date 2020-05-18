@@ -27,9 +27,15 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   link: {
     width: '100%',
+    fontSize: '1rem',
     textAlign: 'center',
+    '& :hover': {
+      backgroundColor: '#ffffff14',
+    },
   },
   aTag: {
+    width: '100%',
+    display: 'block',
     color: theme.palette.text.primary,
     textDecoration: 'none',
   },
