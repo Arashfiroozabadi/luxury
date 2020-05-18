@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useEffect, useState, useRef } from 'react';
 import {
 // eslint-disable-next-line no-unused-vars
@@ -5,11 +6,10 @@ import {
   createMuiTheme,
 } from '@material-ui/core';
 import Axios from 'axios';
-import MaterialTable from 'material-table';
+import MaterialTable, { MTableBodyRow } from 'material-table';
 import { red } from '@material-ui/core/colors';
 import { useSelector } from 'react-redux';
 
-// eslint-disable-next-line no-unused-vars
 import Product from '../Product';
 import RTL from '../RTL';
 // eslint-disable-next-line no-unused-vars
@@ -100,7 +100,6 @@ function AllProducts() {
   }, []);
 
   if (data.length !== 0) {
-    data.map((d) => console.log(d));
     return (
       <div className={classes.root}>
         <div>
@@ -113,13 +112,32 @@ function AllProducts() {
                       <div {...props} />
                     </div>
                   ),
+                  Row: (props) => (
+                    <MTableBodyRow customstyle="rotate(-90deg)" {...props} />
+                  ),
                 }}
+                actions={[
+                  (rowData) => ({
+                    icon: 'delete',
+                    tooltip: 'حذف',
+                    onClick: (event, d) => {
+                    // eslint-disable-next-line no-restricted-globals
+                      const conf = confirm(`${'تایید حذف'}${d.title}`);
+                      if (conf === true) {
+                        alert(`ok${rowData.title}`);
+                      } else {
+                        alert('No');
+                      }
+                    },
+                  }),
+                ]}
                 localization={{
                   toolbar: { searchPlaceholder: 'جستوجو' },
                 }}
                 options={{
                   pageSize: 10,
                   pageSizeOptions: [10, 20, 30],
+                  actionsColumnIndex: -1,
                 }}
                 title="محصولات"
                 columns={[
@@ -137,15 +155,22 @@ function AllProducts() {
                   },
                 ]}
                 data={data}
-                detailPanel={(rowData) => (
-                  <Product
-                    description={rowData.description}
-                    title={rowData.title}
-                    path={rowData.path}
-                  />
-                )}
+                detailPanel={[
+                  {
+                    icon: 'chevron_left',
+                    render: (rowData) => (
+                      <Product
+                        description={rowData.description}
+                        title={rowData.title}
+                        path={rowData.path}
+                      />
+                    ),
+                  },
+                ]}
                 tableRef={tableRef}
-                onRowClick={(_event, _rowData, toggleDetailPanel) => toggleDetailPanel()}
+                onRowClick={(_event, _rowData, toggleDetailPanel) => {
+                  toggleDetailPanel();
+                }}
               />
             </MuiThemeProvider>
           </RTL>
