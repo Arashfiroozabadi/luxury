@@ -1,10 +1,15 @@
 /* eslint-disable no-alert */
-import React, { useEffect, useState, useRef } from 'react';
+import React, {
+  useEffect, useState, useRef,
+} from 'react';
 import {
 // eslint-disable-next-line no-unused-vars
   makeStyles, createStyles, MuiThemeProvider,
   createMuiTheme,
+  Snackbar,
+  Slide,
 } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import Axios from 'axios';
 import MaterialTable, { MTableBodyRow } from 'material-table';
 import { red } from '@material-ui/core/colors';
@@ -21,16 +26,46 @@ const useStyles = makeStyles((theme) => createStyles({
       width: '100%',
     },
   },
+  snackRoot: {
+    width: '35%',
+  },
+  alertRoot: {
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  alertAction: {
+    marginLeft: 'initial',
+  },
   tableContainer: {
     backgroundColor: theme.palette.background.default,
     transition: 'background-color 250ms linear',
   },
 }));
 
+function TransitionUp(props) {
+  return <Slide {...props} direction="down" />;
+}
+
+function StatusCode(code) {
+  switch (code) {
+    case 200:
+      return 'success';
+    case 304:
+      return 'warning';
+    default:
+      return undefined;
+  }
+}
+
 
 function AllProducts() {
   const classes = useStyles();
   const [data, setData] = useState([]);
+
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackMSG, setSnackMSG] = useState('');
+  const [snackStutus, setSnackStatus] = useState(undefined);
+
   const tableRef = useRef();
 
   const t = useSelector((state) => state.theme);
@@ -89,6 +124,9 @@ function AllProducts() {
       },
     },
   });
+  const handleClose = () => {
+    setOpenSnack(false);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,12 +135,35 @@ function AllProducts() {
     };
 
     fetchData();
-  }, []);
+  }, [openSnack]);
 
   if (data.length !== 0) {
     return (
       <div className={classes.root}>
         <div>
+          <Snackbar
+            classes={{
+              root: classes.snackRoot,
+            }}
+            open={openSnack}
+            message={snackMSG}
+            onClose={handleClose}
+            TransitionComponent={TransitionUp}
+            // autoHideDuration={6000}
+          >
+            <MuiAlert
+              classes={{
+                root: classes.alertRoot,
+                action: classes.alertAction,
+              }}
+              elevation={6}
+              variant="filled"
+              onClose={handleClose}
+              severity={StatusCode(snackStutus)}
+            >
+              {snackMSG}
+            </MuiAlert>
+          </Snackbar>
           <RTL>
             <MuiThemeProvider theme={t ? theme1 : theme2}>
               <MaterialTable
@@ -122,9 +183,22 @@ function AllProducts() {
                     tooltip: 'حذف',
                     onClick: (event, d) => {
                     // eslint-disable-next-line no-restricted-globals
-                      const conf = confirm(`${'تایید حذف'}${d.title}`);
+                      const conf = confirm(`${'تایید حذف'} ${d.title}`);
                       if (conf === true) {
-                        alert(`ok${rowData.title}`);
+                        Axios.put('/api/put', { id: rowData._id }).then((res) => {
+                          console.log(res);
+                          setSnackStatus(res.status);
+                          setSnackMSG(`محصول "${d.title}" حذف شد‍‍`);
+                          setOpenSnack(true);
+                        }).catch((err) => {
+                          console.log(err.response);
+                          const { status } = err.response;
+                          if (status === 304) {
+                            setSnackStatus(status);
+                            setSnackMSG(`محصول "${d.title}" حذف یا یافت نشده است`);
+                            setOpenSnack(true);
+                          }
+                        });
                       } else {
                         alert('No');
                       }
@@ -135,8 +209,8 @@ function AllProducts() {
                   toolbar: { searchPlaceholder: 'جستوجو' },
                 }}
                 options={{
-                  pageSize: 10,
-                  pageSizeOptions: [10, 20, 30],
+                  pageSize: 5,
+                  pageSizeOptions: [5, 10, 15],
                   actionsColumnIndex: -1,
                 }}
                 title="محصولات"
