@@ -4,8 +4,9 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
+// import { Overview } from './models';
 
-import AccountController from './api';
+const middlewares = require('./api/index');
 
 mongoose.connect('mongodb://localhost:27017/luxury',
   {
@@ -23,6 +24,8 @@ mongoose.connection.once('connected', () => {
   console.log('connected');
 });
 
+// const newOV = new Overview();
+// newOV.save();
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -40,7 +43,7 @@ app.prepare().then(() => {
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: db }),
   }));
-  server.use('/api', AccountController);
+  server.use('/api', middlewares);
 
 
   server.get('/posts/:id', (req, res) => {
