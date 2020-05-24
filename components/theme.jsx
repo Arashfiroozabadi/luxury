@@ -20,9 +20,6 @@ const theme1 = createMuiTheme({
     primary: {
       main: '#556cd6',
     },
-    testText: {
-      main: 'blue',
-    },
     secondary: {
       main: '#212121',
       dark: '#171717',
@@ -56,9 +53,6 @@ const theme2 = createMuiTheme({
     },
     background: {
       default: '#fff',
-    },
-    testText: {
-      main: 'red',
     },
   },
 });

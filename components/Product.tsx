@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme: any) => createStyles({
   },
   texts: {
     width: '30%',
-    color: theme.palette.testText.main,
     [theme.breakpoints.only('xs')]: {
       width: '100%',
       marginTop: 20,
