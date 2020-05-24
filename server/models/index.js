@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const { ObjectId } = Schema;
 
 const overview = new Schema({
+  name: { type: String, default: 'overview' },
   total: { type: Number, default: 0 },
   category: { type: Array },
   totalView: { type: Number, default: 0 },
