@@ -6,6 +6,7 @@ import {
   PhotoModel,
   Overview,
 } from '../models';
+import PostController from './PostController';
 
 const AccountController = express.Router();
 
@@ -205,4 +206,10 @@ AccountController.post('/overview', (_req, res) => {
   );
 });
 
-export default AccountController;
+
+// export default AccountController;
+
+module.exports = [
+  AccountController,
+  PostController,
+];
