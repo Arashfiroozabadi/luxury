@@ -14,7 +14,6 @@ import ProductCaro from './ProductCaro';
 const useStyles = makeStyles((theme: any) => createStyles({
   root: {
     flexGrow: 1,
-    color: theme.palette.testText.main,
     [theme.breakpoints.only('xs')]: {
       width: '100%',
     },
