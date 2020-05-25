@@ -185,7 +185,7 @@ function AllProducts() {
                     // eslint-disable-next-line no-restricted-globals
                       const conf = confirm(`${'تایید حذف'} ${d.title}`);
                       if (conf === true) {
-                        Axios.put('/api/put', { id: rowData._id }).then((res) => {
+                        Axios.put('/api/put', { rowData }).then((res) => {
                           console.log(res);
                           setSnackStatus(res.status);
                           setSnackMSG(`محصول "${d.title}" حذف شد‍‍`);
