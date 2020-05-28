@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import mkdirp from 'mkdirp';
+import chalk from 'chalk';
 import {
   User,
   PhotoModel,
@@ -107,17 +108,17 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
       { upsert: true },
       (err, d) => {
         if (err) {
-          console.log(err);
+          console.log(`[ ${chalk.green('DB')} ${chalk.red('Error')} ]`);
+          console.log(err.errmsg);
           if (err.code === 2) {
             Overview.find({},
               (Err, doc: any) => {
                 if (Err) {
                   return console.log(Err);
                 }
-                console.log(doc);
+                console.log(`[ ${chalk.blue('info')} ] collection with ID ${chalk.blue.underline(doc[0]._id)} found`);
 
                 const id = doc[0]._id;
-                console.log(id);
 
                 return Overview.updateOne(
                   { _id: id },
@@ -131,6 +132,7 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
                   },
                   (ERr, Doc) => {
                     if (ERr) return console.log(ERr);
+                    console.log(`[ ${chalk.blue('info')} ] DB Update`);
                     return console.log(Doc);
                   },
                 );
