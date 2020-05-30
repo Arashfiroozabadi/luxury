@@ -23,9 +23,9 @@ AccountController.get('/all', (_req, res) => {
 
 const storage = multer.diskStorage({
   destination(req: any, _files: any, cb) {
-    const dest = `static/uploads/${req.body.cate}/${req.body.name}`;
-    mkdirp.sync(`public/${dest}`);
-    cb(null, `public/${dest}`);
+    const dest = `uploads/${req.body.cate}/${req.body.name}`;
+    mkdirp.sync(`statics/${dest}`);
+    cb(null, `statics/${dest}`);
   },
   filename(_req: any, file, cb) {
     cb(null, file.originalname);
@@ -88,7 +88,7 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
     res.send({ auth: true, msg: 'لطفا تمام فیلد‌ها را وارد کنید', status: 'err' });
   } else {
     const path: any = [];
-    file.map((d: any) => path.push(d.path.replace(/public\\/g, '')));
+    file.map((d: any) => path.push(d.path.replace(/statics\\/g, '')));
     const newPhoto = new PhotoModel({
       title: body.name,
       category: body.cate,
