@@ -32,7 +32,7 @@ PostController.put('/put', async (req, res) => {
         },
       );
       console.log(`[ ${chalk.blue.bold('info')} ] Document with ID::" ${chalk.blue.underline(body._id)} ":: ${chalk.green.bgWhite.bold('Deleted')}`);
-      const Path = `./public/static/uploads/${body.category}/${body.title}`;
+      const Path = `./statics/uploads/${body.category}/${body.title}`;
       // console.log(process.cwd());
 
       await rimraf(Path, (err) => {
