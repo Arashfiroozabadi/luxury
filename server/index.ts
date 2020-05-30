@@ -44,7 +44,7 @@ app.prepare().then(() => {
     store: new MongoStore({ mongooseConnection: db }),
   }));
   server.use('/api', middlewares);
-
+  server.use(express.static('statics'));
 
   server.get('/posts/:id', (req, res) => {
     const nextJsPage = '/posts';
