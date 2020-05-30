@@ -1,4 +1,6 @@
-const withPlugins = require("next-compose-plugins");
+const withPlugins = require('next-compose-plugins');
+const withImages = require('next-images');
+const optimizedImages = require('next-optimized-images');
 // const withPWA = require('next-pwa')
 // const settings = {
 //   env: {
@@ -10,11 +12,19 @@ const withPlugins = require("next-compose-plugins");
 //     dest: 'public',
 //   },
 // };
-module.exports = process.env.NODE_ENV === 'development' ? {} : withPlugins(
-  [
+module.exports = process.env.NODE_ENV === 'development'
+  ? withPlugins([
+    // withImages({
+    //   assetPrefix: 'locallhost:8080',
+    // }),
+  ])
+  : withPlugins(
+    [
+      // [optimizedImages, {}],
+      // withImages(),
     // [withPWA,
     //   settings
     // ]
-  ],
-  { /* nextConfig options here */ }
-)
+    ],
+    { /* nextConfig options here */ },
+  );
