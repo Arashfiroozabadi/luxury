@@ -90,6 +90,8 @@ function Chart(props: PropsTypes) {
         <div className={classes.root}>
           <div className={clsx(classes.row, classes.chartContiner)}>
             {t.map((item: number, i: number) => {
+              console.log(Number.isNaN(item));
+
               const randomColor = Math.floor(Math.random() * 16777215).toString(16);
               return (
                 <div
@@ -97,6 +99,7 @@ function Chart(props: PropsTypes) {
                   className={classes.chartCell}
                   key={randomColor}
                   style={{
+                    display: Number.isNaN(item) || item === 0 ? 'none' : 'flex',
                     width: `${item}%`,
                     backgroundColor: chartRowColor[i],
                   }}
