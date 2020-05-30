@@ -141,7 +141,7 @@ function Carousel() {
                     >
                       <img
                         className={classes.img}
-                        src={step.path[step.bannerPath]}
+                        src={(process.env.PUBLIC_URL, `http://user-45375703.localhost.run/${step.path[step.bannerPath]}`)}
                         alt={step.title}
                       />
                       <div

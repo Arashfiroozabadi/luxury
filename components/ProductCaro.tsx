@@ -89,7 +89,7 @@ function ProductCaro(props: any) {
               {Math.abs(activeStep - index) <= 2 ? (
                 <img
                   className={classes.img}
-                  src={`/${step}`}
+                  src={(process.env.PUBLIC_URL, `http://user-45375703.localhost.run/${step}`)}
                   alt=""
                 />
               ) : null}
@@ -124,7 +124,7 @@ function ProductCaro(props: any) {
           <img
             className={classes.imgThumbs}
             key={p}
-            src={`/${p}`}
+            src={(process.env.PUBLIC_URL, `/${p}`)}
             alt=""
             height="80"
             width="80"
