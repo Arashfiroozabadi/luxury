@@ -6,6 +6,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Paper, Button, MobileStepper } from '@material-ui/core';
 
+import RandNum from './randNum';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -85,11 +86,11 @@ function ProductCaro(props: any) {
           enableMouseEvents
         >
           {path.map((step: any, index: any) => (
-            <div key={step}>
+            <div key={RandNum()}>
               {Math.abs(activeStep - index) <= 2 ? (
                 <img
                   className={classes.img}
-                  src={(process.env.PUBLIC_URL, `http://user-45375703.localhost.run/${step}`)}
+                  src={`data:image/png;base64,${step.image}`}
                   alt=""
                 />
               ) : null}
@@ -123,8 +124,8 @@ function ProductCaro(props: any) {
           // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
           <img
             className={classes.imgThumbs}
-            key={p}
-            src={(process.env.PUBLIC_URL, `/${p}`)}
+            key={RandNum()}
+            src={`data:image/png;base64,${p.image}`}
             alt=""
             height="80"
             width="80"
