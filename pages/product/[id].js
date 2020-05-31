@@ -42,7 +42,7 @@ function Post() {
               <Product
                 description={res.description}
                 title={res.title}
-                path={res.path}
+                path={res.image}
               />
             </Grid>
           </Grid>
