@@ -3,6 +3,20 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 const { ObjectId } = Schema;
 
+const images = new Schema({
+  author: ObjectId,
+  title: { type: String },
+  color: [{ colorName: String, imgPath: String }],
+  views: { type: Array },
+  unit: { type: String },
+  category: { type: String },
+  description: { type: String },
+  banner: { type: Boolean },
+  bannerPath: { type: String },
+  date: { type: Date, default: Date.now },
+  image: Array,
+});
+
 const overview = new Schema({
   name: { type: String, default: 'overview' },
   total: { type: Number, default: 0 },
@@ -36,3 +50,4 @@ user.requiredPaths();
 export const User = mongoose.model('users', user);
 export const Overview = mongoose.model('overview', overview);
 export const PhotoModel = mongoose.model('photos', photoModel);
+export const ImgModel = mongoose.model('images', images);
