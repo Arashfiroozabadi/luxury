@@ -53,7 +53,7 @@ function ProductCardInfo(props:FetchData) {
       <CardMedia
         className={classes.cardImgs}
         component="img"
-        image={`/${path}`}
+        image={`data:image/png;base64,${path}`}
         alt={title}
         title={title}
       />

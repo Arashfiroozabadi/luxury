@@ -77,7 +77,7 @@ function Rahati() {
               >
                 <ProductCardInfo
                   title={d.title}
-                  path={d.path[0]}
+                  path={d.image[0].image}
                   _id={d._id}
                 />
               </Grid>
