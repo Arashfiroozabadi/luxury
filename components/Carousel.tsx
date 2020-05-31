@@ -13,6 +13,7 @@ import { autoPlay } from 'react-swipeable-views-utils';
 
 
 import ConvertString from './ConvertString';
+import RandNum from './randNum';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -131,40 +132,37 @@ function Carousel() {
             onChangeIndex={handleStepChange}
             enableMouseEvents
           >
-            {res.map((step: any, index: any) => {
-              const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-              return (
-                <div key={randomColor}>
-                  {Math.abs(activeStep - index) <= 2 ? (
+            {res.map((step: any, index: any) => (
+              <div key={RandNum()}>
+                {Math.abs(activeStep - index) <= 2 ? (
+                  <div
+                    className={classes.imgContainer}
+                  >
+                    <img
+                      className={classes.img}
+                      src={`data:image/png;base64,${step.image[step.bannerPath].image}`}
+                      alt={step.title}
+                    />
                     <div
-                      className={classes.imgContainer}
+                      className={clsx(classes.productLink, 'productLink')}
                     >
-                      <img
-                        className={classes.img}
-                        src={(process.env.PUBLIC_URL, `http://user-45375703.localhost.run/${step.path[step.bannerPath]}`)}
-                        alt={step.title}
-                      />
-                      <div
-                        className={clsx(classes.productLink, 'productLink')}
+                      <Link
+                        href="/product/[id]"
+                        as={`/product/${res[activeStep]._id}`}
+                        passHref
                       >
-                        <Link
-                          href="/product/[id]"
-                          as={`/product/${res[activeStep]._id}`}
-                          passHref
+                        <Button
+                          size="large"
+                          component="a"
                         >
-                          <Button
-                            size="large"
-                            component="a"
-                          >
-                            مشاهده محصول
-                          </Button>
-                        </Link>
-                      </div>
+                          مشاهده محصول
+                        </Button>
+                      </Link>
                     </div>
-                  ) : null}
-                </div>
-              );
-            })}
+                  </div>
+                ) : null}
+              </div>
+            ))}
           </AutoPlaySwipeableViews>
           <MobileStepper
             className={classes.MobileStepper}
