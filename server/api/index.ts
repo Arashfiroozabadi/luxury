@@ -2,23 +2,18 @@ import express from 'express';
 import multer from 'multer';
 import mkdirp from 'mkdirp';
 import chalk from 'chalk';
+import fs from 'fs';
+import loger from '../components/logers';
 import {
   User,
-  PhotoModel,
   Overview,
+  ImgModel,
 } from '../models';
 import PostController from './PostController';
 
-const AccountController = express.Router();
+declare const Buffer: { from: new (arg0: string, arg1: string) => any; };
 
-// test git
-AccountController.get('/all', (_req, res) => {
-  PhotoModel.find({}).then(
-    (resualt) => {
-      res.send(resualt);
-    },
-  );
-});
+const AccountController = express.Router();
 
 
 const storage = multer.diskStorage({
@@ -78,7 +73,7 @@ AccountController.post('/login', upload.single('file'), (req: any, res) => {
     res.send({ auth: true, userName: body.userName, msg: 'وارد شدید' });
   }
 });
-AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
+AccountController.post('/upload', upload.array('file', 7), async (req: any, res) => {
   const file = req.files;
   const { body } = req;
 
@@ -87,17 +82,25 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
     // console.log('file name is null');
     res.send({ auth: true, msg: 'لطفا تمام فیلد‌ها را وارد کنید', status: 'err' });
   } else {
-    const path: any = [];
-    file.map((d: any) => path.push(d.path.replace(/statics\\/g, '')));
-    const newPhoto = new PhotoModel({
+    const imageFiles: any = [];
+    file.map(async (d:{path:string, mimetype:any}) => {
+      const Img = fs.readFileSync(d.path);
+      const EncodeImg = Img.toString('base64');
+      const FinalImg = {
+        contentType: d.mimetype,
+        // eslint-disable-next-line new-cap
+        image: new Buffer.from(EncodeImg, 'base64'),
+      };
+      await imageFiles.push(FinalImg);
+    });
+    const newImage = new ImgModel({
       title: body.name,
       category: body.cate,
       description: body.desc,
-      path,
       banner: body.banner,
       bannerPath: body.bannerPath,
+      image: imageFiles,
     });
-
     Overview.updateOne({ 'category.name': body.cate },
       {
         $inc: {
@@ -143,7 +146,8 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
         }
         return console.log(d);
       });
-    newPhoto.save();
+    await newImage.save();
+
     res.send({
       msg: 'ثبت شد',
       auth: true,
@@ -155,22 +159,21 @@ AccountController.post('/upload', upload.array('file', 7), (req: any, res) => {
 
 AccountController.post('/production', (req, res) => {
   const { target } = req.body;
-  PhotoModel.find({ category: target }).then(
+  ImgModel.find({ category: target }).then(
     (resualt) => {
       res.send(resualt);
     },
   );
 });
-AccountController.post('/product', (req, res) => {
+AccountController.post('/product', async (req, res) => {
   const { target } = req.body;
-
-  PhotoModel.findOne({ _id: target }).then(
-    (resualt: any) => {
-      PhotoModel.updateOne(
+  ImgModel.findOne({ _id: target }).then(
+    async (resualt:any) => {
+      ImgModel.updateOne(
         { _id: target },
         { $addToSet: { views: req.connection.remoteAddress } },
         (err, d) => {
-          if (err) return console.log(err);
+          if (err) return loger('error', err);
 
           if (d.nModified === 0) {
             return null;
@@ -179,21 +182,22 @@ AccountController.post('/product', (req, res) => {
               { name: 'overview' },
               { $inc: { totalView: 1 } },
               (Err, D) => {
-                if (Err) return console.log(Err);
-                return console.log(D);
+                if (Err) return loger('error', err);
+                return loger('info', D);
               },
             );
           }
-          return console.log(d);
+          return loger('info', d);
         },
       );
+      loger('info', resualt);
       res.send(resualt);
     },
   );
 });
 
 AccountController.post('/banner', (_req, res) => {
-  PhotoModel.find({ banner: true }).then(
+  ImgModel.find({ banner: true }).then(
     (resualt) => {
       res.send(resualt);
     },
@@ -208,8 +212,11 @@ AccountController.post('/overview', (_req, res) => {
   );
 });
 
-
-// export default AccountController;
+AccountController.get('/all', (_req, res) => {
+  ImgModel.find({}).then((resualt:any) => {
+    res.send(resualt);
+  });
+});
 
 module.exports = [
   AccountController,
