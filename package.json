@@ -61,6 +61,7 @@
     "rimraf": "^3.0.2",
     "sass": "^1.26.5",
     "serialize-javascript": "^3.0.0",
+    "sharp": "^0.25.3",
     "strip-ansi": "^6.0.0"
   },
   "devDependencies": {
@@ -69,6 +70,7 @@
     "@types/react-dom": "16.8.4",
     "@types/react-redux": "^7.1.7",
     "@types/recharts": "^1.8.10",
+    "@types/sharp": "^0.25.0",
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
