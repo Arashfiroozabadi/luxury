@@ -14,6 +14,7 @@ import { autoPlay } from 'react-swipeable-views-utils';
 
 import ConvertString from './ConvertString';
 import RandNum from './randNum';
+import Loading from './loading';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -54,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: '100% auto',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center center',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      margin: 5,
+    },
   },
   productLink: {
     color: 'gold',
@@ -74,24 +79,36 @@ const useStyles = makeStyles((theme) => ({
   MobileStepper: {
     transition: 'background-color 250ms linear , color 250ms linear',
   },
+  loaderClass: {
+    display: 'flex',
+    height: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
 }));
 
 function Carousel() {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [res, setRes] = useState<any | null>([]);
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const result = await axios.post(
         '/api/banner',
       );
       setRes(result.data);
+      setIsLoading(false);
     };
     fetchData();
   }, []);
-  const maxSteps = res.length;
+  const maxSteps = res.banners !== undefined ? res.banners.length : 0;
+  console.log(res.banners !== undefined ? res.banners.length : 0);
 
 
   const handleNext = () => {
@@ -105,7 +122,14 @@ function Carousel() {
   const handleStepChange = (step: any) => {
     setActiveStep(step);
   };
-
+  if (isLoading) {
+    return (
+      <Loading
+        size={80}
+        className={classes.loaderClass}
+      />
+    );
+  }
   return (
     res.length !== 0
       ? (
@@ -113,7 +137,7 @@ function Carousel() {
           <Paper square elevation={0} className={classes.header}>
             <Link
               href="/product/[id]"
-              as={`/product/${res[activeStep]._id}`}
+              as={`/product/${res.bannerInfo[activeStep]._id}`}
               passHref
             >
               <Button
@@ -121,7 +145,7 @@ function Carousel() {
                 color="primary"
                 component="a"
               >
-                {`${ConvertString(res[activeStep].category)} ${res[activeStep].title}`}
+                {`${ConvertString(res.bannerInfo[activeStep].category)} ${res.bannerInfo[activeStep].title}`}
               </Button>
             </Link>
           </Paper>
@@ -132,7 +156,7 @@ function Carousel() {
             onChangeIndex={handleStepChange}
             enableMouseEvents
           >
-            {res.map((step: any, index: any) => (
+            {res.banners.map((step: any, index: any) => (
               <div key={RandNum()}>
                 {Math.abs(activeStep - index) <= 2 ? (
                   <div
@@ -140,15 +164,15 @@ function Carousel() {
                   >
                     <img
                       className={classes.img}
-                      src={`data:image/png;base64,${step.image[step.bannerPath].image}`}
-                      alt={step.title}
+                      src={`data:image/png;base64,${step.image}`}
+                      alt={res.bannerInfo[index].title}
                     />
                     <div
                       className={clsx(classes.productLink, 'productLink')}
                     >
                       <Link
                         href="/product/[id]"
-                        as={`/product/${res[activeStep]._id}`}
+                        as={`/product/${res.bannerInfo[activeStep]._id}`}
                         passHref
                       >
                         <Button

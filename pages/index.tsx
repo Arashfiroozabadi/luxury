@@ -4,7 +4,6 @@ import React, {
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { ThemeProvider } from '@material-ui/styles';
 import {
   Grid,
   Button,
@@ -13,15 +12,10 @@ import {
   Container,
   Toolbar,
 } from '@material-ui/core';
-
 // eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import {
-  useSelector,
-  // useDispatch,
-} from 'react-redux';
 
-import { themeDark, themeLight } from '../components/theme';
+import AppTheme from '../components/theme';
 import Carousel from '../components/Carousel';
 import Cards from '../components/Cards';
 
@@ -33,6 +27,10 @@ const Layout = dynamic(
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+      padding: 0,
+    },
   },
   textBox: {
     alignSelf: 'flex-start',
@@ -80,16 +78,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     textAlign: 'center',
   },
 }));
-interface State {
-  theme:boolean
-}
 
 export default () => {
   const classes = useStyles();
-  const t = useSelector((state:State) => state.theme);
 
   return (
-    <ThemeProvider theme={t ? themeDark : themeLight}>
+    <AppTheme>
       <Layout>
         <Head>
           <title>Luxury</title>
@@ -229,6 +223,6 @@ export default () => {
           </Grid>
         </Container>
       </Layout>
-    </ThemeProvider>
+    </AppTheme>
   );
 };

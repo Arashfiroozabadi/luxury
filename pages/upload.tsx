@@ -9,7 +9,6 @@ import {
   Box,
   TextField,
   Button,
-  Paper,
   Grid,
   FormHelperText,
   Typography,
@@ -24,11 +23,20 @@ import axios from 'axios';
 import AppTheme from '../components/theme';
 import Layout from '../components/Layout';
 import RTL from '../components/RTL';
+import Paper from '../components/Paper';
+import Loading from '../components/loading';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     [theme.breakpoints.only('xs')]: {
       width: '100%',
+    },
+  },
+  rootGrid: {
+    // backgroundColor: theme.palette.background.default,
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      flexDirection: 'column',
     },
   },
   uploadRoot: {
@@ -44,6 +52,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   textField: {
     width: '80%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   dense: {
     marginTop: theme.spacing(2),
@@ -63,6 +74,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   progress: {
     width: '80%',
     marginBottom: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+  },
+  rootImage: {
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+    },
   },
   img: {
     width: '30%',
@@ -82,6 +101,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       '& .bannerForm': {
         transform: 'translateY(0px)',
       },
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '40%',
     },
   },
   close: {
@@ -129,6 +151,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     height: 30,
     padding: theme.spacing(1),
   },
+  loaderClass: {
+    display: 'flex',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '15px 2.5px',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
 }));
 
 function Upload() {
@@ -152,13 +184,16 @@ function Upload() {
   const [imgUrl, setImgUrl] = useState<any | null>([]);
   const [imgs, setImgs] = useState<any | null>([]);
   const [isAuth, setAuth] = useState<boolean | null>();
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const result = await axios.post(
         '/api/auth',
       );
       if (result.data.auth === false) { setAuth(false); }
       setData(result.data);
+      setIsLoading(false);
     };
     fetchData();
   }, [isAuth]);
@@ -229,6 +264,7 @@ function Upload() {
     for (let i = 0; i < imgs.length; i += 1) {
       file.append('file', imgs[i]);
     }
+    setIsLoading(true);
     axios.post('/api/upload',
 
       file,
@@ -240,8 +276,12 @@ function Upload() {
         },
       }).then((res: any) => {
       setData(res.data);
+      setIsLoading(false);
+      setLoad({ loaded: 0 });
     }).catch(
       (Err: any) => {
+        setIsLoading(false);
+        setLoad({ loaded: 0 });
         if (Err.response) {
           console.log(Err);
         }
@@ -280,6 +320,7 @@ function Upload() {
             <Container>
               <Paper>
                 <Grid
+                  className={classes.rootGrid}
                   container
                   justify="center"
                 >
@@ -296,8 +337,10 @@ function Upload() {
                     </Typography>
                   </Grid>
                   <Grid
+                    // className={classes.infoInputs}
                     item
-                    xs={4}
+                    md={4}
+                    xs={12}
                   >
                     <TextField
                       className={clsx(classes.textField, classes.dense)}
@@ -339,7 +382,8 @@ function Upload() {
                   </Grid>
                   <Grid
                     item
-                    xs={6}
+                    md={6}
+                    xs={12}
                   >
                     <TextField
                       className={clsx(classes.textField, classes.dense)}
@@ -362,6 +406,7 @@ function Upload() {
                     <Box
                       display="flex"
                       flexWrap="wrap"
+                      className={classes.rootImage}
                     >
                       {imgUrl.map((d: any, i: any) => (
                         <div
@@ -425,19 +470,24 @@ function Upload() {
                     >
                       ارسال
                     </Button>
-                    <FormHelperText
-                      className={classes.helperText}
-                      color="red"
-                      style={data.status === 'err'
-                        ? {
-                          color: 'red',
-                        }
-                        : {
-                          color: 'green',
-                        }}
-                    >
-                      {data.msg}
-                    </FormHelperText>
+                    {
+                      isLoading ? <Loading className={classes.loaderClass} size={50} />
+                        : (
+                          <FormHelperText
+                            className={classes.helperText}
+                            color="red"
+                            style={data.status === 'err'
+                              ? {
+                                color: 'red',
+                              }
+                              : {
+                                color: 'green',
+                              }}
+                          >
+                            {data.msg}
+                          </FormHelperText>
+                        )
+                    }
                   </Grid>
                 </Grid>
               </Paper>

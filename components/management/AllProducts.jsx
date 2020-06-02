@@ -236,7 +236,7 @@ function AllProducts() {
                       <Product
                         description={rowData.description}
                         title={rowData.title}
-                        path={rowData.image}
+                        path={rowData._id}
                       />
                     ),
                   },

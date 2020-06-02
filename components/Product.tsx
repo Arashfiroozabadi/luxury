@@ -23,6 +23,12 @@ const useStyles = makeStyles((theme: any) => createStyles({
     backgroundColor: theme.palette.background.default,
     transition: 'background-color 250ms linear , color 250ms linear',
   },
+  cardContentRoot: {
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+      padding: 0,
+    },
+  },
   mainContent: {
     display: 'flex',
     justifyContent: 'space-evenly',
@@ -35,6 +41,7 @@ const useStyles = makeStyles((theme: any) => createStyles({
     [theme.breakpoints.only('xs')]: {
       width: '100%',
       marginTop: 20,
+      padding: theme.spacing(2.5),
     },
   },
 }));
@@ -56,7 +63,7 @@ function Product(props:FetchData) {
             </Box>
           </Typography>
         </CardContent>
-        <CardContent>
+        <CardContent className={classes.cardContentRoot}>
           {path ? (
             <div
               className={classes.mainContent}

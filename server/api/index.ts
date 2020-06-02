@@ -3,16 +3,18 @@ import multer from 'multer';
 import mkdirp from 'mkdirp';
 import chalk from 'chalk';
 import fs from 'fs';
+
 import loger from '../components/logers';
 import {
   User,
   Overview,
-  ImgModel,
+  Post,
+  Img,
 } from '../models';
-import PostController from './PostController';
+
+const PostController = require('./PostController');
 
 declare const Buffer: { from: new (arg0: string, arg1: string) => any; };
-
 const AccountController = express.Router();
 
 
@@ -82,24 +84,12 @@ AccountController.post('/upload', upload.array('file', 7), async (req: any, res)
     // console.log('file name is null');
     res.send({ auth: true, msg: 'لطفا تمام فیلد‌ها را وارد کنید', status: 'err' });
   } else {
-    const imageFiles: any = [];
-    file.map(async (d:{path:string, mimetype:any}) => {
-      const Img = fs.readFileSync(d.path);
-      const EncodeImg = Img.toString('base64');
-      const FinalImg = {
-        contentType: d.mimetype,
-        // eslint-disable-next-line new-cap
-        image: new Buffer.from(EncodeImg, 'base64'),
-      };
-      await imageFiles.push(FinalImg);
-    });
-    const newImage = new ImgModel({
+    const newPost = new Post({
       title: body.name,
       category: body.cate,
       description: body.desc,
       banner: body.banner,
       bannerPath: body.bannerPath,
-      image: imageFiles,
     });
     Overview.updateOne({ 'category.name': body.cate },
       {
@@ -146,7 +136,28 @@ AccountController.post('/upload', upload.array('file', 7), async (req: any, res)
         }
         return console.log(d);
       });
-    await newImage.save();
+    await newPost.save(async (err, post:any) => {
+      if (err) return loger('error', err);
+      const imageFiles: any = [];
+      file.map(async (d:{path:string, mimetype:any}) => {
+        const img = fs.readFileSync(d.path);
+        const EncodeImg = img.toString('base64');
+        const FinalImg = {
+          contentType: d.mimetype,
+          // eslint-disable-next-line new-cap
+          image: new Buffer.from(EncodeImg, 'base64'),
+        };
+        await imageFiles.push(FinalImg);
+      });
+      const newImg = new Img({
+        postID: post._id,
+        image: imageFiles,
+        banner: post.banner,
+        bannerPath: post.bannerPath,
+      });
+      await newImg.save();
+      return loger('info', post);
+    });
 
     res.send({
       msg: 'ثبت شد',
@@ -159,7 +170,7 @@ AccountController.post('/upload', upload.array('file', 7), async (req: any, res)
 
 AccountController.post('/production', (req, res) => {
   const { target } = req.body;
-  ImgModel.find({ category: target }).then(
+  Post.find({ category: target }).then(
     (resualt) => {
       res.send(resualt);
     },
@@ -167,9 +178,9 @@ AccountController.post('/production', (req, res) => {
 });
 AccountController.post('/product', async (req, res) => {
   const { target } = req.body;
-  ImgModel.findOne({ _id: target }).then(
+  Post.findOne({ _id: target }).then(
     async (resualt:any) => {
-      ImgModel.updateOne(
+      Post.updateOne(
         { _id: target },
         { $addToSet: { views: req.connection.remoteAddress } },
         (err, d) => {
@@ -197,9 +208,17 @@ AccountController.post('/product', async (req, res) => {
 });
 
 AccountController.post('/banner', (_req, res) => {
-  ImgModel.find({ banner: true }).then(
-    (resualt) => {
-      res.send(resualt);
+  Post.find({ banner: true }).then(
+    async (resualt) => {
+      await Img.find({ banner: true }).then((docs) => {
+        const d:any = [];
+        docs.map((data:any) => d.push(data.image[data.bannerPath]));
+        const finalRes = {
+          banners: d,
+          bannerInfo: resualt,
+        };
+        res.send(finalRes);
+      });
     },
   );
 });
@@ -213,10 +232,21 @@ AccountController.post('/overview', (_req, res) => {
 });
 
 AccountController.get('/all', (_req, res) => {
-  ImgModel.find({}).then((resualt:any) => {
+  Post.find({}).then((resualt:any) => {
     res.send(resualt);
   });
 });
+AccountController.get('/test/:id', (_req, res) => {
+  const { id } = _req.params;
+
+  // eslint-disable-next-line consistent-return
+  Img.find({ _id: id }, (err, result:any) => {
+    if (err) return console.log(err);
+    res.contentType('image/jpeg');
+    res.send(result[0].image[0].image.buffer);
+  });
+});
+
 
 module.exports = [
   AccountController,

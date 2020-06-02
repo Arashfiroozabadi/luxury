@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     '& p': {
       margin: '0',
     },
-    [theme.breakpoints.only('xs')]: {
-
+    [theme.breakpoints.down('sm')]: {
+      width: '25%',
     },
   },
   chartIdColorDivider: {

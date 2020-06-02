@@ -2,7 +2,7 @@ import chalk from 'chalk';
 
 function Loger(
   type:'info' | 'error' | 'warn',
-  msg?:string,
+  msg?:string | number| any,
 ):void{
   switch (type) {
     case 'info':

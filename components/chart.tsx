@@ -45,22 +45,26 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     boxShadow: theme.shadows[5],
     alignItems: 'center',
     justifyContent: 'center',
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '100%',
+    },
   },
   captionText: {
     color: theme.palette.info.contrastText,
+    textShadow: '0px 1px 2px #000000ba, 0px 2px 4px #000000ba',
   },
   chartContiner: {
     padding: theme.spacing(1.5),
     borderRadius: theme.shape.borderRadius,
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+      padding: 0,
+      alignItems: 'center',
+      flexDirection: 'column',
+    },
   },
   chartInfo: {
-    width: '15%',
-    fontSize: 14,
-    margin: '15px 10px',
-    textAlign: 'center',
-    '& p': {
-      margin: '0',
-    },
+    flexWrap: 'wrap',
   },
   chartIdColorDivider: {
     height: theme.spacing(0.5),
@@ -90,8 +94,6 @@ function Chart(props: PropsTypes) {
         <div className={classes.root}>
           <div className={clsx(classes.row, classes.chartContiner)}>
             {t.map((item: number, i: number) => {
-              console.log(Number.isNaN(item));
-
               const randomColor = Math.floor(Math.random() * 16777215).toString(16);
               return (
                 <div
@@ -118,8 +120,7 @@ function Chart(props: PropsTypes) {
               );
             })}
           </div>
-          <div className={classes.row}>
-
+          <div className={clsx(classes.row, classes.chartInfo)}>
             {data.category.map((item: CateType, i: number) => {
               const randomKey = Math.floor(Math.random() * 16777215).toString(16);
               return (
