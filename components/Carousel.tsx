@@ -108,8 +108,6 @@ function Carousel() {
     fetchData();
   }, []);
   const maxSteps = res.banners !== undefined ? res.banners.length : 0;
-  console.log(res.banners !== undefined ? res.banners.length : 0);
-
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
