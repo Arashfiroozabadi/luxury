@@ -12,11 +12,19 @@ import {
   Img,
 } from '../models';
 
+const Liara = require('@liara/sdk');
+
 const PostController = require('./PostController');
 
 declare const Buffer: { from: new (arg0: string, arg1: string) => any; };
 const AccountController = express.Router();
 
+
+const liaraClient = new Liara.Storage.Client({
+  accessKey: 'Z3SBHOIW4DM5VL9YTHRJF',
+  secretKey: 'ejoUJJEe4yqkUYFohJZtYprSxWSqT8wC9Thv9AOBQ',
+  endPoint: '5ed778ad1c92cc0011b11ead.liara.space',
+});
 
 const storage = multer.diskStorage({
   destination(req: any, _files: any, cb) {
@@ -75,9 +83,10 @@ AccountController.post('/login', upload.single('file'), (req: any, res) => {
     res.send({ auth: true, userName: body.userName, msg: 'وارد شدید' });
   }
 });
-AccountController.post('/upload', upload.array('file', 7), async (req: any, res) => {
+AccountController.post('/upload', async (req: any, res) => {
   const file = req.files;
   const { body } = req;
+  console.log(file);
 
   if (body.name.length === 0 || body.cate.length === 0
     || body.desc.length === 0 || file.length === 0) {
@@ -91,6 +100,7 @@ AccountController.post('/upload', upload.array('file', 7), async (req: any, res)
       banner: body.banner,
       bannerPath: body.bannerPath,
     });
+
     Overview.updateOne({ 'category.name': body.cate },
       {
         $inc: {
@@ -168,13 +178,36 @@ AccountController.post('/upload', upload.array('file', 7), async (req: any, res)
   }
 });
 
-AccountController.post('/production', (req, res) => {
+AccountController.post('/production', async (req, res) => {
   const { target } = req.body;
-  Post.find({ category: target }).then(
-    (resualt) => {
-      res.send(resualt);
-    },
-  );
+  Post.find({ category: target }, ((postErr, posts) => {
+    if (postErr) return loger('error', postErr);
+    const finalImg:any = [];
+    posts.map((post) => Img.find({ postID: post._id }, (imgErr, imgs:any) => {
+      if (imgErr) return loger('error', imgErr);
+      return imgs.map((img:any) => finalImg.push(img.image[0].image));
+    }));
+
+    return res.send(finalImg);
+  }));
+  // Post.find({ category: target }).then(
+  //   async (resualt) => {
+  //     const images:any = [];
+  //     await resualt.map(async (d) => {
+  //       Img.find({ postID: d._id }).then(
+  //         async (img: any) => {
+  //           await img.map((doc: any) => images.push(doc.image[0].image));
+  //           return res.send({ resualt, images });
+  //         },
+  //       ).catch((err) => {
+  //         res.send('err');
+  //         console.log(`${err}line 1`);
+  //       });
+  //     });
+  //   },
+  // ).catch((err) => {
+  //   console.log(`${err}line 2`);
+  // });
 });
 AccountController.post('/product', async (req, res) => {
   const { target } = req.body;
@@ -236,15 +269,34 @@ AccountController.get('/all', (_req, res) => {
     res.send(resualt);
   });
 });
-AccountController.get('/test/:id', (_req, res) => {
-  const { id } = _req.params;
+AccountController.post('/test', (req, res) => {
+  const { files }:any = req.files;
 
-  // eslint-disable-next-line consistent-return
-  Img.find({ _id: id }, (err, result:any) => {
-    if (err) return console.log(err);
-    res.contentType('image/jpeg');
-    res.send(result[0].image[0].image.buffer);
+  const fileContents = fs.createReadStream('./server/api/1wd.jpg');
+  console.log(req.body);
+
+  liaraClient.putObject('images', 'rahati/test1/hello-file.jpg', fileContents).then((result:any) => {
+    console.log('Successfully uploaded.');
+    res.send(result);
   });
+  // liaraClient.makeBucket('test1', (err:any) => {
+  //   if (err) return console.log(err);
+  //   return console.log('ok');
+  // });
+  // liaraClient.listBuckets((err:any, buckets:any) => {
+  //   if (err) return console.log(err);
+  //   console.log('buckets :', buckets);
+  // });
+  // liaraClient.presignedUrl('GET', 'images', 'hello-file.jpg', 24 * 60 * 60, (err:any, doc:any) => {
+  //   if (err) {
+  //     return res.send(err);
+  //   }
+  //   // doc.on('data', (d:any) => {
+  //   //   console.log(d);
+  //   // });
+  //   return res.send(doc);
+  // });
+  console.log(files.name);
 });
 
 

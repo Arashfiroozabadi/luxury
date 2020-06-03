@@ -50,42 +50,47 @@ function Rahati() {
     };
     fetchData();
   }, []);
+  console.log(resp.resualt);
 
   return (
-    <AppTheme>
-      <Layout>
-        <Head>
-          <title>مبل راحتی</title>
-        </Head>
-        <Container>
-          <Typography
-            variant="h5"
-            component="h2"
-            gutterBottom
-          >
-            <Box>
-              مبل راحتی
-            </Box>
-          </Typography>
-          <Grid container justify="space-evenly">
-            {resp.map((d: any) => (
-              <Grid
-                key={d._id}
-                item
-                md={4}
-                className={classes.container}
+    resp.resualt !== undefined
+      ? (
+        <AppTheme>
+          <Layout>
+            <Head>
+              <title>مبل راحتی</title>
+            </Head>
+            <Container>
+              <Typography
+                variant="h5"
+                component="h2"
+                gutterBottom
               >
-                <ProductCardInfo
-                  title={d.title}
-                  path={d.image[0].image}
-                  _id={d._id}
-                />
+                <Box>
+                  مبل راحتی
+                </Box>
+              </Typography>
+              <Grid container justify="space-evenly">
+                {resp.resualt.map((d: any) => (
+                  <Grid
+                    key={d._id}
+                    item
+                    md={4}
+                    className={classes.container}
+                  >
+                    <ProductCardInfo
+                      title={d.title}
+                      path={resp.images[0]}
+                      _id={d._id}
+                    />
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Layout>
-    </AppTheme>
+            </Container>
+          </Layout>
+        </AppTheme>
+      )
+      : null
   );
 }
 

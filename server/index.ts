@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
+import fileUpload from 'express-fileupload';
 // import { Overview } from './models';
 
 const middlewares = require('./api/index');
@@ -33,7 +34,9 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
-  server.use(bodyParser.json());
+  server.use(bodyParser.json({ limit: '50mb' }));
+  server.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+  server.use(fileUpload({ extended: true }));
   server.use(session({
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 365,
