@@ -180,6 +180,10 @@ function Management() {
     fetchData();
   }, [isAuth]);
 
+  useEffect(() => () => {
+    console.log('cleaned up');
+  }, []);
+
   const handleChangeTab = (_event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };

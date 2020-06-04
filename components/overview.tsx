@@ -26,7 +26,9 @@ function Overview() {
     };
     fetchData();
   }, []);
-
+  useEffect(() => () => {
+    console.log('cleaned up');
+  }, []);
   if (data.category) {
     return (
       <AppTheme>

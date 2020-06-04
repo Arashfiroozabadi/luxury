@@ -198,6 +198,9 @@ function Upload() {
     fetchData();
   }, [isAuth]);
 
+  useEffect(() => () => {
+    console.log('cleaned up');
+  }, []);
   function handleChange(e: any) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }

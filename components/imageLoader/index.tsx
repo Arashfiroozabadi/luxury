@@ -41,6 +41,11 @@ function ImageLoader({
     };
     fetchData();
   }, []);
+
+  useEffect(() => () => {
+    console.log('cleaned up');
+  }, []);
+
   if (isError) {
     console.log('cancle');
     return null;
