@@ -8,7 +8,6 @@ import {
   User,
   Overview,
   Post,
-  Img,
 } from '../models';
 
 const Liara = require('@liara/sdk');
@@ -16,6 +15,8 @@ const Liara = require('@liara/sdk');
 const PostController = require('./PostController');
 const UploadController = require('./UploadController');
 const Banner = require('./banner');
+const Production = require('./production');
+
 
 const AccountController = express.Router();
 
@@ -83,37 +84,6 @@ AccountController.post('/login', upload.single('file'), (req: any, res) => {
   }
 });
 
-AccountController.post('/production', async (req, res) => {
-  const { target } = req.body;
-  Post.find({ category: target }, ((postErr, posts) => {
-    if (postErr) return loger('error', postErr);
-    const finalImg:any = [];
-    posts.map((post) => Img.find({ postID: post._id }, (imgErr, imgs:any) => {
-      if (imgErr) return loger('error', imgErr);
-      return imgs.map((img:any) => finalImg.push(img.image[0].image));
-    }));
-
-    return res.send(finalImg);
-  }));
-  // Post.find({ category: target }).then(
-  //   async (resualt) => {
-  //     const images:any = [];
-  //     await resualt.map(async (d) => {
-  //       Img.find({ postID: d._id }).then(
-  //         async (img: any) => {
-  //           await img.map((doc: any) => images.push(doc.image[0].image));
-  //           return res.send({ resualt, images });
-  //         },
-  //       ).catch((err) => {
-  //         res.send('err');
-  //         console.log(`${err}line 1`);
-  //       });
-  //     });
-  //   },
-  // ).catch((err) => {
-  //   console.log(`${err}line 2`);
-  // });
-});
 AccountController.post('/product', async (req, res) => {
   const { target } = req.body;
   Post.findOne({ _id: target }).then(
@@ -141,22 +111,6 @@ AccountController.post('/product', async (req, res) => {
       );
       loger('info', resualt);
       res.send(resualt);
-    },
-  );
-});
-
-AccountController.post('/banner', (_req, res) => {
-  Post.find({ banner: true }).then(
-    async (resualt) => {
-      await Img.find({ banner: true }).then((docs) => {
-        const d:any = [];
-        docs.map((data:any) => d.push(data.image[data.bannerPath]));
-        const finalRes = {
-          banners: d,
-          bannerInfo: resualt,
-        };
-        res.send(finalRes);
-      });
     },
   );
 });
@@ -210,4 +164,5 @@ module.exports = [
   PostController,
   UploadController,
   Banner,
+  Production,
 ];
