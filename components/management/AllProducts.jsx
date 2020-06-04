@@ -136,7 +136,9 @@ function AllProducts() {
 
     fetchData();
   }, [openSnack]);
-
+  useEffect(() => () => {
+    console.log('cleaned up');
+  }, []);
   if (data.length !== 0) {
     return (
       <div className={classes.root}>
@@ -236,7 +238,7 @@ function AllProducts() {
                       <Product
                         description={rowData.description}
                         title={rowData.title}
-                        path={rowData._id}
+                        path={rowData.imagePath}
                       />
                     ),
                   },

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, {
   useState,
   useEffect,
@@ -14,6 +15,7 @@ import {
 } from '@material-ui/core';
 import { withRouter } from 'next/dist/client/router';
 
+import Loading from '../../components/loading';
 import AppTheme from '../../components/theme';
 import ProductCardInfo from '../../components/ProductCardInfo';
 
@@ -32,14 +34,19 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   container: {
     margin: 1,
   },
+  Loading: {
+
+  },
 }));
 
 function Rahati() {
   const classes = useStyles();
   const [resp, setResp] = useState<any | null>([]);
-  // const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const result = await axios.post(
         '/api/production',
         {
@@ -47,31 +54,40 @@ function Rahati() {
         },
       );
       setResp(result.data);
+      setIsLoading(false);
     };
     fetchData();
   }, []);
-  console.log(resp.resualt);
+  useEffect(() => () => {
+    console.log('cleaned up');
+  }, []);
 
   return (
-    resp.resualt !== undefined
-      ? (
-        <AppTheme>
-          <Layout>
-            <Head>
-              <title>مبل راحتی</title>
-            </Head>
-            <Container>
-              <Typography
-                variant="h5"
-                component="h2"
-                gutterBottom
-              >
-                <Box>
-                  مبل راحتی
-                </Box>
-              </Typography>
-              <Grid container justify="space-evenly">
-                {resp.resualt.map((d: any) => (
+    <AppTheme>
+      <Layout>
+        <Head>
+          <title>مبل راحتی</title>
+        </Head>
+        <Container>
+          <Typography
+            variant="h5"
+            component="h2"
+            gutterBottom
+          >
+            <Box>
+              مبل راحتی
+            </Box>
+          </Typography>
+          <Grid container justify="space-evenly">
+            {isLoading
+              ? <Loading size={80} className={classes.Loading} />
+              : resp.length === 0
+                ? (
+                  <div>
+                    <h1>no any post for this category</h1>
+                  </div>
+                )
+                : resp.map((d: any) => (
                   <Grid
                     key={d._id}
                     item
@@ -80,17 +96,15 @@ function Rahati() {
                   >
                     <ProductCardInfo
                       title={d.title}
-                      path={resp.images[0]}
+                      path={d.imagePath[0]}
                       _id={d._id}
                     />
                   </Grid>
                 ))}
-              </Grid>
-            </Container>
-          </Layout>
-        </AppTheme>
-      )
-      : null
+          </Grid>
+        </Container>
+      </Layout>
+    </AppTheme>
   );
 }
 

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Paper, Button, MobileStepper } from '@material-ui/core';
-import Axios from 'axios';
 
 import RandNum from './randNum';
 import Loading from './loading';
@@ -68,10 +67,8 @@ function ProductCaro(props: any) {
   const { path } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [data, setData] = useState<any>([]);
   const [activeStep, setActiveStep] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const maxSteps = data.length === 1 ? data[0].image.length : 0;
+  const maxSteps = path.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -84,23 +81,7 @@ function ProductCaro(props: any) {
   const handleStepChange = (step: any) => {
     setActiveStep(step);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const result = await Axios.post(
-        '/api/getimages',
-        {
-          postID: path,
-        },
-      );
-      setData(result.data);
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, []);
-  if (isLoading || data.length !== 1) {
+  if (path.length === -1) {
     return (
       <Loading className={classes.loaderClass} size={80} />
     );
@@ -119,12 +100,12 @@ function ProductCaro(props: any) {
           onChangeIndex={handleStepChange}
           enableMouseEvents
         >
-          {data[0].image.map((step: any, index: any) => (
+          {path.map((step: any, index: any) => (
             <div key={RandNum()}>
               {Math.abs(activeStep - index) <= 2 ? (
                 <img
                   className={classes.img}
-                  src={`data:image/jpeg;base64,${step.image}`}
+                  src={step}
                   alt=""
                 />
               ) : null}
@@ -154,12 +135,12 @@ function ProductCaro(props: any) {
       <Paper
         className={classes.thumbs}
       >
-        {data[0].image.map((p: any, i: any) => (
+        {path.map((p: any, i: any) => (
           // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
           <img
             className={classes.imgThumbs}
             key={RandNum()}
-            src={`data:image/png;base64,${p.image}`}
+            src={p}
             alt=""
             height="50"
             width="50"

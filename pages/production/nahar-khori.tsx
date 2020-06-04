@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, {
   useState,
   useEffect,
@@ -5,7 +6,6 @@ import React, {
 import axios from 'axios';
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-// import { useDispatch } from 'react-redux'
 // eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import {
@@ -14,8 +14,8 @@ import {
   Typography, Box,
 } from '@material-ui/core';
 import { withRouter } from 'next/dist/client/router';
-// eslint-disable-next-line no-unused-vars
 
+import Loading from '../../components/loading';
 import AppTheme from '../../components/theme';
 import ProductCardInfo from '../../components/ProductCardInfo';
 
@@ -34,14 +34,19 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   container: {
     margin: 1,
   },
+  Loading: {
+
+  },
 }));
 
 function NaharKhori() {
   const classes = useStyles();
   const [resp, setResp] = useState<any | null>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const result = await axios.post(
         '/api/production',
         {
@@ -49,8 +54,12 @@ function NaharKhori() {
         },
       );
       setResp(result.data);
+      setIsLoading(false);
     };
     fetchData();
+  }, []);
+  useEffect(() => () => {
+    console.log('cleaned up');
   }, []);
 
   return (
@@ -70,20 +79,28 @@ function NaharKhori() {
             </Box>
           </Typography>
           <Grid container justify="space-evenly">
-            {resp!.map((d: any) => (
-              <Grid
-                key={d._id}
-                item
-                md={4}
-                className={classes.container}
-              >
-                <ProductCardInfo
-                  title={d.title}
-                  path={d.path[0]}
-                  _id={d._id}
-                />
-              </Grid>
-            ))}
+            {isLoading
+              ? <Loading size={80} className={classes.Loading} />
+              : resp.length === 0
+                ? (
+                  <div>
+                    <h1>no any post for this category</h1>
+                  </div>
+                )
+                : resp.map((d: any) => (
+                  <Grid
+                    key={d._id}
+                    item
+                    md={4}
+                    className={classes.container}
+                  >
+                    <ProductCardInfo
+                      title={d.title}
+                      path={d.imagePath[0]}
+                      _id={d._id}
+                    />
+                  </Grid>
+                ))}
           </Grid>
         </Container>
       </Layout>

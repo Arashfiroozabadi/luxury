@@ -46,6 +46,9 @@ function Post() {
     };
     fetchData();
   }, []);
+  useEffect(() => () => {
+    console.log('cleaned up');
+  }, []);
   return (
     <AppTheme>
       <Layout>
@@ -60,7 +63,7 @@ function Post() {
               <Product
                 description={res.description}
                 title={res.title}
-                path={res._id}
+                path={res.imagePath}
               />
             </Grid>
           </Grid>

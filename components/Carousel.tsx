@@ -107,7 +107,12 @@ function Carousel() {
     };
     fetchData();
   }, []);
-  const maxSteps = res.banners !== undefined ? res.banners.length : 0;
+
+  useEffect(() => () => {
+    console.log('cleaned up');
+  }, []);
+
+  const maxSteps = res.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -135,7 +140,7 @@ function Carousel() {
           <Paper square elevation={0} className={classes.header}>
             <Link
               href="/product/[id]"
-              as={`/product/${res.bannerInfo[activeStep]._id}`}
+              as={`/product/${res[activeStep]._id}`}
               passHref
             >
               <Button
@@ -143,7 +148,7 @@ function Carousel() {
                 color="primary"
                 component="a"
               >
-                {`${ConvertString(res.bannerInfo[activeStep].category)} ${res.bannerInfo[activeStep].title}`}
+                {`${ConvertString(res[activeStep].category)} ${res[activeStep].title}`}
               </Button>
             </Link>
           </Paper>
@@ -154,7 +159,7 @@ function Carousel() {
             onChangeIndex={handleStepChange}
             enableMouseEvents
           >
-            {res.banners.map((step: any, index: any) => (
+            {res.map((step: any, index: any) => (
               <div key={RandNum()}>
                 {Math.abs(activeStep - index) <= 2 ? (
                   <div
@@ -162,15 +167,15 @@ function Carousel() {
                   >
                     <img
                       className={classes.img}
-                      src={`data:image/png;base64,${step.image}`}
-                      alt={res.bannerInfo[index].title}
+                      src={step.imagePath[step.bannerPath]}
+                      alt={res[index].title}
                     />
                     <div
                       className={clsx(classes.productLink, 'productLink')}
                     >
                       <Link
                         href="/product/[id]"
-                        as={`/product/${res.bannerInfo[activeStep]._id}`}
+                        as={`/product/${res[activeStep]._id}`}
                         passHref
                       >
                         <Button
