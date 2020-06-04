@@ -15,6 +15,7 @@ const Liara = require('@liara/sdk');
 
 const PostController = require('./PostController');
 const UploadController = require('./UploadController');
+const Banner = require('./banner');
 
 const AccountController = express.Router();
 
@@ -208,4 +209,5 @@ module.exports = [
   AccountController,
   PostController,
   UploadController,
+  Banner,
 ];
