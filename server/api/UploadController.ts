@@ -10,10 +10,12 @@ import {
 const UploadController = express.Router();
 
 UploadController.post('/upload', async (req: any, res) => {
+  loger('error', req.files);
+  if (req.files === undefined || req.files === null) return res.send({ auth: true, msg: 'لطفا تمام فیلد‌ها را وارد کنید', status: 'err' });
   const { file } = req.files;
   const { body } = req;
 
-  if (body.name.length === 0 || body.cate.length === 0
+  if (req.files === undefined || body.name.length === 0 || body.cate.length === 0
       || body.desc.length === 0 || file.length === 0) {
     res.send({ auth: true, msg: 'لطفا تمام فیلد‌ها را وارد کنید', status: 'err' });
   } else {
