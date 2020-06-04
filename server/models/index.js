@@ -18,6 +18,7 @@ const post = new Schema({
   description: { type: String },
   banner: { type: Boolean },
   bannerPath: { type: Number },
+  imagePath: Array,
   date: { type: Date, default: Date.now },
 });
 
