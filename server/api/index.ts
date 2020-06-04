@@ -1,7 +1,6 @@
 import express from 'express';
 import multer from 'multer';
 import mkdirp from 'mkdirp';
-import chalk from 'chalk';
 import fs from 'fs';
 
 import loger from '../components/logers';
@@ -15,10 +14,9 @@ import {
 const Liara = require('@liara/sdk');
 
 const PostController = require('./PostController');
+const UploadController = require('./UploadController');
 
-declare const Buffer: { from: new (arg0: string, arg1: string) => any; };
 const AccountController = express.Router();
-
 
 const liaraClient = new Liara.Storage.Client({
   accessKey: 'Z3SBHOIW4DM5VL9YTHRJF',
@@ -81,100 +79,6 @@ AccountController.post('/login', upload.single('file'), (req: any, res) => {
     );
   } else if (req.session.auth.username === body.userName) {
     res.send({ auth: true, userName: body.userName, msg: 'وارد شدید' });
-  }
-});
-AccountController.post('/upload', async (req: any, res) => {
-  const file = req.files;
-  const { body } = req;
-  console.log(file);
-
-  if (body.name.length === 0 || body.cate.length === 0
-    || body.desc.length === 0 || file.length === 0) {
-    // console.log('file name is null');
-    res.send({ auth: true, msg: 'لطفا تمام فیلد‌ها را وارد کنید', status: 'err' });
-  } else {
-    const newPost = new Post({
-      title: body.name,
-      category: body.cate,
-      description: body.desc,
-      banner: body.banner,
-      bannerPath: body.bannerPath,
-    });
-
-    Overview.updateOne({ 'category.name': body.cate },
-      {
-        $inc: {
-          total: 1,
-          'category.$.value': 1,
-        },
-      },
-      { upsert: true },
-      (err, d) => {
-        if (err) {
-          console.log(`[ ${chalk.green('DB')} ${chalk.red('Error')} ]`);
-          console.log(err.errmsg);
-          if (err.code === 2) {
-            Overview.find({},
-              (Err, doc: any) => {
-                if (Err) {
-                  return console.log(Err);
-                }
-                console.log(`[ ${chalk.blue('info')} ] collection with ID ${chalk.blue.underline(doc[0]._id)} found`);
-
-                const id = doc[0]._id;
-
-                return Overview.updateOne(
-                  { _id: id },
-                  {
-                    $inc: {
-                      total: 1,
-                    },
-                    $push: {
-                      category: { name: body.cate, value: 1 },
-                    },
-                  },
-                  (ERr, Doc) => {
-                    if (ERr) return console.log(ERr);
-                    console.log(`[ ${chalk.blue('info')} ] DB Update`);
-                    return console.log(Doc);
-                  },
-                );
-              });
-          } else {
-            return console.log(err);
-          }
-        }
-        return console.log(d);
-      });
-    await newPost.save(async (err, post:any) => {
-      if (err) return loger('error', err);
-      const imageFiles: any = [];
-      file.map(async (d:{path:string, mimetype:any}) => {
-        const img = fs.readFileSync(d.path);
-        const EncodeImg = img.toString('base64');
-        const FinalImg = {
-          contentType: d.mimetype,
-          // eslint-disable-next-line new-cap
-          image: new Buffer.from(EncodeImg, 'base64'),
-        };
-        await imageFiles.push(FinalImg);
-      });
-      const newImg = new Img({
-        postID: post._id,
-        image: imageFiles,
-        banner: post.banner,
-        bannerPath: post.bannerPath,
-      });
-      await newImg.save();
-      return loger('info', post);
-    });
-
-    res.send({
-      msg: 'ثبت شد',
-      auth: true,
-      imgPath: file.path,
-      status: 'ok',
-    });
   }
 });
 
@@ -303,4 +207,5 @@ AccountController.post('/test', (req, res) => {
 module.exports = [
   AccountController,
   PostController,
+  UploadController,
 ];
