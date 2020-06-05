@@ -11,7 +11,7 @@ import {
 import clsx from 'clsx';
 
 
-import Papeer from '../Paper';
+import Papeer from '../Div';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
