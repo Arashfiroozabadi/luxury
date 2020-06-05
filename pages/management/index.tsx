@@ -6,40 +6,26 @@ import axios from 'axios';
 import clsx from 'clsx';
 import {
   TextField,
-  AppBar,
-  Tabs,
-  Tab,
   Button,
-  Paper,
   Grid,
   FormHelperText,
   Typography,
   Container,
+  Box,
+  IconButton,
 } from '@material-ui/core';
-// eslint-disable-next-line no-unused-vars
 import {
   // eslint-disable-next-line no-unused-vars
   makeStyles, createStyles, Theme,
 } from '@material-ui/core/styles';
-// import {
-//   useSelector,
-//   // useDispatch,
-// } from 'react-redux';
 
-import AllProducts from '../../components/management/AllProducts';
+import Link from 'next/link';
+import { Assessment } from '@material-ui/icons';
+import { Paper } from '../../components';
 import AppTheme from '../../components/theme';
-
 import Layout from '../../components/Layout';
 import RTL from '../../components/RTL';
-import Overview from '../../components/overview';
-import TabPanel from '../../components/tabPanel';
-
-function a11yProps(index: any) {
-  return {
-    id: `scrollable-force-tab-${index}`,
-    'aria-controls': `scrollable-force-tabpanel-${index}`,
-  };
-}
+import Div from '../../components/Div';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -48,10 +34,26 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
   },
   rootTab: {
-    flexGrow: 1,
     width: '100%',
     backgroundColor: theme.palette.background.paper,
     transition: 'background-color 250ms linear , color 250ms linear',
+  },
+  containerDiv: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+  },
+  linkBox: {
+    color: 'white',
+    flex: 0.4,
+    margin: theme.spacing(1),
+    padding: 5,
+    display: 'flex',
+    alignItems: 'center',
+    background: 'linear-gradient(51deg, rgba(0,255,248,1) 0%, rgba(0,215,255,1) 31%, rgba(176,143,184,1) 82%)',
+  },
+  linkIcons: {
+    color: 'white',
+    fontSize: '4em',
   },
   uploadRoot: {
 
@@ -159,7 +161,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 function Management() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
   const [data, setData] = useState<any | null>({});
   const [form, setForm] = useState<any | null>({
     userName: '',
@@ -184,9 +185,8 @@ function Management() {
     console.log('cleaned up');
   }, []);
 
-  const handleChangeTab = (_event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-  };
+  console.log(data);
+
 
   function handleChange(e: any) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -205,48 +205,55 @@ function Management() {
       <AppTheme>
         <Layout>
           <Container>
-            <div className={classes.rootTab}>
-              <AppBar position="static" color="default">
-                <Tabs
-                  value={value}
-                  onChange={handleChangeTab}
-                  variant="scrollable"
-                  scrollButtons="on"
-                  indicatorColor="primary"
-                  textColor="primary"
-                  aria-label="scrollable force tabs example"
-                >
-                  <Tab label="آمار" {...a11yProps(0)} />
-                  <Tab label="محصولات" {...a11yProps(1)} />
-                  {/* <Tab label="Item Three" {...a11yProps(2)} />
-                  <Tab label="Item Four" {...a11yProps(3)} />
-                  <Tab label="Item Five" {...a11yProps(4)} />
-                  <Tab label="Item Six" {...a11yProps(5)} />
-                  <Tab label="Item Seven" {...a11yProps(6)} /> */}
-                </Tabs>
-              </AppBar>
-              <TabPanel value={value} index={0}>
-                <Overview />
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                <AllProducts />
-              </TabPanel>
-              {/* <TabPanel value={value} index={2}>
-                Item Three
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                Item Four
-              </TabPanel>
-              <TabPanel value={value} index={4}>
-                Item Five
-              </TabPanel>
-              <TabPanel value={value} index={5}>
-                Item Six
-              </TabPanel>
-              <TabPanel value={value} index={6}>
-                Item Seven
-              </TabPanel> */}
-            </div>
+            <Div className={classes.rootTab}>
+              <Typography
+                variant="h5"
+                component="h2"
+                gutterBottom
+              >
+                <Box>
+                  پنل مدریت
+                </Box>
+              </Typography>
+              <div className={classes.containerDiv}>
+                <Paper className={classes.linkBox}>
+                  <>
+                    <Link href="/management/chart" passHref>
+                      <IconButton>
+                        <Assessment
+                          className={classes.linkIcons}
+                        />
+                      </IconButton>
+                    </Link>
+                    <Typography
+                      variant="h6"
+                      component="h5"
+                    >
+                      <Box>
+                        آمار
+                      </Box>
+                    </Typography>
+                  </>
+                </Paper>
+                <Paper className={classes.linkBox}>
+                  <>
+                    <Link href="/management/product" passHref>
+                      <IconButton>
+                        <Assessment className={classes.linkIcons} />
+                      </IconButton>
+                    </Link>
+                    <Typography
+                      variant="h6"
+                      component="h5"
+                    >
+                      <Box>
+                        آمار
+                      </Box>
+                    </Typography>
+                  </>
+                </Paper>
+              </div>
+            </Div>
           </Container>
         </Layout>
       </AppTheme>
