@@ -1,33 +1,39 @@
-import React from 'react';
+// eslint-disable-next-line no-unused-vars
+import React, { ReactNode } from 'react';
 import {
 // eslint-disable-next-line no-unused-vars
-  makeStyles, createStyles, Theme, Container,
+  Paper as Pap, PaperProps, makeStyles, Theme, createStyles,
 } from '@material-ui/core';
 
-import AppTheme from './theme';
-
+interface Props extends PaperProps {
+    children: ReactNode
+}
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
-    backgroundColor: theme.palette.background.default,
-    transition: 'background-color 250ms linear , color 250ms linear',
     [theme.breakpoints.only('xs')]: {
-      width: '100%',
+
     },
+    color: 'inherit',
+    willChange: 'background-color, color',
+    backgroundColor: 'inherit',
   },
 }));
 
-function Papeer(props:any) {
+function Paper(props:Props):JSX.Element {
   const classes = useStyles();
-  const { children } = props;
+  const { children, className } = props;
+
   return (
-    <AppTheme>
-      <Container>
-        <div className={classes.root}>
-          {children}
-        </div>
-      </Container>
-    </AppTheme>
+    <Pap
+      classes={{
+        root: classes.root,
+      }}
+      className={className || classes.root}
+      {...props}
+    >
+      {children}
+    </Pap>
   );
 }
 
-export default Papeer;
+export default Paper;
