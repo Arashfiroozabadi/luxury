@@ -23,7 +23,7 @@ import axios from 'axios';
 import AppTheme from '../components/theme';
 import Layout from '../components/Layout';
 import RTL from '../components/RTL';
-import Paper from '../components/Paper';
+import Paper from '../components/Div';
 import Loading from '../components/loading';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
