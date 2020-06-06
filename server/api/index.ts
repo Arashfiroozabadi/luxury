@@ -16,7 +16,7 @@ const PostController = require('./PostController');
 const UploadController = require('./UploadController');
 const Banner = require('./banner');
 const Production = require('./production');
-
+const AllProducts = require('./AllProducts');
 
 const AccountController = express.Router();
 
@@ -123,11 +123,6 @@ AccountController.post('/overview', (_req, res) => {
   );
 });
 
-AccountController.get('/all', (_req, res) => {
-  Post.find({}).then((resualt:any) => {
-    res.send(resualt);
-  });
-});
 AccountController.post('/test', (req, res) => {
   const { files }:any = req.files;
 
@@ -165,4 +160,5 @@ module.exports = [
   UploadController,
   Banner,
   Production,
+  AllProducts,
 ];
