@@ -8,16 +8,21 @@ import {
   Snackbar,
   Slide,
   IconButton,
+  Typography,
+  Box,
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import Axios from 'axios';
+import { Delete, NavigateBefore, NavigateNext } from '@material-ui/icons';
 
 // import Product from '../Product';
 // import RTL from '../RTL';
-import { Delete } from '@material-ui/icons';
+import Loading from '../loading';
 // eslint-disable-next-line no-unused-vars
 import { FetchData } from '../../interface';
 import RandNum from '../randNum';
+import ConvertValue from '../ConvertValue';
+
 
 const useStyles = makeStyles((theme) => createStyles({
   root: {
@@ -27,9 +32,13 @@ const useStyles = makeStyles((theme) => createStyles({
   },
   rootTable: {
     width: '100%',
-    border: '1px solid black',
+    padding: theme.spacing(1),
     marginTop: 20,
-    borderCollapse: 'collapse',
+    minHeight: 400,
+    borderSpacing: 0,
+    borderCollapse: 'separate',
+    borderRadius: theme.spacing(0.5),
+    boxShadow: theme.shadows[3],
     [theme.breakpoints.down('sm')]: {
       border: 'none',
     },
@@ -70,9 +79,12 @@ const useStyles = makeStyles((theme) => createStyles({
   },
   th: {
     flex: 1,
+    padding: theme.spacing(2),
   },
   td: {
     flex: 1,
+    padding: `${theme.spacing(0.5)}px ${theme.spacing(2)}px`,
+    borderBottom: '1px solid',
     [theme.breakpoints.down('sm')]: {
       border: 'none !important',
       display: 'flex',
@@ -88,21 +100,33 @@ const useStyles = makeStyles((theme) => createStyles({
   },
   tdTextKey: {
     // border: 'none!important',
+    [theme.breakpoints.down('sm')]: {
+      margin: 0,
+      padding: '12px 20px',
+    },
   },
   tbody: {
+    verticalAlign: 'top',
     '& tr:last-child': {
-      [theme.breakpoints.down('sm')]: {
-        borderBottom: 'none',
-      },
+
     },
     '& > :last-child': {
       '& td': {
-        // borderBottom: 'none',
+        borderBottom: 'none',
       },
     },
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
+      overflow: 'scroll',
+      maxHeight: 340,
       flexDirection: 'column',
+    },
+  },
+  dataPerPage: {
+    display: 'flex',
+    alignItems: 'center',
+    '& >button': {
+      transition: 'background-color 250ms linear , color 250ms linear',
     },
   },
   snackRoot: {
@@ -137,6 +161,10 @@ const useStyles = makeStyles((theme) => createStyles({
     backgroundColor: theme.palette.background.default,
     transition: 'background-color 250ms linear',
   },
+  loading: {
+    textAlign: 'center',
+    marginTop: 20,
+  },
 }));
 
 function TransitionUp(props) {
@@ -158,6 +186,9 @@ function StatusCode(code) {
 function AllProducts() {
   const classes = useStyles();
   const [data, setData] = useState([]);
+  const [chunk, setChunk] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMSG, setSnackMSG] = useState('');
   const [snackStutus, setSnackStatus] = useState(undefined);
@@ -189,18 +220,29 @@ function AllProducts() {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const result = await Axios.get('/api/all');
-      setData(result.data);
+      setIsError(false);
+      setIsLoading(true);
+      try {
+        if (!isError) {
+          const result = await Axios.get(`/api/all/?chunk=${chunk}`);
+          setData(result.data);
+        }
+      } catch (err) {
+        setIsError(true);
+        setOpenSnack(true);
+        setData([]);
+      }
+      setIsLoading(false);
     };
 
     fetchData();
-  }, [openSnack]);
+  }, [openSnack, chunk]);
 
   useEffect(() => () => {
     console.log('cleaned up');
   }, []);
 
-  console.log(data);
+  console.log(isError);
 
   if (data.length !== 0) {
     return (
@@ -217,7 +259,7 @@ function AllProducts() {
               </tr>
             </thead>
             <tbody className={classes.tbody}>
-              { data.map((rowData) => (
+              { data.data.map((rowData) => (
                 <tr className={classes.tr} key={RandNum()}>
                   <td className={classes.td}>
                     <p className={classes.tdTextKey}>
@@ -236,7 +278,7 @@ function AllProducts() {
                   </td>
                   <td className={classes.td}>
                     <p className={classes.tdTextKey}>
-                      {rowData.views.length}
+                      {ConvertValue(rowData.views.length)}
                     </p>
                   </td>
                   <td className={classes.td}>
@@ -255,6 +297,41 @@ function AllProducts() {
                 </tr>
               ))}
             </tbody>
+            <tfoot>
+              <tr>
+                <td>
+                  <div className={classes.dataPerPage}>
+                    <IconButton
+                      aria-label="before"
+                      disabled={chunk === 0}
+                      onClick={() => setChunk(chunk - 1)}
+                    >
+                      <NavigateNext />
+                    </IconButton>
+                    <Typography
+                      variant="caption"
+                    >
+                      <Box>
+                        صفحه
+                        {' '}
+                        {ConvertValue(chunk + 1)}
+                        {' '}
+                        از
+                        {' '}
+                        {ConvertValue(data.chunkSize)}
+                      </Box>
+                    </Typography>
+                    <IconButton
+                      aria-label="next"
+                      disabled={data.chunkSize === chunk + 1}
+                      onClick={() => setChunk(chunk + 1)}
+                    >
+                      <NavigateBefore />
+                    </IconButton>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
           </table>
 
           <Snackbar
@@ -283,11 +360,15 @@ function AllProducts() {
         </Container>
       </div>
     );
+  } if (isLoading) {
+    return (
+      <div>
+        <Loading size={60} className={classes.loading} />
+      </div>
+    );
   }
   return (
-    <div>
-      بارگذاری ...
-    </div>
+    <div>no post for show</div>
   );
 }
 
