@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: any) => createStyles({
     },
   },
   card: {
+    width: '100%',
     boxShadow: theme.shadows['0'],
     backgroundColor: theme.palette.background.default,
     transition: 'background-color 250ms linear , color 250ms linear',
