@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-alert */
 import React, {
   useEffect, useState,
@@ -15,13 +17,14 @@ import MuiAlert from '@material-ui/lab/Alert';
 import Axios from 'axios';
 import { Delete, NavigateBefore, NavigateNext } from '@material-ui/icons';
 
-// import Product from '../Product';
-// import RTL from '../RTL';
+import Link from 'next/link';
+import Product from '../Product';
 import Loading from '../loading';
 // eslint-disable-next-line no-unused-vars
 import { FetchData } from '../../interface';
 import RandNum from '../randNum';
 import ConvertValue from '../ConvertValue';
+import { FetchPostList } from '../customHooks';
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -35,6 +38,7 @@ const useStyles = makeStyles((theme) => createStyles({
     padding: theme.spacing(1),
     marginTop: 20,
     minHeight: 400,
+    tableLayout: 'fixed',
     borderSpacing: 0,
     borderCollapse: 'separate',
     borderRadius: theme.spacing(0.5),
@@ -129,6 +133,16 @@ const useStyles = makeStyles((theme) => createStyles({
       transition: 'background-color 250ms linear , color 250ms linear',
     },
   },
+  openRowIcon: {
+  },
+  tableRowDetail: {
+
+  },
+  tdProductCardInfo: {
+    display: 'flex',
+    opacity: 1,
+    transition: 'all 4s',
+  },
   snackRoot: {
     width: '35%',
     [theme.breakpoints.down('sm')]: {
@@ -182,26 +196,55 @@ function StatusCode(code) {
   }
 }
 
+function EmptyRow(num) {
+  let height;
+  switch (num) {
+    case 1:
+      height = 230;
+      break;
+    case 2:
+      height = 170;
+      break;
+    case 3:
+      height = 120;
+      break;
+    case 4:
+      height = 70;
+      break;
+    default:
+      height = 0;
+      break;
+  }
+  return (
+    <tr style={{ height: `${height}px` }}>
+      <td />
+    </tr>
+  );
+}
 
 function AllProducts() {
   const classes = useStyles();
-  const [data, setData] = useState([]);
   const [chunk, setChunk] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [openRowDetail, setOpenRowDetail] = useState({ open: false, target: 0 });
   const [openSnack, setOpenSnack] = useState(false);
   const [snackMSG, setSnackMSG] = useState('');
   const [snackStutus, setSnackStatus] = useState(undefined);
+  const { data, isError, isLoading } = FetchPostList(`chunk=${chunk}`, openSnack);
 
   const handleClose = () => {
     setOpenSnack(false);
   };
+  const handleOpenRowDetail = (i) => () => {
+    setOpenRowDetail((prev) => ({ open: !prev.open, target: i }));
+  };
   const handleSendDeleteReq = (rowData) => {
+    if (data.data.length === 1 && chunk > 0) {
+      setChunk(chunk - 1);
+    }
     // eslint-disable-next-line no-restricted-globals
     const conf = confirm(`${'تایید حذف'} ${rowData.title}`);
     if (conf === true) {
       Axios.put('/api/put', { rowData }).then((res) => {
-        console.log(res);
         setSnackStatus(res.status);
         setSnackMSG(`محصول "${rowData.title}" حذف شد‍‍`);
         setOpenSnack(true);
@@ -218,31 +261,9 @@ function AllProducts() {
       alert('No');
     }
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsError(false);
-      setIsLoading(true);
-      try {
-        if (!isError) {
-          const result = await Axios.get(`/api/all/?chunk=${chunk}`);
-          setData(result.data);
-        }
-      } catch (err) {
-        setIsError(true);
-        setOpenSnack(true);
-        setData([]);
-      }
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, [openSnack, chunk]);
-
   useEffect(() => () => {
     console.log('cleaned up');
   }, []);
-
-  console.log(isError);
 
   if (data.length !== 0) {
     return (
@@ -251,6 +272,7 @@ function AllProducts() {
           <table className={classes.rootTable}>
             <thead className={classes.thead}>
               <tr className={classes.tr}>
+                <th width="20" className={classes.th} />
                 <th className={classes.th}>نام</th>
                 <th className={classes.th}>دسته بندی</th>
                 <th className={classes.th}>شناسه</th>
@@ -259,43 +281,78 @@ function AllProducts() {
               </tr>
             </thead>
             <tbody className={classes.tbody}>
-              { data.data.map((rowData) => (
-                <tr className={classes.tr} key={RandNum()}>
-                  <td className={classes.td}>
-                    <p className={classes.tdTextKey}>
-                      {rowData.title}
-                    </p>
-                  </td>
-                  <td className={classes.td}>
-                    <p className={classes.tdTextKey}>
-                      {rowData.category}
-                    </p>
-                  </td>
-                  <td className={classes.td}>
-                    <p className={classes.tdTextKey}>
-                      {rowData._id}
-                    </p>
-                  </td>
-                  <td className={classes.td}>
-                    <p className={classes.tdTextKey}>
-                      {ConvertValue(rowData.views.length)}
-                    </p>
-                  </td>
-                  <td className={classes.td}>
-                    <IconButton
-                      onClick={() => { handleSendDeleteReq(rowData); }}
-                      classes={{
-                        root: classes.rootDeleteIcon,
-                        label: classes.labelDeletIcon,
-                      }}
-                    >
-                      <Delete
-                        className={classes.deleteIcons}
-                      />
-                    </IconButton>
-                  </td>
-                </tr>
+              { data.data.map((rowData, i) => (
+                <React.Fragment key={RandNum()}>
+                  <tr
+                    className={classes.tr}
+                  >
+                    <td className={classes.openRowIcon} width="20">
+                      <IconButton
+                        onClick={handleOpenRowDetail(i)}
+                      >
+                        <NavigateBefore
+                          style={{
+                            transform: openRowDetail.target === i && openRowDetail.open
+                              ? 'rotate(-90deg)' : 'rotate(0deg)',
+                          }}
+                        />
+                      </IconButton>
+                    </td>
+                    <td className={classes.td}>
+                      <p className={classes.tdTextKey}>
+                        {rowData.title}
+                      </p>
+                    </td>
+                    <td className={classes.td}>
+                      <p className={classes.tdTextKey}>
+                        {rowData.category}
+                      </p>
+                    </td>
+                    <td className={classes.td}>
+                      <p className={classes.tdTextKey}>
+                        {rowData._id}
+                      </p>
+                    </td>
+                    <td className={classes.td}>
+                      <p className={classes.tdTextKey}>
+                        {ConvertValue(rowData.views.length)}
+                      </p>
+                    </td>
+                    <td className={classes.td}>
+                      <IconButton
+                        onClick={() => { handleSendDeleteReq(rowData); }}
+                        classes={{
+                          root: classes.rootDeleteIcon,
+                          label: classes.labelDeletIcon,
+                        }}
+                      >
+                        <Delete
+                          className={classes.deleteIcons}
+                        />
+                      </IconButton>
+                    </td>
+                  </tr>
+                  <tr
+                    className={classes.tableRowDetail}
+                  >
+                    <td colSpan="6">
+                      {openRowDetail.target === i && openRowDetail.open
+                        ? (
+                          <div className={classes.tdProductCardInfo}>
+                            <Product
+                              description={rowData.description}
+                              title={rowData.title}
+                              path={rowData.imagePath}
+                            />
+                          </div>
+                        )
+                        : null}
+                    </td>
+                  </tr>
+                </React.Fragment>
               ))}
+              {EmptyRow(data.data.length)}
+
             </tbody>
             <tfoot>
               <tr>
@@ -333,7 +390,6 @@ function AllProducts() {
               </tr>
             </tfoot>
           </table>
-
           <Snackbar
             classes={{
               root: classes.snackRoot,
@@ -366,10 +422,31 @@ function AllProducts() {
         <Loading size={60} className={classes.loading} />
       </div>
     );
+  } if (isError) {
+    return (
+      <div>
+        <Typography
+          variant="h6"
+          component="h6"
+        >
+          <Box marginTop={4} textAlign="center">
+            محصولی ثبت نشده است
+          </Box>
+          <Box marginTop={3} textAlign="center">
+            <Link href="/upload" passHref>
+              <a style={{
+                textDecoration: 'none',
+              }}
+              >
+                افزودن محصول
+              </a>
+            </Link>
+          </Box>
+        </Typography>
+      </div>
+    );
   }
-  return (
-    <div>no post for show</div>
-  );
+  return null;
 }
 
 export default AllProducts;
