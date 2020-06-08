@@ -20,6 +20,9 @@ const theme1 = createMuiTheme({
     primary: {
       main: '#556cd6',
     },
+    textLink: {
+      main: '#e2e2e2',
+    },
     secondary: {
       main: '#212121',
       dark: '#171717',
@@ -43,6 +46,9 @@ const theme2 = createMuiTheme({
     type: 'light',
     primary: {
       main: '#556cd6',
+    },
+    textLink: {
+      main: '#232323',
     },
     secondary: {
       main: '#212121',
