@@ -61,9 +61,11 @@ function Post() {
           <Grid container justify="center">
             <Grid item md={12}>
               <Product
+                data={res}
                 description={res.description}
                 title={res.title}
                 path={res.imagePath}
+                views={res.views}
               />
             </Grid>
           </Grid>
