@@ -19,7 +19,8 @@ export interface FetchData {
     banner?: boolean;
     path?: [string] | null;
     title?: string;
-    views?: string;
+    views?: [] | undefined | number | any;
     __v?: number;
     _id?: string;
+    data?: any
 }
