@@ -4,17 +4,19 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Paper from '@material-ui/core/Paper';
 import clsx from 'clsx';
-// import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import Visibility from '@material-ui/icons/Visibility';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
 
+import { Typography, Box } from '@material-ui/core';
 import ConvertString from './ConvertString';
 import RandNum from './randNum';
 import Loading from './loading';
+import ConvertValue from './ConvertValue';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -44,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  imgBox: {
+    position: 'relative',
+  },
   img: {
     height: 300,
     display: 'block',
@@ -58,6 +63,18 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       width: '100%',
       margin: 5,
+    },
+  },
+  imgViews: {
+    top: 10,
+    right: 10,
+    padding: '0 5px',
+    position: 'absolute',
+    borderRadius: 4,
+    backgroundColor: 'gray',
+    '& p': {
+      margin: '0px 5px',
+      fontSize: 12,
     },
   },
   productLink: {
@@ -165,11 +182,31 @@ function Carousel() {
                   <div
                     className={classes.imgContainer}
                   >
-                    <img
-                      className={classes.img}
-                      src={step.imagePath[step.bannerPath]}
-                      alt={res[index].title}
-                    />
+                    <div className={classes.imgBox}>
+                      <img
+                        className={classes.img}
+                        src={step.imagePath[step.bannerPath]}
+                        alt={res[index].title}
+                      />
+                      <span className={classes.imgViews}>
+                        <Typography
+                          variant="caption"
+                          component="span"
+                        >
+                          <Box
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                          >
+                            <p>
+                              {ConvertValue(res[index].views.length)}
+                            </p>
+                            {' '}
+                            <Visibility />
+                          </Box>
+                        </Typography>
+                      </span>
+                    </div>
                     <div
                       className={clsx(classes.productLink, 'productLink')}
                     >
