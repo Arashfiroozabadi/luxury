@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, {
@@ -58,6 +59,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   dense: {
     marginTop: theme.spacing(2),
+  },
+  inputButtn: {
+    display: 'none',
   },
   inputFiles: {
     width: 100,
@@ -148,8 +152,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   helperText: {
     width: '90%',
-    height: 30,
     padding: theme.spacing(1),
+    textAlign: 'center',
   },
   loaderClass: {
     display: 'flex',
@@ -388,19 +392,26 @@ function Upload() {
                     md={6}
                     xs={12}
                   >
-                    <TextField
-                      className={clsx(classes.textField, classes.dense)}
-                      name="file"
-                      onChange={(e) => handleChangeImage(e)}
-                      type="file"
-                      inputProps={{
-                        className: classes.inputFiles,
-                        multiple: true,
-                        encType: 'multipart/form-data',
-                      }}
-                      margin="dense"
-                      variant="outlined"
-                    />
+                    <Box
+                      display="flex"
+                      justifyContent="center"
+                      m="15px 0"
+                    >
+                      <input
+                        className={clsx(classes.textField, classes.dense, classes.inputButtn)}
+                        name="file"
+                        onChange={(e) => handleChangeImage(e)}
+                        multiple
+                        id="file"
+                        accept="image/*"
+                        type="file"
+                      />
+                      <label htmlFor="file">
+                        <Button variant="outlined" component="span">
+                          انتخاب فایل
+                        </Button>
+                      </label>
+                    </Box>
                     <LinearProgress
                       className={classes.progress}
                       variant="determinate"
@@ -441,7 +452,6 @@ function Upload() {
                           >
                             <input
                               className={clsx('select', classes.select)}
-                                                            // onClick={(e) => handleBanner(e, i)}
                               onChange={() => handleBannerChange(i)}
                               type="checkbox"
                               id={`banner${i}`}
@@ -476,19 +486,21 @@ function Upload() {
                     {
                       isLoading ? <Loading className={classes.loaderClass} size={50} />
                         : (
-                          <FormHelperText
-                            className={classes.helperText}
-                            color="red"
-                            style={data.status === 'err'
-                              ? {
-                                color: 'red',
-                              }
-                              : {
-                                color: 'green',
-                              }}
+                          <Box
+                            width="100%"
+                            display="flex"
+                            justifyContent="center"
+                            bgcolor={data.status === 'err'
+                              ? 'error.main' : 'success.main'}
+                            m={1.2}
+                            borderRadius={4}
                           >
-                            {data.msg}
-                          </FormHelperText>
+                            <FormHelperText
+                              className={classes.helperText}
+                            >
+                              {data.msg}
+                            </FormHelperText>
+                          </Box>
                         )
                     }
                   </Grid>
