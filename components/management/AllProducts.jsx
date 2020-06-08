@@ -12,6 +12,7 @@ import {
   IconButton,
   Typography,
   Box,
+  Button,
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import Axios from 'axios';
@@ -60,10 +61,12 @@ const useStyles = makeStyles((theme) => createStyles({
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
       flexDirection: 'column',
-      border: '1px solid',
-      margin: '15px 0px',
+      border: '1px solid #ffffff3b',
+      borderBottom: 'none',
       padding: 10,
-      borderRadius: theme.spacing(1),
+      borderRadius: 3,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
       '& td:nth-of-type(1):before': {
         content: '"نام"',
       },
@@ -133,7 +136,22 @@ const useStyles = makeStyles((theme) => createStyles({
       transition: 'background-color 250ms linear , color 250ms linear',
     },
   },
-  openRowIcon: {
+  openRowIconTop: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  openRowIconButtom: {
+    display: 'none',
+    [theme.breakpoints.down('sm')]: {
+      display: 'flex',
+      '& td': {
+        width: '100%',
+        '& > button': {
+          width: '100%',
+        },
+      },
+    },
   },
   tableRowDetail: {
 
@@ -141,7 +159,8 @@ const useStyles = makeStyles((theme) => createStyles({
   tdProductCardInfo: {
     display: 'flex',
     opacity: 1,
-    transition: 'all 4s',
+    transition: 'background-color 250ms linear , color 250ms linear',
+
   },
   snackRoot: {
     width: '35%',
@@ -235,7 +254,12 @@ function AllProducts() {
     setOpenSnack(false);
   };
   const handleOpenRowDetail = (i) => () => {
-    setOpenRowDetail((prev) => ({ open: !prev.open, target: i }));
+    setOpenRowDetail({ open: true, target: i });
+  };
+  const handleCloseRowDetail = (i) => {
+    setOpenRowDetail({
+      open: false, target: i,
+    });
   };
   const handleSendDeleteReq = (rowData) => {
     if (data.data.length === 1 && chunk > 0) {
@@ -286,17 +310,32 @@ function AllProducts() {
                   <tr
                     className={classes.tr}
                   >
-                    <td className={classes.openRowIcon} width="20">
-                      <IconButton
-                        onClick={handleOpenRowDetail(i)}
-                      >
-                        <NavigateBefore
-                          style={{
-                            transform: openRowDetail.target === i && openRowDetail.open
-                              ? 'rotate(-90deg)' : 'rotate(0deg)',
-                          }}
-                        />
-                      </IconButton>
+                    <td className={classes.openRowIconTop} width="20">
+                      { openRowDetail.target === i && openRowDetail.open
+                        ? (
+                          <IconButton
+                            onClick={() => handleCloseRowDetail(i)}
+                          >
+                            <NavigateBefore
+                              style={{
+                                transform: openRowDetail.target === i && openRowDetail.open
+                                  ? 'rotate(-90deg)' : 'rotate(0deg)',
+                              }}
+                            />
+                          </IconButton>
+                        )
+                        : (
+                          <IconButton
+                            onClick={handleOpenRowDetail(i)}
+                          >
+                            <NavigateBefore
+                              style={{
+                                transform: openRowDetail.target === i && openRowDetail.open
+                                  ? 'rotate(-90deg)' : 'rotate(0deg)',
+                              }}
+                            />
+                          </IconButton>
+                        )}
                     </td>
                     <td className={classes.td}>
                       <p className={classes.tdTextKey}>
@@ -330,6 +369,44 @@ function AllProducts() {
                           className={classes.deleteIcons}
                         />
                       </IconButton>
+                    </td>
+                  </tr>
+                  <tr className={classes.openRowIconButtom}>
+                    <td
+                      colSpan="6"
+                      style={{
+                        padding: 0,
+                      }}
+                    >
+                      {
+                       openRowDetail.target === i && openRowDetail.open
+                         ? (
+                           <Button
+                             variant="outlined"
+                             onClick={() => handleCloseRowDetail(i)}
+                             style={{
+                               borderTop: 0,
+                               borderTopRightRadius: 0,
+                               borderTopLeftRadius: 0,
+                             }}
+                           >
+                             پنهان شدن
+                           </Button>
+                         )
+                         : (
+                           <Button
+                             variant="outlined"
+                             onClick={handleOpenRowDetail(i)}
+                             style={{
+                               borderTop: 0,
+                               borderTopRightRadius: 0,
+                               borderTopLeftRadius: 0,
+                             }}
+                           >
+                             نشان دادن
+                           </Button>
+                         )
+                      }
                     </td>
                   </tr>
                   <tr
