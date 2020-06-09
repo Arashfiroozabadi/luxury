@@ -25,7 +25,7 @@ import Loading from '../loading';
 import { FetchData } from '../../interface';
 import RandNum from '../randNum';
 import ConvertValue from '../ConvertValue';
-import { FetchPostList } from '../customHooks';
+import { FetchPostList, NotFound } from '../customHooks';
 
 
 const useStyles = makeStyles((theme) => createStyles({
@@ -507,7 +507,7 @@ function AllProducts() {
           component="h6"
         >
           <Box marginTop={4} textAlign="center">
-            محصولی ثبت نشده است
+            <NotFound />
           </Box>
           <Box marginTop={3} textAlign="center">
             <Link href="/upload" passHref>
