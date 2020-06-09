@@ -70,30 +70,35 @@ function Production() {
               <Cards
                 title="مبلمان راحتی"
                 link="rahati"
+                category="rahati"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
               <Cards
                 title="مبلمان راحتی ال"
                 link="rahati-L"
+                category="rahatil"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
               <Cards
                 title="سرویس خواب"
                 link="service-khab"
+                category="servicekhab"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
               <Cards
                 title="نهار خوری"
                 link="nahar-khori"
+                category="naharkhori"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
               <Cards
                 title="آینه کنسول"
                 link="console"
+                category="console"
               />
             </Grid>
           </Grid>
