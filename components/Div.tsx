@@ -4,6 +4,7 @@ import {
   makeStyles, createStyles, Theme,
 } from '@material-ui/core';
 
+import clsx from 'clsx';
 import AppTheme from './theme';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -18,10 +19,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 function Div(props:any) {
   const classes = useStyles();
-  const { children } = props;
+  const { children, className } = props;
   return (
     <AppTheme>
-      <div className={classes.root}>
+      <div className={clsx(classes.root, className || null)}>
         {children}
       </div>
     </AppTheme>
