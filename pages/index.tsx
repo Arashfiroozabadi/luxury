@@ -184,6 +184,7 @@ export default () => {
               <Cards
                 title="مبلمان راحتی"
                 link="rahati"
+                category="rahati"
               />
             </Grid>
             <Grid
@@ -193,6 +194,7 @@ export default () => {
               <Cards
                 title="مبلمان راحتی ال"
                 link="rahati-L"
+                category="rahatil"
               />
             </Grid>
             <Grid
@@ -202,6 +204,7 @@ export default () => {
               <Cards
                 title="سرویس خواب"
                 link="service-khab"
+                category="servicekhab"
               />
             </Grid>
             <Grid
