@@ -12,6 +12,8 @@ import {
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Link from 'next/link';
 
+import { ColorCate } from '.';
+
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     marginTop: theme.spacing(3),
@@ -21,8 +23,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
     },
   },
+  rootCardContent: {
+    padding: '16px 8px',
+  },
   title: {
     fontSize: '1rem',
+  },
+  cateText: {
+    display: 'inline',
+    padding: '3px 6px',
+    borderRadius: 4,
   },
   cardButton: {
     // color: '#ffd54f'
@@ -32,10 +42,16 @@ interface CardProps {
     title: string;
     caption?: string;
     link: string;
+    image?: string;
+    alt?: string;
+    category: string;
 }
 
 function Cards(props: CardProps) {
-  const { title, caption, link } = props;
+  const {
+    title, caption,
+    link, category,
+  } = props;
   const classes = useStyles();
   return (
     <Card
@@ -49,14 +65,19 @@ function Cards(props: CardProps) {
         alt="مبل راحتی"
         title="مبل راحتی"
       />
-      <CardContent>
+      <CardContent className={classes.rootCardContent}>
         <Typography
           variant="h6"
           component="h2"
           gutterBottom
           className={classes.title}
         >
-          <Box>
+          <Box
+            className={classes.cateText}
+            style={{
+              border: `1px solid ${ColorCate(category)}`,
+            }}
+          >
             {title}
           </Box>
         </Typography>
