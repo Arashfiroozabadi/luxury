@@ -6,7 +6,6 @@ import {
   useSelector,
   useDispatch,
 } from 'react-redux';
-// import Head from 'next/head';
 // eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import {
@@ -17,19 +16,18 @@ import {
   ListItem,
   useScrollTrigger,
   Slide,
-  Switch,
   Tooltip,
   Collapse,
   ListItemText,
-  // Slide
 } from '@material-ui/core';
+import clsx from 'clsx';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import Brightness4 from '@material-ui/icons/Brightness4';
+import Brightness7 from '@material-ui/icons/Brightness7';
 
-
-import clsx from 'clsx';
 import Logo from './Logo';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -193,11 +191,11 @@ function Nav(props: any) {
                   placement="top"
                   title="زمینه"
                 >
-                  <Switch
-                    onChange={handleChangeTheme}
-                    value={theme ? 'dark' : 'light'}
-                    color="primary"
-                  />
+                  <IconButton
+                    onClick={handleChangeTheme}
+                  >
+                    {theme ? <Brightness4 /> : <Brightness7 />}
+                  </IconButton>
                 </Tooltip>
               </div>
               <Typography
