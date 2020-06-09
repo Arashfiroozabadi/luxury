@@ -18,6 +18,7 @@ import { withRouter } from 'next/dist/client/router';
 import Loading from '../../components/loading';
 import AppTheme from '../../components/theme';
 import ProductCardInfo from '../../components/ProductCardInfo';
+import { NotFound } from '../../components';
 
 const Layout = dynamic(
   () => import('../../components/Layout'),
@@ -83,9 +84,7 @@ function Console() {
               ? <Loading size={80} className={classes.Loading} />
               : resp.length === 0
                 ? (
-                  <div>
-                    <h1>no any post for this category</h1>
-                  </div>
+                  <NotFound />
                 )
                 : resp.map((d: any) => (
                   <Grid
