@@ -10,7 +10,7 @@ import { themeDark, themeLight } from './theme';
 import Nav from './Nav';
 import Footer from './Footer';
 
-interface Layout {
+interface LayoutProps {
   children: ReactNode,
 }
 interface State {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     transition: 'background-color 250ms linear',
   },
 }));
-function Layout(props: Layout) {
+function Layout(props: LayoutProps) {
   const classes = useStyles();
   const { children } = props;
   const t = useSelector((state:State) => state.theme);
