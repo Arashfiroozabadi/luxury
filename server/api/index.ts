@@ -17,6 +17,8 @@ const UploadController = require('./UploadController');
 const Banner = require('./banner');
 const Production = require('./production');
 const AllProducts = require('./AllProducts');
+const Search = require('./Search');
+
 
 const AccountController = express.Router();
 
@@ -161,4 +163,5 @@ module.exports = [
   Banner,
   Production,
   AllProducts,
+  Search,
 ];
