@@ -9,3 +9,9 @@ export { default as ColorCate } from './ColorCate';
 export { default as Div } from './Div';
 
 export { default as NotFound } from './NotFound';
+
+export { default as Layout } from './Layout';
+
+export { default as AppTheme } from './theme';
+
+export { default as RTL } from './RTL';
