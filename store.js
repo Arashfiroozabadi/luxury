@@ -9,6 +9,7 @@ const initialState = {
   lastUpdate: 0,
   light: false,
   theme: false,
+  auth: { auth: false },
   count: 0,
 };
 
@@ -16,12 +17,19 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'product':
       return {
+        ...state,
         data: action.data,
 
       };
     case 'changeTheme':
       return {
+        ...state,
         theme: action.theme,
+      };
+    case 'authStatus':
+      return {
+        ...state,
+        auth: action.auth,
       };
     default:
       return state;
