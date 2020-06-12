@@ -34,6 +34,7 @@ import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 import StopIcon from '@material-ui/icons/Stop';
 
 import Logo from './Logo';
+import ColorCate from './ColorCate';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -322,19 +323,29 @@ function Nav(props: any) {
                       component="a"
                       button
                     >
-                      <StopIcon className={classes.subLinkIcon} />
+                      <StopIcon
+                        className={classes.subLinkIcon}
+                        style={{
+                          color: ColorCate('rahati'),
+                        }}
+                      />
                       محصولات راحتی
                     </ListItem>
                   </Link>
-                  <Link href="/production/rahatil" passHref>
+                  <Link href="/production/rahati-l" passHref>
                     <ListItem
                       className={
-                        clsx(classes.subLink, classes.linkHover, pathname === '/production/rahatil' ? classes.active : null)
+                        clsx(classes.subLink, classes.linkHover, pathname === '/production/rahati-l' ? classes.active : null)
                       }
                       component="a"
                       button
                     >
-                      <StopIcon className={classes.subLinkIcon} />
+                      <StopIcon
+                        className={classes.subLinkIcon}
+                        style={{
+                          color: ColorCate('rahatil'),
+                        }}
+                      />
                       محصولات راحتی ال
                     </ListItem>
                   </Link>
@@ -346,7 +357,12 @@ function Nav(props: any) {
                       component="a"
                       button
                     >
-                      <StopIcon className={classes.subLinkIcon} />
+                      <StopIcon
+                        className={classes.subLinkIcon}
+                        style={{
+                          color: ColorCate('servicekhab'),
+                        }}
+                      />
                       محصولات سرویس خواب
                     </ListItem>
                   </Link>
@@ -358,7 +374,12 @@ function Nav(props: any) {
                       component="a"
                       button
                     >
-                      <StopIcon className={classes.subLinkIcon} />
+                      <StopIcon
+                        className={classes.subLinkIcon}
+                        style={{
+                          color: ColorCate('naharkhori'),
+                        }}
+                      />
                       محصولات نهار خوری
                     </ListItem>
                   </Link>
@@ -370,7 +391,12 @@ function Nav(props: any) {
                       component="a"
                       button
                     >
-                      <StopIcon className={classes.subLinkIcon} />
+                      <StopIcon
+                        className={classes.subLinkIcon}
+                        style={{
+                          color: ColorCate('console'),
+                        }}
+                      />
                       محصولات آینه کنسول
                     </ListItem>
                   </Link>
