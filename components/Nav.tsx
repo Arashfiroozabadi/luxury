@@ -27,6 +27,11 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Brightness4 from '@material-ui/icons/Brightness4';
 import Brightness7 from '@material-ui/icons/Brightness7';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import ListIcon from '@material-ui/icons/List';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import ViewComfyIcon from '@material-ui/icons/ViewComfy';
+import StopIcon from '@material-ui/icons/Stop';
 
 import Logo from './Logo';
 
@@ -44,6 +49,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   rootDrawer: {
     width: 240,
+    height: '100%',
+    overflow: 'auto',
+    direction: 'ltr',
+  },
+  list: {
+    height: '100%',
+    display: 'flex',
+    direction: 'rtl',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   logo: {
     textDecoration: 'none',
@@ -62,14 +77,47 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   collaoseMenuText: {
     textAlign: 'right',
+    transition: 'background 200ms',
+    '&:hover': {
+      backgroundColor: 'gray',
+    },
   },
-  link: {
-    fontFamily: 'Vazir',
+  listHeaderText: {
+    display: 'flex',
+    fontSize: '0.8rem',
+    alignItems: 'center',
+  },
+  linkHover: {
+    transition: 'color 200ms, padding 200ms',
+    '&:hover': {
+      color: '#105dea',
+      transition: 'color 200ms, padding 200ms',
+      paddingRight: 50,
+      backgroundColor: theme.palette.background.default,
+    },
+  },
+  linIconkHover: {
+    transition: 'color 200ms, padding 200ms',
+    '&:hover': {
+      color: '#105dea',
+      transition: 'color 200ms, padding 200ms',
+      paddingRight: 40,
+      backgroundColor: theme.palette.background.default,
+    },
+  },
+  linkText: {
+    marginTop: 3,
+  },
+  linkIcon: {
+    marginLeft: 10,
   },
   subLink: {
-    fontSize: '0.8rem',
+    fontSize: '0.7rem',
     fontFamily: 'Vazir',
     paddingRight: theme.spacing(4),
+  },
+  subLinkIcon: {
+    fontSize: '0.7rem',
   },
   menuButton: {
     // color: theme.palette.secondary.dark,
@@ -121,8 +169,8 @@ function HideOnScroll(props: Props) {
 function Nav(props: any) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [openMenu, setOpenMenu] = useState(true);
-
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openCate, setOpenCate] = useState(true);
   const router = useRouter();
   const { pathname } = router;
 
@@ -138,6 +186,9 @@ function Nav(props: any) {
   }
   const handleChangeTheme = () => {
     dispatch({ type: 'changeTheme', theme: !theme });
+  };
+  const handleOpenCate = () => {
+    setOpenCate(!openCate);
   };
   const handleClick = () => {
     setOpenMenu(!openMenu);
@@ -224,68 +275,171 @@ function Nav(props: any) {
         onClose={() => handleClose()}
       >
         <div className={classes.rootDrawer}>
-          <List>
-            <Link href="/" passHref>
-              <ListItem component="a" button>
-                <div>
-                  <Logo
-                    textClass={classes.logoList}
-                  />
-                </div>
-              </ListItem>
-            </Link>
-            <Link href="/production" passHref>
+          <List className={classes.list}>
+            <div>
+              <Link href="/" passHref>
+                <ListItem component="a" button>
+                  <div>
+                    <Logo
+                      textClass={classes.logoList}
+                    />
+                  </div>
+                </ListItem>
+              </Link>
               <ListItem
-                className={
-                  clsx(classes.link, pathname === '/production' ? classes.active : null)
-                }
-                component="a"
+                className={classes.collaoseMenuText}
                 button
+                onClick={handleOpenCate}
               >
-                محصولات
+                <ListItemText
+                  classes={{
+                    primary: classes.listHeaderText,
+                  }}
+                >
+                  <ViewComfyIcon className={classes.linkIcon} />
+                  دسته بندی محصولات
+                </ListItemText>
+                {openCate ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
-            </Link>
-            <Link href="/upload" passHref>
+              <Collapse in={openCate} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <Link href="/production" passHref>
+                    <ListItem
+                      className={
+                        clsx(classes.subLink, classes.linkHover, pathname === '/production' ? classes.active : null)
+                      }
+                      component="a"
+                      button
+                    >
+                      لیست دسته بندی‌ها
+                    </ListItem>
+                  </Link>
+                  <Link href="/production/rahati" passHref>
+                    <ListItem
+                      className={
+                        clsx(classes.subLink, classes.linkHover, pathname === '/production/rahati' ? classes.active : null)
+                      }
+                      component="a"
+                      button
+                    >
+                      <StopIcon className={classes.subLinkIcon} />
+                      محصولات راحتی
+                    </ListItem>
+                  </Link>
+                  <Link href="/production/rahatil" passHref>
+                    <ListItem
+                      className={
+                        clsx(classes.subLink, classes.linkHover, pathname === '/production/rahatil' ? classes.active : null)
+                      }
+                      component="a"
+                      button
+                    >
+                      <StopIcon className={classes.subLinkIcon} />
+                      محصولات راحتی ال
+                    </ListItem>
+                  </Link>
+                  <Link href="/production/service-khab" passHref>
+                    <ListItem
+                      className={
+                        clsx(classes.subLink, classes.linkHover, pathname === '/production/service-khab' ? classes.active : null)
+                      }
+                      component="a"
+                      button
+                    >
+                      <StopIcon className={classes.subLinkIcon} />
+                      محصولات سرویس خواب
+                    </ListItem>
+                  </Link>
+                  <Link href="/production/nahar-khori" passHref>
+                    <ListItem
+                      className={
+                        clsx(classes.subLink, classes.linkHover, pathname === '/production/nahar-khori' ? classes.active : null)
+                      }
+                      component="a"
+                      button
+                    >
+                      <StopIcon className={classes.subLinkIcon} />
+                      محصولات نهار خوری
+                    </ListItem>
+                  </Link>
+                  <Link href="/production/console" passHref>
+                    <ListItem
+                      className={
+                        clsx(classes.subLink, classes.linkHover, pathname === '/production/console' ? classes.active : null)
+                      }
+                      component="a"
+                      button
+                    >
+                      <StopIcon className={classes.subLinkIcon} />
+                      محصولات آینه کنسول
+                    </ListItem>
+                  </Link>
+                </List>
+              </Collapse>
+            </div>
+            <div>
               <ListItem
-                className={
-                  clsx(classes.link, pathname === '/upload' ? classes.active : null)
-                }
-                component="a"
+                className={classes.collaoseMenuText}
                 button
+                onClick={handleClick}
               >
-                upload
+                <ListItemText primary="مدیریت" />
+                {openMenu ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
-            </Link>
-            <ListItem button onClick={handleClick}>
-              <ListItemText className={classes.collaoseMenuText} primary="مدیریت" />
-              {openMenu ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={openMenu} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <Link href="/management/chart" passHref>
-                  <ListItem
-                    className={
-                      clsx(classes.subLink, pathname === '/management/chart' ? classes.active : null)
+              <Collapse in={openMenu} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <Link href="/management/chart" passHref>
+                    <ListItem
+                      className={
+                      clsx(classes.subLink, classes.linIconkHover, pathname === '/management/chart' ? classes.active : null)
                     }
-                    component="a"
-                    button
-                  >
-                    آمار
-                  </ListItem>
-                </Link>
-                <Link href="/management/products" passHref>
-                  <ListItem
-                    className={
-                    clsx(classes.subLink, pathname === '/management/products' ? classes.active : null)
-                  }
-                    component="a"
-                    button
-                  >
-                    محصولات
-                  </ListItem>
-                </Link>
-              </List>
-            </Collapse>
+                      component="a"
+                      button
+                    >
+                      <EqualizerIcon className={classes.linkIcon} />
+                      <span className={classes.linkText}>
+                        آمار
+                      </span>
+                    </ListItem>
+                  </Link>
+                  <Link href="/management/products" passHref>
+                    <ListItem
+                      className={
+                      clsx(classes.subLink, classes.linIconkHover, pathname === '/management/products' ? classes.active : null)
+                    }
+                      component="a"
+                      button
+                    >
+                      <ListIcon
+                        className={classes.linkIcon}
+                        style={{
+                          transform: 'rotate(180deg)',
+                        }}
+                      />
+                      <span className={classes.linkText}>
+                        لیست محصولات
+                      </span>
+                    </ListItem>
+                  </Link>
+                  <Link href="/upload" passHref>
+                    <ListItem
+                      className={
+                      clsx(classes.subLink, classes.linIconkHover, pathname === '/upload' ? classes.active : null)
+                    }
+                      component="a"
+                      button
+                    >
+                      <CloudUploadIcon
+                        className={classes.linkIcon}
+                      />
+                      <span className={classes.linkText}>
+                        افزودن محصول
+                      </span>
+                    </ListItem>
+                  </Link>
+                </List>
+              </Collapse>
+            </div>
           </List>
         </div>
       </Drawer>
