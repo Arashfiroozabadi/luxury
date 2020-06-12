@@ -11,7 +11,7 @@ function ColorCate(cate:string) {
     case 'console':
       return '#ff5722';
     default:
-      return 'white';
+      return '';
   }
 }
 
