@@ -57,7 +57,7 @@ const upload = multer({
 
 AccountController.post('/auth', (req: any, res) => {
   if (req.session.auth) {
-    res.send({ auth: true, test: req.session.auth, msg: 'وارد شدید' });
+    res.send({ auth: true, user: req.session.auth, msg: 'وارد شدید' });
   } else {
     res.send({ auth: false });
   }
