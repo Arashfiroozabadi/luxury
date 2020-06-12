@@ -157,7 +157,6 @@ function Search() {
   }
   async function handleSubmitForm(e:React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    console.log(data);
     const { searchValue } = data;
     if (searchValue === undefined) {
       setErr({
