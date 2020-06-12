@@ -51,7 +51,7 @@ function NaharKhori() {
       const result = await axios.post(
         '/api/production',
         {
-          target: 'naharkhori',
+          target: 'nahar-khori',
         },
       );
       setResp(result.data);

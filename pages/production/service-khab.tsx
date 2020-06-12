@@ -51,7 +51,7 @@ function ServiceKhab() {
       const result = await axios.post(
         '/api/production',
         {
-          target: 'servicekhab',
+          target: 'service-khab',
         },
       );
       setResp(result.data);

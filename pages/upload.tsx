@@ -302,15 +302,15 @@ function Upload() {
       label: 'راحتی',
     },
     {
-      value: 'rahatil',
+      value: 'rahati-l',
       label: 'راحتی ال',
     },
     {
-      value: 'servicekhab',
+      value: 'service-khab',
       label: 'سرویس خواب',
     },
     {
-      value: 'naharkhori',
+      value: 'nahar-khori',
       label: 'نهار خوری',
     },
     {
