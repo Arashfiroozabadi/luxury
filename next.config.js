@@ -17,7 +17,11 @@ module.exports = process.env.NODE_ENV === 'development'
     // withImages({
     //   assetPrefix: 'locallhost:8080',
     // }),
-  ])
+  ], {
+    env: {
+      tokenKey: 'djdammasdesjuskesmuskjkjds',
+    },
+  })
   : withPlugins(
     [
       // [optimizedImages, {}],
@@ -26,5 +30,9 @@ module.exports = process.env.NODE_ENV === 'development'
     //   settings
     // ]
     ],
-    { /* nextConfig options here */ },
+    {
+      env: {
+        tokenKey: 'djdammasdesjuskesmuskjkjds',
+      },
+    },
   );
