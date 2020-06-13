@@ -1,6 +1,5 @@
 import express from 'express';
 import chalk from 'chalk';
-import rimraf from 'rimraf';
 import { Post, Overview, Img } from '../models';
 
 const PostController = express.Router();
@@ -32,14 +31,6 @@ PostController.put('/put', async (req, res) => {
         },
       );
       console.log(`[ ${chalk.blue.bold('info')} ] Document with ID::" ${chalk.blue.underline(body._id)} ":: ${chalk.green.bgWhite.bold('Deleted')}`);
-      const Path = `./statics/uploads/${body.category}/${body.title}`;
-      // console.log(process.cwd());
-
-      await rimraf(Path, (err) => {
-        if (err) {
-          return console.log(`[ ${chalk.red.bold('Error')} ] Document directory folder Not Delet`);
-        } return console.log(`[ ${chalk.blue.bold('info')} ] Documet directory Deleted successfully`);
-      });
       res.sendStatus(200);
     } else {
       console.log(`[ ${
