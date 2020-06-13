@@ -32,6 +32,7 @@ import ListIcon from '@material-ui/icons/List';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 import StopIcon from '@material-ui/icons/Stop';
+import SearchIcon from '@material-ui/icons/Search';
 
 import Logo from './Logo';
 import ColorCate from './ColorCate';
@@ -75,6 +76,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         textDecoration: 'none',
       },
     },
+  },
+  link: {
+
   },
   collaoseMenuText: {
     textAlign: 'right',
@@ -402,6 +406,18 @@ function Nav(props: any) {
                   </Link>
                 </List>
               </Collapse>
+              <Link href="/search" passHref>
+                <ListItem
+                  className={
+                        clsx(classes.link, classes.linkHover, pathname === '/search' ? classes.active : null)
+                      }
+                  component="a"
+                  button
+                >
+                  <SearchIcon className={classes.linkIcon} />
+                  جستوجو
+                </ListItem>
+              </Link>
             </div>
             <div>
               <ListItem
