@@ -25,8 +25,8 @@ import Loading from '../loading';
 import { FetchData } from '../../interface';
 import RandNum from '../randNum';
 import ConvertValue from '../ConvertValue';
-import { FetchPostList, NotFound } from '../customHooks';
-
+import { FetchPostList } from '../customHooks';
+import { NotFound } from '..';
 
 const useStyles = makeStyles((theme) => createStyles({
   root: {
