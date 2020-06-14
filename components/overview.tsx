@@ -18,9 +18,11 @@ function Overview() {
   const [data, setData] = useState<any | null>([]);
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.post(
-        '/api/overview',
-      );
+      const result = await axios.post('/api/overview', {}, {
+        headers: {
+          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWVlNDk5NTE1YTU1NTAxZDQ0MjY3ZWZhIn0sImlhdCI6MTU5MjEyMTMwOCwiZXhwIjoxNTkyMTMxMzA4fQ.bvF3Trb53AN9eHJ_ZNi2E6xndV461nsSNY79pazfDLs',
+        },
+      });
 
       setData(result.data);
     };
