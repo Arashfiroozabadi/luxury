@@ -16,7 +16,7 @@ const Production = require('./production');
 const AllProducts = require('./AllProducts');
 const Search = require('./Search');
 const UserController = require('./UserController');
-
+const DashBoard = require('./DashBoard');
 
 const AccountController = express.Router();
 
@@ -57,14 +57,6 @@ AccountController.post('/product', async (req, res) => {
   );
 });
 
-AccountController.post('/overview', (_req, res) => {
-  Overview.findOne({}).then(
-    (resualt) => {
-      res.send(resualt);
-    },
-  );
-});
-
 AccountController.post('/test', (req, res) => {
   const { files }:any = req.files;
 
@@ -88,4 +80,5 @@ module.exports = [
   AllProducts,
   Search,
   UserController,
+  DashBoard,
 ];
