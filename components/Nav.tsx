@@ -430,6 +430,20 @@ function Nav(props: any) {
               </ListItem>
               <Collapse in={openMenu} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
+                  <Link href="/management" passHref>
+                    <ListItem
+                      className={
+                      clsx(classes.subLink, classes.linIconkHover, pathname === '/management' ? classes.active : null)
+                    }
+                      component="a"
+                      button
+                    >
+                      <EqualizerIcon className={classes.linkIcon} />
+                      <span className={classes.linkText}>
+                        مدیریت
+                      </span>
+                    </ListItem>
+                  </Link>
                   <Link href="/management/chart" passHref>
                     <ListItem
                       className={
