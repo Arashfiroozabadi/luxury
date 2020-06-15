@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import Loger from '../components/logers';
 
 function auth(req: any, res:any, next:any) {
   const token = req.header('token');
@@ -9,8 +10,8 @@ function auth(req: any, res:any, next:any) {
     req.user = decoded.user;
     return next();
   } catch (e) {
-    console.log(e);
-    return res.status(500).send({ msg: 'Invalid Token' });
+    Loger('error', e.message);
+    return res.status(500).send({ msg: 'احراز هویت کاربر نا موفق بود' });
   }
 }
 
