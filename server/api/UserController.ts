@@ -57,6 +57,7 @@ UserController.get('/admininfo', auth, async (req:any, res) => {
       res.send({
         userName: userDoc.userName,
         type: userDoc.type,
+        auth: true,
         msg: 'احراز هویت انجام شد',
       });
     }).catch((e) => {
