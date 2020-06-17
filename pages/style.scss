@@ -19,3 +19,7 @@
     transform : translateY(-100px);
     transition: opacity 100ms, transform 500ms;
 }
+
+input::-ms-reveal, input::-ms-clear {
+    display: none;
+}
