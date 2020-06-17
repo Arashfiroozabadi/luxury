@@ -23,3 +23,5 @@ export { default as ListItems } from './search/ListItems';
 export { default as ProductCardInfo } from './ProductCardInfo';
 
 export { default as ConvertString } from './ConvertString';
+
+export { default as AdminPanel } from './management/AdminPanel';
