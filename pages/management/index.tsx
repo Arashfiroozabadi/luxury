@@ -3,12 +3,13 @@ import {
   // eslint-disable-next-line no-unused-vars
   Theme,
   Typography, Box, Container,
-  makeStyles, createStyles, TextField, Button, FormHelperText,
+  makeStyles, createStyles, TextField, Button, FormHelperText, InputAdornment, IconButton,
 } from '@material-ui/core';
 import clsx from 'clsx';
 import Axios from 'axios';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 import {
-  AppTheme, Layout, Div, Paper, RTL, Loading,
+  AppTheme, Layout, Div, Paper, RTL, Loading, AdminPanel,
 } from '../../components';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -31,18 +32,28 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
   formPaper: {
     width: '30%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
   },
   form: {
     width: '100%',
     display: 'flex',
+    padding: '10px 15px',
     flexDirection: 'column',
+  },
+  submitButton: {
+    margin: '15px 0px',
   },
   formTextHelper: {
     textAlign: 'center',
   },
+  success: {
+    color: theme.palette.success.main,
+  },
   loading: {
+    padding: 7,
     display: 'flex',
-    marginTop: 40,
     justifyContent: 'center',
   },
 }));
@@ -61,7 +72,7 @@ function Management() {
   const classes = useStyles();
   const [auth, setAuth] = useState<boolean>();
   const [isLoading, setisLoading] = useState<boolean>(false);
-
+  const [showPass, setShowPass] = useState<boolean>(false);
   const [data, setData] = useState<dataProps>({
     userName: '',
     type: '',
@@ -78,29 +89,42 @@ function Management() {
 
 
   function handleSubmit(e:any) {
+    const userCheck = FormData.userName.length;
+    const passCheck = FormData.password.length;
+    if (userCheck <= 0) {
+      e.preventDefault();
+      return setError({ err: true, msg: 'نام کاربری را وارد کنید' });
+    }
+    if (passCheck <= 3) {
+      e.preventDefault();
+      return setError({ err: true, msg: 'رمز ورود نباید کمتر از ۴ حرف باشد' });
+    }
     e.preventDefault();
     const fetchData = async () => {
       setisLoading(true);
       await Axios.post('/api/login', { form: FormData }).then((result) => {
-        setisLoading(false);
         setError({ err: false, msg: result.data.msg });
-        console.log(result.data);
         localStorage.setItem('token', result.data.token);
         setTimeout(() => {
+          setisLoading(false);
           setAuth(result.data.auth);
-        }, 3000);
+        }, 2000);
       }).catch((err) => {
         setisLoading(false);
         setError({ err: true, msg: err.response.data.msg });
-        console.log(err.response.data);
       });
     };
 
-    fetchData();
+    return fetchData();
   }
 
   function handleOnChangeInput(e:any) {
     setFormData({ ...FormData, [e.target.name]: e.target.value });
+    setError({ err: false, msg: '' });
+  }
+
+  function handleShowPass() {
+    setShowPass(!showPass);
   }
 
   useEffect(() => {
@@ -112,8 +136,11 @@ function Management() {
           token: userToken,
         },
       }).then((result) => {
-        setisLoading(false);
-        setAuth(true);
+        setError({ err: false, msg: result.data.msg });
+        setTimeout(() => {
+          // setisLoading(false);
+          setAuth(result.data.auth);
+        }, 3000);
         setData(result.data);
       }).catch((e) => {
         setisLoading(false);
@@ -157,22 +184,45 @@ function Management() {
                             label="نام کاربری"
                             name="userName"
                             helperText=""
+                            onInvalid={(e:any) => e.target.setCustomValidity('نام کاربری را وارد کنید')}
+                            onInput={(e:any) => e.target.setCustomValidity('')}
+                            required={Error.err}
                             onChange={(e) => handleOnChangeInput(e)}
                           />
                           <TextField
                             label="رمز ورود"
                             name="password"
+                            type={showPass ? 'text' : 'password'}
                             helperText=""
+                            onInvalid={(e:any) => e.target.setCustomValidity('رمز ورود را وارد کنید')}
+                            onInput={(e:any) => e.target.setCustomValidity('')}
+                            required={Error.err}
                             onChange={(e) => handleOnChangeInput(e)}
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    onClick={() => handleShowPass()}
+                                  >
+                                    {showPass ? <Visibility /> : <VisibilityOff />}
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
+                            }}
                           />
                           <Button
-                            disabled={isLoading}
+                            className={classes.submitButton}
+                            disabled={(isLoading || Error.err)}
                             type="submit"
+                            variant="outlined"
                           >
                             ورود
                           </Button>
                           <FormHelperText
-                            className={classes.formTextHelper}
+                            className={clsx(
+                              classes.formTextHelper,
+                              Error.err ? null : classes.success,
+                            )}
                             error={Error.err}
                             variant="outlined"
                           >
@@ -181,18 +231,17 @@ function Management() {
                         </RTL>
                       </form>
                       {isLoading
-                        ? <Loading className={classes.loading} size={20} />
+                        ? <Loading className={classes.loading} size={30} />
                         : null}
                     </Paper>
                   </div>
                 </div>
               )
               : (
-                <h1>
-                  good for you
-                  {' '}
-                  {data!.userName}
-                </h1>
+                <AdminPanel
+                  userName={data.userName}
+                  userType={data.type}
+                />
               )}
           </Div>
         </Container>
