@@ -32,13 +32,14 @@ UserController.post('/login', async (req:any, res:any) => {
             };
             const key = process.env.token;
 
-            jwt.sign(payLoad, `${key}`, { expiresIn: 10000 }, (errToken, token) => {
+            jwt.sign(payLoad, `${key}`, { expiresIn: 10000 }, async (errToken, token) => {
               if (errToken) throw errToken;
               // req.session.auth = { username: user.userName };
-              res.send({
+              await res.send({
                 auth: isMatch,
                 userName: user.userName,
                 token,
+                type: user.type,
                 msg: 'شما با موفقیت وارد شدید',
               });
             });
