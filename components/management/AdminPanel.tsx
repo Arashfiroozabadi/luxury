@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   // eslint-disable-next-line no-unused-vars
   makeStyles, Theme, createStyles,
   Paper, Typography, Box, Button, List, ListItem,
-  Avatar,
+  Avatar, Slide, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
 } from '@material-ui/core';
+// eslint-disable-next-line import/no-unresolved, no-unused-vars
+import { TransitionProps } from '@material-ui/core/transitions';
 import Link from 'next/link';
 import clsx from 'clsx';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import ListIcon from '@material-ui/icons/List';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
+import {
+  useDispatch,
+} from 'react-redux';
 
 const useStyles = makeStyles((theme:Theme) => createStyles({
   root: {
@@ -114,8 +119,14 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
   linkText: {
 
   },
+  dialogUserName: {
+    color: '#218fde',
+  },
 }));
-
+const Transition = React.forwardRef((
+  props: TransitionProps & { children?: React.ReactElement<any, any> },
+  ref: React.Ref<unknown>,
+) => <Slide direction="up" ref={ref} {...props} />);
 interface PropsType{
     userName:string
     userType:string
@@ -124,6 +135,27 @@ interface PropsType{
 function AdminPanel(props:PropsType) {
   const classes = useStyles();
   const { userName, userType } = props;
+  const [open, setopen] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
+
+  const handleLogout = () => {
+    setopen(true);
+  };
+
+  const handleYes = () => {
+    localStorage.removeItem('token');
+    dispatch({ type: 'authStatus', auth: false });
+    dispatch({ type: 'err', err: { err: true, msg: '' } });
+    setopen(false);
+  };
+  const handleNo = () => {
+    setopen(false);
+  };
+
+  useEffect(() => () => {
+    console.log('cleaned up');
+  }, []);
   return (
     <div
       className={classes.root}
@@ -160,9 +192,36 @@ function AdminPanel(props:PropsType) {
           size="small"
           className={classes.logout}
           variant="outlined"
+          onClick={handleLogout}
         >
           خروج از حساب کاربری
         </Button>
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          onClose={handleNo}
+          keepMounted
+        >
+          <DialogTitle>
+            تایید خروج از حساب
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <span className={classes.dialogUserName}>
+                {userName}
+              </span>
+              {' آیا تایید میکنید که از این حساب کاربری خارج شوید'}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleYes}>
+              بله
+            </Button>
+            <Button onClick={handleNo}>
+              خیر
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Paper>
       <Paper className={classes.listContainer}>
         <List className={classes.listItems}>
