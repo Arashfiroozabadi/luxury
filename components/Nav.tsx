@@ -27,12 +27,10 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Brightness4 from '@material-ui/icons/Brightness4';
 import Brightness7 from '@material-ui/icons/Brightness7';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import ListIcon from '@material-ui/icons/List';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
 import ViewComfyIcon from '@material-ui/icons/ViewComfy';
 import StopIcon from '@material-ui/icons/Stop';
 import SearchIcon from '@material-ui/icons/Search';
+import ScatterPlotIcon from '@material-ui/icons/ScatterPlot';
 
 import Logo from './Logo';
 import ColorCate from './ColorCate';
@@ -438,58 +436,9 @@ function Nav(props: any) {
                       component="a"
                       button
                     >
-                      <EqualizerIcon className={classes.linkIcon} />
+                      <ScatterPlotIcon className={classes.linkIcon} />
                       <span className={classes.linkText}>
-                        مدیریت
-                      </span>
-                    </ListItem>
-                  </Link>
-                  <Link href="/management/chart" passHref>
-                    <ListItem
-                      className={
-                      clsx(classes.subLink, classes.linIconkHover, pathname === '/management/chart' ? classes.active : null)
-                    }
-                      component="a"
-                      button
-                    >
-                      <EqualizerIcon className={classes.linkIcon} />
-                      <span className={classes.linkText}>
-                        آمار
-                      </span>
-                    </ListItem>
-                  </Link>
-                  <Link href="/management/products" passHref>
-                    <ListItem
-                      className={
-                      clsx(classes.subLink, classes.linIconkHover, pathname === '/management/products' ? classes.active : null)
-                    }
-                      component="a"
-                      button
-                    >
-                      <ListIcon
-                        className={classes.linkIcon}
-                        style={{
-                          transform: 'rotate(180deg)',
-                        }}
-                      />
-                      <span className={classes.linkText}>
-                        لیست محصولات
-                      </span>
-                    </ListItem>
-                  </Link>
-                  <Link href="/upload" passHref>
-                    <ListItem
-                      className={
-                      clsx(classes.subLink, classes.linIconkHover, pathname === '/upload' ? classes.active : null)
-                    }
-                      component="a"
-                      button
-                    >
-                      <CloudUploadIcon
-                        className={classes.linkIcon}
-                      />
-                      <span className={classes.linkText}>
-                        افزودن محصول
+                        پنل مدیریت
                       </span>
                     </ListItem>
                   </Link>
