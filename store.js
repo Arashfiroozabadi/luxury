@@ -11,6 +11,9 @@ const initialState = {
   theme: false,
   auth: { auth: false },
   count: 0,
+  err: {
+    err: false, msg: '',
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,6 +33,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         auth: action.auth,
+      };
+    case 'err':
+      return {
+        ...state,
+        err: action.err,
       };
     default:
       return state;
