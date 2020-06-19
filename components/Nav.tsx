@@ -19,8 +19,17 @@ import {
   Tooltip,
   Collapse,
   ListItemText,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Box,
 } from '@material-ui/core';
 import clsx from 'clsx';
+// eslint-disable-next-line import/no-unresolved, no-unused-vars
+import { TransitionProps } from '@material-ui/core/transitions';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -32,8 +41,10 @@ import StopIcon from '@material-ui/icons/Stop';
 import SearchIcon from '@material-ui/icons/Search';
 import ScatterPlotIcon from '@material-ui/icons/ScatterPlot';
 
+import Axios from 'axios';
 import Logo from './Logo';
 import ColorCate from './ColorCate';
+import Loading from './loading';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
@@ -145,9 +156,20 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   active: {
     backgroundColor: theme.palette.background.default,
     borderBottom: '1px solid gold',
-
+  },
+  dialogUserName: {
+    color: '#218fde',
+  },
+  loading: {
+    margin: 10,
+    textAlign: 'center',
   },
 }));
+
+const Transition = React.forwardRef((
+  props: TransitionProps & { children?: React.ReactElement<any, any> },
+  ref: React.Ref<unknown>,
+) => <Slide direction="up" ref={ref} {...props} />);
 interface Props {
     children: React.ReactElement;
 }
@@ -174,12 +196,16 @@ function Nav(props: any) {
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [openCate, setOpenCate] = useState(true);
+  const [openModal, setopenModal] = useState<boolean>(false);
+  const [isloading, setisloading] = useState<boolean>(false);
   const router = useRouter();
   const { pathname } = router;
 
   const dispatch = useDispatch();
   // eslint-disable-next-line no-shadow
   const theme = useSelector((state:State) => state.theme);
+  const auth = useSelector((state:any) => state.auth);
+  const loginForm = useSelector((state:any) => state.loginForm);
 
   function handleOpen() {
     setOpen(!open);
@@ -195,6 +221,30 @@ function Nav(props: any) {
   };
   const handleClick = () => {
     setOpenMenu(!openMenu);
+  };
+  const handleOpenModal = () => {
+    setopenModal(true);
+  };
+  const handleLogout = async () => {
+    const tokenKey = localStorage.getItem('token');
+    setisloading(true);
+    await Axios.get('/api/logout', {
+      headers: { token: tokenKey },
+    }).then((result:any) => {
+      localStorage.setItem('token', result.data.token);
+    });
+    await setTimeout(() => {
+      setisloading(false);
+      setopenModal(false);
+      setOpen(false);
+      dispatch({ type: 'authStatus', auth: false });
+      dispatch({ type: 'err', err: { err: true, msg: '' } });
+      dispatch({ type: 'login', loginForm: { userName: '', password: '' } });
+    }, 2000);
+  };
+  const handleNo = () => {
+    setopenModal(false);
+    setOpen(false);
   };
   return (
     <div
@@ -442,8 +492,55 @@ function Nav(props: any) {
                       </span>
                     </ListItem>
                   </Link>
+                  {auth ? (
+                    <Box
+                      textAlign="center"
+                      margin="15px 0px"
+                    >
+                      <Button
+                        variant="outlined"
+                        onClick={handleOpenModal}
+                      >
+                        خروج از حساب کاربری
+                      </Button>
+                    </Box>
+
+                  )
+                    : null}
                 </List>
               </Collapse>
+              <Dialog
+                open={openModal}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleNo}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+              >
+                <DialogTitle id="alert-dialog-slide-title">
+                  تایید خروج از حساب
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-slide-description">
+                    <span className={classes.dialogUserName}>
+                      {loginForm.userName}
+                    </span>
+                    {' آیا تایید میکنید که از این حساب کاربری خارج شوید'}
+                  </DialogContentText>
+                  {isloading ? <Loading className={classes.loading} size={30} /> : null}
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    disabled={isloading}
+                    onClick={handleLogout}
+                  >
+                    بله
+                  </Button>
+                  <Button onClick={handleNo}>
+                    خیر
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </List>
         </div>
