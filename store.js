@@ -9,7 +9,7 @@ const initialState = {
   lastUpdate: 0,
   light: false,
   theme: false,
-  auth: { auth: false },
+  auth: false,
   count: 0,
   err: {
     err: false, msg: '',
