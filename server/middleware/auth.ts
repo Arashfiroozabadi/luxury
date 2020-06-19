@@ -11,7 +11,7 @@ function auth(req: any, res:any, next:any) {
     return next();
   } catch (e) {
     Loger('error', e.message);
-    return res.status(500).send({ msg: 'احراز هویت کاربر نا موفق بود' });
+    return res.status(500).send({ auth: false, msg: 'احراز هویت کاربر نا موفق بود' });
   }
 }
 
