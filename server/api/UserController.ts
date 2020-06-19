@@ -70,10 +70,22 @@ UserController.get('/admininfo', auth, async (req:any, res) => {
   }
 });
 
-UserController.get('/me', auth, async (req:any, res) => {
+UserController.get('/logout', auth, async (req:any, res) => {
+  const payLoad = {
+    user: { id: req.user.id },
+  };
   try {
-    const user = await User.findById(req.user.id);
-    res.json(user);
+    const key = process.env.token;
+    jwt.sign(payLoad, `${key}`, { expiresIn: 5 }, async (errToken, token) => {
+      if (errToken) throw errToken;
+      await res.send({
+        auth: false,
+        userName: 'none',
+        token,
+        type: 'none',
+        msg: 'شما با موفقیت خارج شدید',
+      });
+    });
   } catch (e) {
     res.send({ message: 'Error in Fetching user' });
   }
