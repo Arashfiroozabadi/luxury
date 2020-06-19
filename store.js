@@ -14,6 +14,10 @@ const initialState = {
   err: {
     err: false, msg: '',
   },
+  loginForm: {
+    userName: '',
+    password: '',
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,6 +42,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         err: action.err,
+      };
+    case 'login':
+      return {
+        ...state,
+        loginForm: action.loginForm,
       };
     default:
       return state;
