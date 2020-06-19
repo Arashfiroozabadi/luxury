@@ -118,7 +118,7 @@ function Management() {
           setisLoading(false);
           setFormData({ userName: '', password: '' });
           dispatch({ type: 'err', err: { err: true, msg: '' } });
-          dispatch({ type: 'login', loginForm: { userName: '', password: '' } });
+          dispatch({ type: 'login', loginForm: { userName: result.data.userName, password: '' } });
           dispatch({ type: 'authStatus', auth: true });
         }, 2000);
       }).catch((err) => {
