@@ -84,15 +84,11 @@ function Management() {
     userName: '',
     password: '',
   });
-  // const [Error, setError] = useState({
-  //   err: false,
-  //   msg: '',
-  // });
 
   const dispatch = useDispatch();
   const auth = useSelector((state:any) => state.auth);
   const Error = useSelector((state:any) => state.err);
-  console.log(Error);
+  const loginForm = useSelector((state:any) => state.loginForm);
 
 
   function handleSubmit(e:any) {
@@ -101,18 +97,15 @@ function Management() {
     if (userCheck <= 0) {
       e.preventDefault();
       return dispatch({ type: 'err', err: { err: true, msg: 'نام کاربری را وارد کنید' } });
-      // return setError({ err: true, msg: 'نام کاربری را وارد کنید' });
     }
     if (passCheck <= 3) {
       e.preventDefault();
       return dispatch({ type: 'err', err: { err: true, msg: 'رمز ورود نباید کمتر از ۴ حرف باشد' } });
-      // return setError({ err: true, msg: 'رمز ورود نباید کمتر از ۴ حرف باشد' });
     }
     e.preventDefault();
     const fetchData = async () => {
       setisLoading(true);
-      await Axios.post('/api/login', { form: FormData }).then((result:any) => {
-        // setError({ err: false, msg: result.data.msg });
+      await Axios.post('/api/login', { form: loginForm }).then((result:any) => {
         dispatch({ type: 'err', err: { err: false, msg: result.data.msg } });
 
         localStorage.setItem('token', result.data.token);
@@ -123,12 +116,13 @@ function Management() {
         });
         setTimeout(() => {
           setisLoading(false);
-          // setAuth(result.data.auth);
+          setFormData({ userName: '', password: '' });
+          dispatch({ type: 'err', err: { err: true, msg: '' } });
+          dispatch({ type: 'login', loginForm: { userName: '', password: '' } });
           dispatch({ type: 'authStatus', auth: true });
         }, 2000);
       }).catch((err) => {
         setisLoading(false);
-        // setError({ err: true, msg: err.response.data.msg });
         dispatch({ type: 'err', err: { err: true, msg: err.response.data.msg } });
       });
     };
@@ -137,26 +131,20 @@ function Management() {
   }
 
   function handleOnChangeInput(e:any) {
-    console.log(auth);
-
-    if (!auth) {
-      setFormData({ userName: '', password: '' });
-    }
     setFormData({ ...FormData, [e.target.name]: e.target.value });
-    // setError({ err: false, msg: '' });
+    dispatch({ type: 'login', loginForm: { ...loginForm, [e.target.name]: e.target.value } });
     dispatch({ type: 'err', err: { err: false, msg: '' } });
   }
 
   function handleShowPass() {
     setShowPass(!showPass);
+    setTimeout(() => {
+      setShowPass(false);
+    }, 4000);
   }
 
 
   useEffect(() => {
-    if (!auth) {
-      // setError({ err: true, msg: '' });
-      setFormData({ userName: '', password: '' });
-    }
     const userToken = localStorage.getItem('token');
     const fetchData = async () => {
       setisLoading(true);
@@ -165,28 +153,24 @@ function Management() {
           token: userToken,
         },
       }).then((result) => {
-        // setError({ err: false, msg: result.data.msg });
         dispatch({ type: 'err', err: { err: false, msg: result.data.msg } });
-
         setTimeout(() => {
-          // setisLoading(false);
-          // setAuth(result.data.auth);
+          setisLoading(false);
+          dispatch({ type: 'err', err: { err: true, msg: '' } });
           dispatch({ type: 'authStatus', auth: true });
         }, 3000);
         setData(result.data);
       }).catch((e) => {
         setisLoading(false);
         dispatch({ type: 'authStatus', auth: false });
-        // setError({ err: true, msg: e.response.data.msg });
         dispatch({ type: 'err', err: { err: true, msg: e.response.data.msg } });
         console.error(e);
       });
     };
     fetchData();
-  }, []);
-
-  useEffect(() => () => {
-    console.log('cleaned up');
+    return () => {
+      console.log('cleaned up');
+    };
   }, []);
 
   if (auth) {
