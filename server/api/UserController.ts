@@ -76,7 +76,7 @@ UserController.get('/logout', auth, async (req:any, res) => {
   };
   try {
     const key = process.env.token;
-    jwt.sign(payLoad, `${key}`, { expiresIn: 5 }, async (errToken, token) => {
+    jwt.sign(payLoad, `${key}`, { expiresIn: 1 }, async (errToken, token) => {
       if (errToken) throw errToken;
       await res.send({
         auth: false,
