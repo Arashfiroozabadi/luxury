@@ -15,6 +15,7 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import {
   useDispatch,
 } from 'react-redux';
+import Axios from 'axios';
 
 const useStyles = makeStyles((theme:Theme) => createStyles({
   root: {
@@ -143,11 +144,16 @@ function AdminPanel(props:PropsType) {
     setopen(true);
   };
 
-  const handleYes = () => {
-    localStorage.removeItem('token');
-    dispatch({ type: 'authStatus', auth: false });
-    dispatch({ type: 'err', err: { err: true, msg: '' } });
-    setopen(false);
+  const handleYes = async () => {
+    const tokenKey = localStorage.getItem('token');
+    await Axios.get('/api/logout', {
+      headers: { token: tokenKey },
+    }).then((result:any) => {
+      localStorage.setItem('token', result.data.token);
+      dispatch({ type: 'authStatus', auth: false });
+      dispatch({ type: 'err', err: { err: true, msg: '' } });
+      dispatch({ type: 'login', loginForm: { userName: '', password: '' } });
+    });
   };
   const handleNo = () => {
     setopen(false);
@@ -156,6 +162,7 @@ function AdminPanel(props:PropsType) {
   useEffect(() => () => {
     console.log('cleaned up');
   }, []);
+
   return (
     <div
       className={classes.root}
