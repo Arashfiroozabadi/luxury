@@ -13,7 +13,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import ListIcon from '@material-ui/icons/List';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import {
-  useDispatch,
+  useDispatch, useSelector,
 } from 'react-redux';
 import Axios from 'axios';
 
@@ -137,23 +137,24 @@ function AdminPanel(props:PropsType) {
   const classes = useStyles();
   const { userName, userType } = props;
   const [open, setopen] = useState<boolean>(false);
+
   const dispatch = useDispatch();
-
-
+  const loginForm = useSelector((state:any) => state.loginForm);
   const handleLogout = () => {
     setopen(true);
   };
-
   const handleYes = async () => {
     const tokenKey = localStorage.getItem('token');
     await Axios.get('/api/logout', {
       headers: { token: tokenKey },
     }).then((result:any) => {
       localStorage.setItem('token', result.data.token);
+    });
+    await setTimeout(() => {
       dispatch({ type: 'authStatus', auth: false });
       dispatch({ type: 'err', err: { err: true, msg: '' } });
-      dispatch({ type: 'login', loginForm: { userName: '', password: '' } });
-    });
+      dispatch({ type: 'login', loginForm: { ...loginForm, password: '' } });
+    }, 2000);
   };
   const handleNo = () => {
     setopen(false);
