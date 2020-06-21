@@ -77,11 +77,11 @@ function colorCate(cate:string) {
   switch (cate) {
     case 'rahati':
       return '#e8e230';
-    case 'rahatil':
+    case 'rahati-l':
       return '#ec407a';
-    case 'servicekhab':
+    case 'service-khab':
       return '#ab47bc';
-    case 'naharkhori':
+    case 'nahar-khori':
       return '#01b075';
     case 'console':
       return '#ff5722';
@@ -97,7 +97,6 @@ function Product(props:FetchData) {
     description,
     views, data,
   } = props;
-  console.log(views);
   return (
     <AppTheme>
       <Card className={classes.card}>
