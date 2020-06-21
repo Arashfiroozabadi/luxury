@@ -214,6 +214,7 @@ function Nav(props: any) {
     setOpen(false);
   }
   const handleChangeTheme = () => {
+    localStorage.setItem('theme', `${!theme}`);
     dispatch({ type: 'changeTheme', theme: !theme });
   };
   const handleOpenCate = () => {
