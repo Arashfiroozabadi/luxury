@@ -26,7 +26,7 @@ import { FetchData } from '../../interface';
 import RandNum from '../randNum';
 import ConvertValue from '../ConvertValue';
 import { FetchPostList } from '../customHooks';
-import { NotFound } from '..';
+import NotFound from '../NotFound';
 
 const useStyles = makeStyles((theme) => createStyles({
   root: {
@@ -420,6 +420,8 @@ function AllProducts() {
                               description={rowData.description}
                               title={rowData.title}
                               path={rowData.imagePath}
+                              data={rowData}
+                              views={rowData.views}
                             />
                           </div>
                         )
@@ -510,7 +512,7 @@ function AllProducts() {
             <NotFound />
           </Box>
           <Box marginTop={3} textAlign="center">
-            <Link href="/upload" passHref>
+            <Link href="/management/upload" passHref>
               <a style={{
                 textDecoration: 'none',
               }}
