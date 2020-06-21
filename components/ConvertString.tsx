@@ -3,13 +3,13 @@ export default function (value: string| undefined) {
     case 'rahati':
       return 'راحتی';
 
-    case 'rahatil':
+    case 'rahati-l':
       return 'راحتی ال';
 
-    case 'servicekhab':
+    case 'service-khab':
       return 'سرویس خواب';
 
-    case 'naharkhori':
+    case 'nahar-khori':
       return 'نهار خوری';
 
     case 'console':
