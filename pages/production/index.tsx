@@ -3,11 +3,8 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import {
 // eslint-disable-next-line no-unused-vars
-  makeStyles, createStyles, Theme, ThemeProvider,
+  makeStyles, createStyles, Theme,
 } from '@material-ui/core/styles';
-import {
-  useSelector,
-} from 'react-redux';
 
 
 import {
@@ -15,7 +12,8 @@ import {
 } from '@material-ui/core';
 
 import Cards from '../../components/Cards';
-import { themeDark, themeLight } from '../../components/theme';
+import AppTheme, {
+} from '../../components/theme';
 
 
 const Layout = dynamic(
@@ -35,16 +33,12 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-interface State {
-  theme:boolean
-}
 
 function Production() {
   const classes = useStyles();
-  const t = useSelector((state:State) => state.theme);
 
   return (
-    <ThemeProvider theme={t ? themeDark : themeLight}>
+    <AppTheme>
       <Layout>
         <Head>
           <title>محصولات ما</title>
@@ -104,7 +98,7 @@ function Production() {
           </Grid>
         </Container>
       </Layout>
-    </ThemeProvider>
+    </AppTheme>
   );
 }
 
