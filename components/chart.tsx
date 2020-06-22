@@ -16,10 +16,13 @@ import ChartInfo from './ChartInfo';
 interface CateType{
   name: string;
   value: number;
+  view: string;
 }
 interface PropsTypes{
+    view:boolean;
     data: {
       total: string;
+      totalView:string;
       category: Array<CateType>;
     };
     array: Array<{name: string}>;
@@ -76,14 +79,15 @@ const chartRowColor = ['#01b075', '#e8e230', '#ec407a', '#AB47BC', '#ff5722', '#
 
 function Chart(props: PropsTypes) {
   const classes = useStyles();
-  const { data } = props;
+  const { data, view } = props;
   const t: any = [];
+  console.log(view);
 
   data.category.map((item: any | null) => {
     const per: any = () => {
-      const v1 = parseInt(data.total, 10);
-      const v2 = parseInt(item.value, 10);
-      const perc = ((v2 / v1) * 100).toFixed(0);
+      const v1 = parseInt(view ? data.totalView : data.total, 10);
+      const v2 = parseInt(view ? item.view : item.value, 10);
+      const perc = ((v2 / v1) * 100).toFixed(2);
       return perc;
     };
     return t.push(Number(per()));
@@ -127,7 +131,7 @@ function Chart(props: PropsTypes) {
                 <ChartInfo
                   key={randomKey}
                   name={item.name}
-                  value={item.value}
+                  value={view ? item.view : item.value}
                   rowColor={chartRowColor[i]}
                 />
               );
