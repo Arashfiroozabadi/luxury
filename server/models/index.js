@@ -31,7 +31,7 @@ const post = new Schema({
 const overview = new Schema({
   name: { type: String, default: 'overview' },
   total: { type: Number, default: 0 },
-  category: [{ name: String, value: Number }],
+  category: [{ name: String, value: Number, view: Number }],
   totalView: { type: Number, default: 0 },
 });
 
