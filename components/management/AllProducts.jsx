@@ -19,6 +19,8 @@ import Axios from 'axios';
 import { Delete, NavigateBefore, NavigateNext } from '@material-ui/icons';
 
 import Link from 'next/link';
+import ColorCate from '../ColorCate';
+import ConvertString from '../ConvertString';
 import Product from '../Product';
 import Loading from '../loading';
 // eslint-disable-next-line no-unused-vars
@@ -343,8 +345,13 @@ function AllProducts() {
                       </p>
                     </td>
                     <td className={classes.td}>
-                      <p className={classes.tdTextKey}>
-                        {rowData.category}
+                      <p
+                        className={classes.tdTextKey}
+                        style={{
+                          color: ColorCate(rowData.category),
+                        }}
+                      >
+                        { ConvertString(rowData.category)}
                       </p>
                     </td>
                     <td className={classes.td}>
