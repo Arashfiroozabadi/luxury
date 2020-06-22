@@ -18,7 +18,7 @@ import { withRouter } from 'next/dist/client/router';
 import Loading from '../../components/loading';
 import AppTheme from '../../components/theme';
 import ProductCardInfo from '../../components/ProductCardInfo';
-import { NotFound } from '../../components';
+import { NotFound, ColorCate } from '../../components';
 
 const Layout = dynamic(
   () => import('../../components/Layout'),
@@ -75,7 +75,11 @@ function NaharKhori() {
             component="h2"
             gutterBottom
           >
-            <Box>
+            <Box
+              style={{
+                color: ColorCate('nahar-khori'),
+              }}
+            >
               نهار خوری
             </Box>
           </Typography>
