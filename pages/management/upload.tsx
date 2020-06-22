@@ -545,7 +545,19 @@ function Upload() {
       <Layout>
         {!auth ? (
           <Paper className={classes.unAuth}>
-            {isLoading ? (<Loading className={classes.loading} size={50} />)
+            {isLoading ? (
+              <>
+                <Typography
+                  variant="h6"
+                  component="h6"
+                >
+                  <Box textAlign="center" component="p">
+                    در حال برسی احراز هویت
+                  </Box>
+                </Typography>
+                <Loading className={classes.loading} size={50} />
+              </>
+            )
               : (
                 <>
                   <Typography
