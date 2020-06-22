@@ -234,6 +234,7 @@ function Management() {
                       <TextField
                         label="رمز ورود"
                         name="password"
+                        autoComplete="off"
                         type={showPass ? 'text' : 'password'}
                         helperText=""
                         onInvalid={(e:any) => e.target.setCustomValidity('رمز ورود را وارد کنید')}
@@ -273,7 +274,19 @@ function Management() {
                     </RTL>
                   </form>
                   {isLoading
-                    ? <Loading className={classes.loading} size={30} />
+                    ? (
+                      <>
+                        <Typography
+                          variant="caption"
+                          component="h6"
+                        >
+                          <Box textAlign="center" component="p">
+                            در حال برسی احراز هویت
+                          </Box>
+                        </Typography>
+                        <Loading className={classes.loading} size={40} />
+                      </>
+                    )
                     : null}
                 </Paper>
               </div>
