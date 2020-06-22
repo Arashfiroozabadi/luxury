@@ -16,6 +16,7 @@ import {
   useDispatch, useSelector,
 } from 'react-redux';
 import Axios from 'axios';
+import Loading from '../loading';
 
 const useStyles = makeStyles((theme:Theme) => createStyles({
   root: {
@@ -123,6 +124,10 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
   dialogUserName: {
     color: '#218fde',
   },
+  loading: {
+    margin: 10,
+    textAlign: 'center',
+  },
 }));
 const Transition = React.forwardRef((
   props: TransitionProps & { children?: React.ReactElement<any, any> },
@@ -137,6 +142,7 @@ function AdminPanel(props:PropsType) {
   const classes = useStyles();
   const { userName, userType } = props;
   const [open, setopen] = useState<boolean>(false);
+  const [isloading, setisloading] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const loginForm = useSelector((state:any) => state.loginForm);
@@ -145,12 +151,14 @@ function AdminPanel(props:PropsType) {
   };
   const handleYes = async () => {
     const tokenKey = localStorage.getItem('token');
+    setisloading(true);
     await Axios.get('/api/logout', {
       headers: { token: tokenKey },
     }).then((result:any) => {
       localStorage.setItem('token', result.data.token);
     });
     await setTimeout(() => {
+      setisloading(true);
       dispatch({ type: 'authStatus', auth: false });
       dispatch({ type: 'err', err: { err: true, msg: '' } });
       dispatch({ type: 'login', loginForm: { ...loginForm, password: '' } });
@@ -220,6 +228,7 @@ function AdminPanel(props:PropsType) {
               </span>
               {' آیا تایید میکنید که از این حساب کاربری خارج شوید'}
             </DialogContentText>
+            {isloading ? <Loading className={classes.loading} size={30} /> : null}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleYes}>
