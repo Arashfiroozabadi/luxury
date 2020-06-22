@@ -85,7 +85,19 @@ function Chart() {
         {!auth
           ? (
             <Paper className={classes.unAuth}>
-              {isLoading ? (<Loading className={classes.loading} size={50} />)
+              {isLoading ? (
+                <>
+                  <Typography
+                    variant="h6"
+                    component="h6"
+                  >
+                    <Box textAlign="center" component="p">
+                      در حال برسی احراز هویت
+                    </Box>
+                  </Typography>
+                  <Loading className={classes.loading} size={50} />
+                </>
+              )
                 : (
                   <>
                     <Typography
@@ -113,14 +125,9 @@ function Chart() {
             </Paper>
           )
           : (
-            <>
-              {isLoading ? (<Loading className={classes.loading} size={50} />)
-                : (
-                  <WithNav className={classes.root}>
-                    <Overview />
-                  </WithNav>
-                )}
-            </>
+            <WithNav className={classes.root}>
+              <Overview />
+            </WithNav>
           )}
       </Layout>
     </AppTheme>
