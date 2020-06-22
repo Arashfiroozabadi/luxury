@@ -70,22 +70,22 @@ function Production() {
             <Grid item md={3} className={classes.cards}>
               <Cards
                 title="مبلمان راحتی ال"
-                link="rahati-L"
-                category="rahatil"
+                link="rahati-l"
+                category="rahati-l"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
               <Cards
                 title="سرویس خواب"
                 link="service-khab"
-                category="servicekhab"
+                category="service-khab"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
               <Cards
                 title="نهار خوری"
                 link="nahar-khori"
-                category="naharkhori"
+                category="nahar-khori"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
