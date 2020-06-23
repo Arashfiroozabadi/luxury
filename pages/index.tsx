@@ -193,7 +193,7 @@ export default () => {
             >
               <Cards
                 title="مبلمان راحتی ال"
-                link="rahati-L"
+                link="rahati-l"
                 category="rahati-l"
               />
             </Grid>
