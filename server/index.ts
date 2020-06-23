@@ -27,7 +27,7 @@ mongoose.connection.once('connected', () => {
 
 // const newOV = new Overview();
 // newOV.save();
-const port = parseInt(process.env.PORT || '3000', 10);
+const port = parseInt(process.env.PORT || '80', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
