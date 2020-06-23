@@ -1,14 +1,24 @@
 /* eslint-disable consistent-return */
 import express from 'express';
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
+
 import Loger from '../components/logers';
 import { User } from '../models';
 import { auth } from '../middleware';
 
 const UserController = express.Router();
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'arashfiroozabadi29@gmail.com',
+    pass: 'arash688',
+  },
+});
 
 UserController.post('/login', async (req:any, res:any) => {
+  Loger('warn', process.env.PORT);
   const { userName, password } = await req.body.form;
   if (userName.length === 0 || password.length <= 3) {
     res.status(400).json({ auth: false, msg: 'نام کاربری یا رمز ورود اشتباه است' });
@@ -48,6 +58,58 @@ UserController.post('/login', async (req:any, res:any) => {
           }
         });
       }
+    });
+  }
+});
+
+interface signinProp{
+  body:{
+    userName:string
+    token:string
+  }
+}
+
+UserController.post('/signin', async (req:signinProp, res) => {
+  const { userName, token } = req.body;
+  const key = process.env.tokenKey;
+
+  const user = await User.findOne({ userName });
+
+  if (user) {
+    return res.status(409).json({ msg: 'user already exists' });
+  }
+
+  if (token) {
+    try {
+      const decoded:any = jwt.verify(token, `${key}`);
+      return res.send({ decoded, token });
+    } catch (error) {
+      res.send({ msg: 'token expire. try to get new token with email', error });
+    }
+  } else {
+    const randomNum = Math.floor((Math.random() * 1000000) + 1);
+    const payLoad = {
+      restToken: randomNum,
+    };
+
+    jwt.sign(payLoad, `${key}`, { expiresIn: 10000 }, async (errToken, newToken) => {
+      if (errToken) throw errToken;
+
+      const mailOptions = {
+        from: 'arashfiroozabadi29@gmail.com',
+        to: 'arashfiroozabadii@gmail.com',
+        subject: 'Sending Email using Node.js',
+        html: `<h1>${newToken}<h1/>`,
+      };
+      transporter.sendMail(mailOptions, (emailerror, info) => {
+        if (emailerror) {
+          console.log(emailerror);
+        } else {
+          console.log(`Email sent: ${info.response}`);
+        }
+      });
+
+      res.send({ msg: 'pls send token in your email' });
     });
   }
 });
