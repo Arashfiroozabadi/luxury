@@ -9,8 +9,10 @@ import fileUpload from 'express-fileupload';
 
 const middlewares = require('./api/index');
 
-mongoose.connect('mongodb://localhost:27017/luxury',
+mongoose.connect('mongodb://localhost:27017/luxury?authSource=admin',
   {
+    user: 'myUserAdmin',
+    pass: '*******',
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
