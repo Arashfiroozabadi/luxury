@@ -40,7 +40,7 @@ UserController.post('/login', async (req:any, res:any) => {
             const payLoad = {
               user: { id: user._id },
             };
-            const key = process.env.token;
+            const key = process.env.tokenKey;
 
             jwt.sign(payLoad, `${key}`, { expiresIn: 10000 }, async (errToken, token) => {
               if (errToken) throw errToken;
@@ -65,14 +65,19 @@ UserController.post('/login', async (req:any, res:any) => {
 interface signinProp{
   body:{
     userName:string
+    password:string
     token:string
   }
 }
 
 UserController.post('/signin', async (req:signinProp, res) => {
-  const { userName, token } = req.body;
-  const key = process.env.tokenKey;
+  const { userName, password, token } = req.body;
 
+  if (userName.length === 0 || password.length <= 3) {
+    return res.status(400).json({ msg: 'you must send valid userName and password' });
+  }
+
+  const key = process.env.tokenKey;
   const user = await User.findOne({ userName });
 
   if (user) {
@@ -81,10 +86,22 @@ UserController.post('/signin', async (req:signinProp, res) => {
 
   if (token) {
     try {
-      const decoded:any = jwt.verify(token, `${key}`);
-      return res.send({ decoded, token });
+      await jwt.verify(token, `${key}`, (err, decoded) => {
+        if (err) {
+          throw err;
+        }
+        const newUser = new User({
+          userName,
+          password,
+          type: 'admin',
+        });
+        newUser.save().then((document:any) => {
+          console.log(document);
+          return res.send({ decoded, msg: `new user as ${document.userName} created successfly` });
+        });
+      });
     } catch (error) {
-      res.send({ msg: 'token expire. try to get new token with email', error });
+      res.send({ msg: 'token expire. please make new request for new token', error });
     }
   } else {
     const randomNum = Math.floor((Math.random() * 1000000) + 1);
@@ -92,14 +109,25 @@ UserController.post('/signin', async (req:signinProp, res) => {
       restToken: randomNum,
     };
 
-    jwt.sign(payLoad, `${key}`, { expiresIn: 10000 }, async (errToken, newToken) => {
+    jwt.sign(payLoad, `${key}`, { expiresIn: '3min' }, async (errToken, newToken) => {
       if (errToken) throw errToken;
 
       const mailOptions = {
         from: 'arashfiroozabadi29@gmail.com',
         to: 'arashfiroozabadii@gmail.com',
-        subject: 'Sending Email using Node.js',
-        html: `<h1>${newToken}<h1/>`,
+        subject: `your token request with id ${randomNum}`,
+        html: `
+        <h2>
+        hi dear
+        <br />
+        this is new token for create new user as  
+        <span style="color:blue;">
+        ${userName} 
+        </span>
+         this token will expires at 3 min
+        </h2>
+        <h1 style="text-align:center;" >${newToken}</h1>
+        `,
       };
       transporter.sendMail(mailOptions, (emailerror, info) => {
         if (emailerror) {
@@ -109,7 +137,7 @@ UserController.post('/signin', async (req:signinProp, res) => {
         }
       });
 
-      res.send({ msg: 'pls send token in your email' });
+      res.send({ msg: 'pls cheack your Email i send token to ara***********ii@gmail.com' });
     });
   }
 });
