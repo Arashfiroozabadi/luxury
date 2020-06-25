@@ -10,12 +10,12 @@ import {
   Divider,
   Toolbar,
 } from '@material-ui/core';
-// eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
 import {
   KeyboardArrowLeft, Call, LocationOnOutlined, Instagram, Telegram, Twitter,
 } from '@material-ui/icons';
+import clsx from 'clsx';
 import Logo from './Logo';
 
 
@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         marginRight: 5,
       },
     },
+    [theme.breakpoints.only('xs')]: {
+      padding: '1.3rem 5px',
+    },
   },
   boxs: {
 
@@ -57,6 +60,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   boxCaption: {
     width: 110,
     color: '#adacacb8',
+    [theme.breakpoints.only('xs')]: {
+      width: '100%',
+    },
   },
   links: {
     color: '#ffd54f',
@@ -77,7 +83,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     fontSize: '2.6rem',
   },
   CallNum: {
+    width: '20%',
     direction: 'ltr',
+    '&:hover svg': {
+      transform: 'translateY(-5px)',
+    },
     '& > div': {
       display: 'flex',
       position: 'relative',
@@ -85,6 +95,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     '& > div > svg': {
       color: blue[500],
+      transition: 'transform 250ms',
     },
     '& > div > a': {
       left: 25,
@@ -92,6 +103,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       color: '#adacacb8',
       position: 'absolute',
       textDecoration: 'none',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '75%',
     },
   },
   social: {
@@ -103,6 +117,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
       color: '#adacacb8',
       margin: '0px 5px',
       display: 'flex',
+      transition: 'transform 250ms, color 250ms',
+      '&:hover': {
+        color: 'white',
+        transform: 'translateY(-5px)',
+      },
     },
     '& a:first-child': {
       margin: '0 5px 0 0',
@@ -113,10 +132,21 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     backgroundColor: '#252525',
     margin: '10px 0',
   },
+  addressBox: {
+    '&:hover .pin': {
+      color: '#f4121c',
+      stroke: 'black',
+      strokeOpacity: 0.5,
+      transform: 'translateY(-5px) scale(1.2)',
+    },
+  },
+  pin: {
+    transition: 'transform 250ms, color 250ms',
+  },
 }));
 
 
-function Footer() {
+function Footer(): JSX.Element {
   const classes = useStyles();
   return (
     <footer>
@@ -230,6 +260,7 @@ function Footer() {
               <Typography
                 className={classes.CallNum}
                 variant="caption"
+                component="div"
               >
                 <Box>
                   <Call
@@ -274,7 +305,7 @@ function Footer() {
             item
             xs={12}
           >
-            <Container>
+            <Container className={classes.addressBox}>
               <Typography
                 variant="caption"
                 component="h6"
@@ -287,7 +318,7 @@ function Footer() {
                   textAlign="center"
                 >
                   <div>
-                    <LocationOnOutlined />
+                    <LocationOnOutlined className={clsx(classes.pin, 'pin')} />
                   </div>
                   البرز مشکین‌ دشت بلوار امام علی
                   گالری مبل لاکچری
