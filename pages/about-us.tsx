@@ -1,11 +1,13 @@
+import React from 'react';
 import { Typography, Box, Container } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 
-import Layout from '../components/Layout';
+import { Layout, AppTheme } from 'components';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     width: '100%',
+    margin: `${theme.spacing(3)}px 0`,
   },
   textBox: {
     width: '50%',
@@ -19,34 +21,36 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     justifyContent: 'center',
   },
 }));
-function AboutUs() {
+function AboutUs(): JSX.Element {
   const classes = useStyles();
   return (
-    <Layout>
-      <div
-        className={classes.root}
-      >
-        <Container
-          className={classes.container}
+    <AppTheme>
+      <Layout>
+        <div
+          className={classes.root}
         >
-          <Typography
-            variant="body1"
-            component="h2"
-            gutterBottom
-            className={classes.textBox}
+          <Container
+            className={classes.container}
           >
-            <Box
-              textAlign="center"
-              fontWeight="fontWeightRegular"
+            <Typography
+              variant="body1"
+              component="h2"
+              gutterBottom
+              className={classes.textBox}
             >
-              گالری مبل لاکچری عرضه کننده انواع مبلمان راحتی
-              در انواع طرح‌ها و رنگ‌های متفاوت متناسب با
-              سلیقیه‌ی شما
-            </Box>
-          </Typography>
-        </Container>
-      </div>
-    </Layout>
+              <Box
+                textAlign="center"
+                fontWeight="fontWeightRegular"
+              >
+                گالری مبل لاکچری عرضه کننده انواع مبلمان راحتی
+                در انواع طرح‌ها و رنگ‌های متفاوت متناسب با
+                سلیقیه‌ی شما
+              </Box>
+            </Typography>
+          </Container>
+        </div>
+      </Layout>
+    </AppTheme>
   );
 }
 

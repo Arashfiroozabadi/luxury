@@ -1,13 +1,18 @@
-import React, {} from 'react';
-import Layout from '../components/Layout';
+import React from 'react';
+import { Layout, AppTheme } from 'components';
+import { Container } from '@material-ui/core';
 
-function CallUS() {
+function CallUS(): JSX.Element {
   return (
-    <Layout>
-      <h1>
-        تماس با ما
-      </h1>
-    </Layout>
+    <AppTheme>
+      <Layout>
+        <Container>
+          <h1>
+            تماس با ما
+          </h1>
+        </Container>
+      </Layout>
+    </AppTheme>
   );
 }
 
