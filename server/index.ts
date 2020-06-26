@@ -7,6 +7,7 @@ import connectMongo from 'connect-mongo';
 import fileUpload from 'express-fileupload';
 // import { Overview } from './models';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const middlewares = require('./api/index');
 
 mongoose.connect('mongodb://localhost:27017/luxury?authSource=admin',
