@@ -267,9 +267,9 @@ function Footer(): JSX.Element {
                     fontSize="small"
                   />
                   <a
-                    href="tel:021 6655 6655"
+                    href="tel:026 3621 1725"
                   >
-                    021 6655 6655
+                    ۰۲۶-۳۶۲۱-۱۷۲۵
                   </a>
                 </Box>
               </Typography>
