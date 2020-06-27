@@ -37,20 +37,25 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   cardButton: {
     // color: '#ffd54f'
   },
+  img: {
+    height: 200,
+    objectFit: 'fill',
+  },
 }));
 interface CardProps {
     title: string;
     caption?: string;
     link: string;
-    image?: string;
+    image: string;
     alt?: string;
     category: string;
 }
 
-function Cards(props: CardProps) {
+function Cards(props: CardProps): JSX.Element {
   const {
     title, caption,
     link, category,
+    image,
   } = props;
   const classes = useStyles();
   return (
@@ -61,9 +66,10 @@ function Cards(props: CardProps) {
     >
       <CardMedia
         component="img"
-        image="/static/img/firstShow.png"
+        image={image}
         alt="مبل راحتی"
         title="مبل راحتی"
+        className={classes.img}
       />
       <CardContent className={classes.rootCardContent}>
         <Typography
