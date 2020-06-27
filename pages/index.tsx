@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-export default () => {
+export default (): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -185,6 +185,7 @@ export default () => {
                 title="مبلمان راحتی"
                 link="rahati"
                 category="rahati"
+                image="/static/img/rahati.jpg"
               />
             </Grid>
             <Grid
@@ -195,6 +196,7 @@ export default () => {
                 title="مبلمان راحتی ال"
                 link="rahati-l"
                 category="rahati-l"
+                image="/static/img/rahati-l.jpg"
               />
             </Grid>
             <Grid
@@ -205,6 +207,7 @@ export default () => {
                 title="سرویس خواب"
                 link="service-khab"
                 category="service-khab"
+                image="/static/img/bedset.jpg"
               />
             </Grid>
             <Grid
