@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }));
 
 
-function Production() {
+function Production(): JSX.Element {
   const classes = useStyles();
 
   return (
@@ -65,6 +65,7 @@ function Production() {
                 title="مبلمان راحتی"
                 link="rahati"
                 category="rahati"
+                image="/static/img/rahati.jpg"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
@@ -72,6 +73,7 @@ function Production() {
                 title="مبلمان راحتی ال"
                 link="rahati-l"
                 category="rahati-l"
+                image="/static/img/rahati-l.jpg"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
@@ -79,6 +81,7 @@ function Production() {
                 title="سرویس خواب"
                 link="service-khab"
                 category="service-khab"
+                image="/static/img/bedset.jpg"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
@@ -86,6 +89,7 @@ function Production() {
                 title="نهار خوری"
                 link="nahar-khori"
                 category="nahar-khori"
+                image="/static/img/dining.jpg"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
@@ -93,6 +97,7 @@ function Production() {
                 title="آینه کنسول"
                 link="console"
                 category="console"
+                image="/static/img/console.jpg"
               />
             </Grid>
           </Grid>
