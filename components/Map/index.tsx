@@ -24,6 +24,7 @@ function Map(): JSX.Element {
       mapboxApiAccessToken="pk.eyJ1IjoiYXJhc2hmaXJvb3phYmFkaSIsImEiOiJjam1kOG5jbnEydDdmM2twb3ZxdjJuaDZiIn0.g0d3SzM5-a6Hj8PtMawuSw"
       {...viewport}
       onViewportChange={(nextViewport): void => setViewport(nextViewport)}
+      mapStyle="mapbox://styles/mapbox/streets-v10"
     >
       <Marker latitude={35.7505} longitude={50.9264} offsetLeft={-20} offsetTop={-10}>
         <LocationOnOutlined style={{
