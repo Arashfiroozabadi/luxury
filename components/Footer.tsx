@@ -13,7 +13,8 @@ import {
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
 import {
-  KeyboardArrowLeft, Call, LocationOnOutlined, Instagram, Telegram, Twitter,
+  KeyboardArrowLeft, Call, LocationOnOutlined, Instagram,
+  // Telegram, Twitter,
 } from '@material-ui/icons';
 import clsx from 'clsx';
 import Logo from './Logo';
@@ -284,15 +285,19 @@ function Footer(): JSX.Element {
                   <div
                     className={classes.social}
                   >
-                    <a>
+                    <a
+                      target="_blanck"
+                      title="instagram"
+                      href="https://www.instagram.com/Luxurry_mobl/"
+                    >
                       <Instagram />
                     </a>
-                    <a href="#">
+                    {/* <a href="#">
                       <Telegram />
                     </a>
                     <a href="#">
                       <Twitter />
-                    </a>
+                    </a> */}
                   </div>
                 </Grid>
               </Grid>
