@@ -6,9 +6,41 @@ import { themeDark } from '../components/theme';
 class MyDocument extends Document {
   render() {
     return (
-      <html lang="en">
+      <html lang="fa">
         <Head>
           <meta charSet="utf-8" />
+
+          <title>گالری مبل Luxury</title>
+          <meta
+            name="description"
+            content="گالری مبل لاکچری عرضه کننده انواع مبلمان راحتی در انواع طرح‌ها و رنگ‌های متفاوت متناسب با سلیقیه‌ی شما"
+          />
+          <meta
+            name="keywords"
+            content="
+            luxury,
+            گالری مبل لاکچری,
+            مبلمان راحتی,
+            مبل راحتی,
+            مبل راحتی ال,
+            مبلمان راحتی ال,
+            سرویس خواب,
+            گالری مبل,
+            مبل,مبلمان,
+            صنایع چوبی,
+            لاکچری,
+            "
+          />
+          <meta name="og:title" property="og:title" content="گالری مبل Luxury" />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="http://luxury.ir" />
+          <meta property="og:locale" content="fa" />
+          <meta
+            property="og:description"
+            content="گالری مبل لاکچری عرضه کننده انواع مبلمان راحتی در انواع طرح‌ها و رنگ‌های متفاوت متناسب با سلیقیه‌ی شما"
+          />
+          <meta property="og:site_name" content="گالری مبل Luxury" />
+          <link rel="canonical" href="https://luxury.ir/" />
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
