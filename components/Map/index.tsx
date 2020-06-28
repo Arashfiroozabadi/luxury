@@ -13,7 +13,7 @@ setRTLTextPlugin(
 
 function Map(): JSX.Element {
   const [viewport, setViewport] = useState({
-    width: 500,
+    width: '90%',
     height: 400,
     latitude: 35.7505,
     longitude: 50.9264,
