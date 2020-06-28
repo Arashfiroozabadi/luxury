@@ -288,6 +288,7 @@ function Footer(): JSX.Element {
                     <a
                       target="_blanck"
                       title="instagram"
+                      rel="nofollow"
                       href="https://www.instagram.com/Luxurry_mobl/"
                     >
                       <Instagram />
