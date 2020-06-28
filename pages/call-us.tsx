@@ -96,6 +96,7 @@ function CallUS(): JSX.Element {
                       className={classes.link}
                       target="_blanck"
                       title="instagram"
+                      rel="nofollow"
                       href="https://www.instagram.com/Luxurry_mobl/"
                     >
                       <Instagram />
