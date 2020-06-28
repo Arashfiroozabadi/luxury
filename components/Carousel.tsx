@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Carousel() {
+function Carousel(): JSX.Element|null {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -211,7 +211,7 @@ function Carousel() {
                       className={clsx(classes.productLink, 'productLink')}
                     >
                       <Link
-                        href="/product/[id]"
+                        href={`/product/${res[activeStep]._id}`}
                         as={`/product/${res[activeStep]._id}`}
                         passHref
                       >
