@@ -86,7 +86,7 @@ export default (): JSX.Element => {
     <AppTheme>
       <Layout>
         <Head>
-          <title>Luxury</title>
+          <title>گالری مبل Luxury</title>
         </Head>
         <Container
           className={classes.root}
