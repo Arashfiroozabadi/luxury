@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   makeStyles, createStyles,
-  // eslint-disable-next-line no-unused-vars
   Theme,
 } from '@material-ui/core/styles';
 import {
@@ -9,7 +8,6 @@ import {
 } from '@material-ui/core';
 import Link from 'next/link';
 
-// eslint-disable-next-line no-unused-vars
 import { FetchData } from '../interface';
 
 
@@ -33,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
   },
 }));
 
-function ProductCardInfo(props:FetchData) {
+function ProductCardInfo(props: FetchData): JSX.Element {
   const classes = useStyles();
   const { title, path, _id } = props;
   return (
@@ -60,7 +58,7 @@ function ProductCardInfo(props:FetchData) {
       <Divider />
       <CardActions>
         <Link
-          href="/product/[id]"
+          href={`/product/${_id}`}
           as={`/product/${_id}`}
           passHref
         >
