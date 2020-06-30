@@ -12,7 +12,7 @@ const middlewares = require('./api/index');
 mongoose.connect('mongodb://localhost:27017/luxury?authSource=admin',
   {
     user: 'myUserAdmin',
-    pass: 'arash688:D',
+    pass: '*******',
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
