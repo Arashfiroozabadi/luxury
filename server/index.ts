@@ -1,11 +1,10 @@
+import { join } from 'path';
 import express from 'express';
 import next from 'next';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
-import session from 'express-session';
-import connectMongo from 'connect-mongo';
 import fileUpload from 'express-fileupload';
-// import { Overview } from './models';
+
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const middlewares = require('./api/index');
@@ -13,13 +12,11 @@ const middlewares = require('./api/index');
 mongoose.connect('mongodb://localhost:27017/luxury?authSource=admin',
   {
     user: 'myUserAdmin',
-    pass: '*******',
+    pass: 'arash688:D',
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-const db = mongoose.connection;
-const MongoStore = connectMongo(session);
 
 mongoose.connection.on('error', () => {
   console.log('error');
@@ -28,8 +25,6 @@ mongoose.connection.once('connected', () => {
   console.log('connected');
 });
 
-// const newOV = new Overview();
-// newOV.save();
 const port = parseInt(process.env.PORT || '80', 10);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -40,27 +35,20 @@ app.prepare().then(() => {
   server.use(bodyParser.json({ limit: '50mb' }));
   server.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   server.use(fileUpload({ extended: true }));
-  server.use(session({
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 365,
-    },
-    secret: 'secret',
-    resave: false,
-    saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: db }),
-  }));
   server.use('/api', middlewares);
   server.use(express.static('statics'));
 
-  server.get('/posts/:id', (req, res) => {
-    const nextJsPage = '/posts';
-    const queryParams = { id: req.params.id, des: req.params.des };
-    return app.render(req, res, nextJsPage, queryParams);
+
+  server.get('*', (req: any, res) => {
+    if (req.url.includes('/sw')) {
+      const filePath = join(__dirname, 'static', 'workbox', 'sw.js');
+      app.serveStatic(req, res, filePath);
+    } else if (req.url.startsWith('static/workbox/')) {
+      app.serveStatic(req, res, join(__dirname, req.url));
+    } else {
+      handle(req, res, req.url);
+    }
   });
-
-  server.get('*', (req, res) => handle(req, res));
-
-  server.get('/upload', (req, res) => handle(req, res));
 
   server.listen(port, (err) => {
     if (err) throw err;

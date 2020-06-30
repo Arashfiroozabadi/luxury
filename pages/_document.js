@@ -10,7 +10,6 @@ class MyDocument extends Document {
         <Head>
           <meta charSet="utf-8" />
 
-          <title>گالری مبل Luxury</title>
           <meta
             name="description"
             content="گالری مبل لاکچری عرضه کننده انواع مبلمان راحتی در انواع طرح‌ها و رنگ‌های متفاوت متناسب با سلیقیه‌ی شما"
@@ -45,8 +44,18 @@ class MyDocument extends Document {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
           />
-          {/* PWA primary color */}
+
+          <meta name="application-name" content="Luxury" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="theme-color" content={themeDark.palette.primary.main} />
+          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+          <meta name="apple-mobile-web-app-title" content="Luxury" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <link rel="manifest" href="/manifest.json" />
+
+          <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+          <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
           <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css" rel="stylesheet" />
           <link
             rel="stylesheet"
