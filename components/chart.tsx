@@ -1,14 +1,11 @@
 import React from 'react';
-// eslint-disable-next-line no-unused-vars
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import {
-  //  Divider,
   Typography, Box,
 } from '@material-ui/core';
 
 import AppTheme from './theme';
-// import ConvertString from './ConvertString';
 import ConvertValue from './ConvertValue';
 import ChartInfo from './ChartInfo';
 
@@ -19,10 +16,10 @@ interface CateType{
   view: string;
 }
 interface PropsTypes{
-    view:boolean;
+    view: boolean;
     data: {
       total: string;
-      totalView:string;
+      totalView: string;
       category: Array<CateType>;
     };
     array: Array<{name: string}>;
@@ -77,12 +74,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const chartRowColor = ['#01b075', '#e8e230', '#ec407a', '#AB47BC', '#ff5722', '#039be5'];
 
-function Chart(props: PropsTypes) {
+function Chart(props: PropsTypes): JSX.Element|null{
   const classes = useStyles();
   const { data, view } = props;
   const t: any = [];
-  console.log(view);
-
   data.category.map((item: any | null) => {
     const per: any = () => {
       const v1 = parseInt(view ? data.totalView : data.total, 10);
@@ -101,7 +96,6 @@ function Chart(props: PropsTypes) {
               const randomColor = Math.floor(Math.random() * 16777215).toString(16);
               return (
                 <div
-                  // eslint-disable-next-line react/no-array-index-key
                   className={classes.chartCell}
                   key={randomColor}
                   style={{

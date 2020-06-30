@@ -23,12 +23,9 @@ import ColorCate from '../ColorCate';
 import ConvertString from '../ConvertString';
 import Product from '../Product';
 import Loading from '../loading';
-// eslint-disable-next-line no-unused-vars
-import { FetchData } from '../../interface';
 import RandNum from '../randNum';
 import ConvertValue from '../ConvertValue';
 import { FetchPostList } from '../customHooks';
-import NotFound from '../NotFound';
 
 const useStyles = makeStyles((theme) => createStyles({
   root: {
@@ -515,9 +512,6 @@ function AllProducts() {
           variant="h6"
           component="h6"
         >
-          <Box marginTop={4} textAlign="center">
-            <NotFound />
-          </Box>
           <Box marginTop={3} textAlign="center">
             <Link href="/management/upload" passHref>
               <a style={{

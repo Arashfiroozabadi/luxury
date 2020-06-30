@@ -88,9 +88,7 @@ function Rahati() {
               ? <Loading size={80} className={classes.Loading} />
               : resp.length === 0
                 ? (
-                  <NotFound>
-                    <h1>no any post for this category</h1>
-                  </NotFound>
+                  <NotFound />
                 )
                 : resp.map((d: any) => (
                   <Grid

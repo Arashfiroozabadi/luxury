@@ -1,19 +1,10 @@
-/* eslint-disable no-shadow */
-/* eslint-disable func-names */
-/* eslint-disable consistent-return */
-/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-this-alias */
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 const { Schema } = mongoose;
 const { ObjectId } = Schema;
 
-const img = new Schema({
-  postID: String,
-  image: Array,
-  banner: { type: Boolean },
-  bannerPath: { type: Number },
-});
 const post = new Schema({
   author: ObjectId,
   title: { type: String },
@@ -66,4 +57,3 @@ user.methods.comparePassword = function (candidatePassword, cb) {
 export const User = mongoose.model('users', user);
 export const Overview = mongoose.model('overview', overview);
 export const Post = mongoose.model('post', post);
-export const Img = mongoose.model('img', img);
