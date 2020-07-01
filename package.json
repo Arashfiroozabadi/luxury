@@ -27,6 +27,10 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
     "express-validator": "^6.5.0",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "imagemin-svgo": "^8.0.0",
     "jsonwebtoken": "^8.5.1",
     "jss": "^10.1.1",
     "jss-rtl": "^0.3.0",
@@ -56,7 +60,9 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.26.5",
     "serialize-javascript": "^3.0.0",
-    "strip-ansi": "^6.0.0"
+    "strip-ansi": "^6.0.0",
+    "svg-sprite-loader": "^5.0.0",
+    "webp-loader": "^0.6.0"
   },
   "devDependencies": {
     "@types/express-fileupload": "^1.1.3",

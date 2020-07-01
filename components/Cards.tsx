@@ -66,7 +66,7 @@ function Cards(props: CardProps): JSX.Element {
     >
       <CardMedia
         component="img"
-        image={image}
+        image={require(`public/static/img/${image}.jpg`)}
         alt="مبل راحتی"
         title="مبل راحتی"
         className={classes.img}

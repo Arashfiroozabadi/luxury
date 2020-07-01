@@ -65,7 +65,7 @@ function Production(): JSX.Element {
                 title="مبلمان راحتی"
                 link="rahati"
                 category="rahati"
-                image="/static/img/rahati.jpg"
+                image="rahati"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
@@ -73,7 +73,7 @@ function Production(): JSX.Element {
                 title="مبلمان راحتی ال"
                 link="rahati-l"
                 category="rahati-l"
-                image="/static/img/rahati-l.jpg"
+                image="rahati-l"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
@@ -81,7 +81,7 @@ function Production(): JSX.Element {
                 title="سرویس خواب"
                 link="service-khab"
                 category="service-khab"
-                image="/static/img/bedset.jpg"
+                image="bedset"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
@@ -89,7 +89,7 @@ function Production(): JSX.Element {
                 title="نهار خوری"
                 link="nahar-khori"
                 category="nahar-khori"
-                image="/static/img/dining.jpg"
+                image="dining"
               />
             </Grid>
             <Grid item md={3} className={classes.cards}>
@@ -97,7 +97,7 @@ function Production(): JSX.Element {
                 title="آینه کنسول"
                 link="console"
                 category="console"
-                image="/static/img/console.jpg"
+                image="console"
               />
             </Grid>
           </Grid>

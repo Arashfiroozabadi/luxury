@@ -185,7 +185,7 @@ export default (): JSX.Element => {
                 title="مبلمان راحتی"
                 link="rahati"
                 category="rahati"
-                image="/static/img/rahati.jpg"
+                image="rahati"
               />
             </Grid>
             <Grid
@@ -196,7 +196,7 @@ export default (): JSX.Element => {
                 title="مبلمان راحتی ال"
                 link="rahati-l"
                 category="rahati-l"
-                image="/static/img/rahati-l.jpg"
+                image="rahati-l"
               />
             </Grid>
             <Grid
@@ -207,7 +207,7 @@ export default (): JSX.Element => {
                 title="سرویس خواب"
                 link="service-khab"
                 category="service-khab"
-                image="/static/img/bedset.jpg"
+                image="bedset"
               />
             </Grid>
             <Grid
